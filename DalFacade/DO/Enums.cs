@@ -34,4 +34,13 @@ public class Enums
         update,
         delete
     }
+       public enum Category
+    {
+        Home,
+        Textile,
+        Kitchen,
+        Office,
+        Garden,
+        Toys
+    }
 }
