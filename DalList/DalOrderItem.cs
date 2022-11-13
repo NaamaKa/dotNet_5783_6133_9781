@@ -3,54 +3,100 @@
 using DO;
 
 namespace Dal;
+using static Dal.DataSource.Config;
+using static Dal.DataSource;
 
 public class DalOrderItem
 {
     public void AddNewOrderItem(OrderItem _newOrderItem)
     {
-        DataSource.orderItems[DataSource.Config._orderItemIndex] = _newOrderItem;
-        DataSource.Config._orderItemIndex++;
+       orderItems[_orderItemIndex] = _newOrderItem;
+        _orderItemIndex++;
     }
     public OrderItem GetOrderItem(int _myNumOrder,int myProductBarcode)
     {
-        for (int i = 0; i < DataSource.Config._orderItemIndex; i++)
+        for (int i = 0; i < _orderItemIndex; i++)
         {
-            if (DataSource.orderItems[i].orderId == _myNumOrder&& DataSource.orderItems[i].itemId== myProductBarcode)
-                return DataSource.orderItems[i];
+            if (orderItems[i].orderId == _myNumOrder && orderItems[i].itemId == myProductBarcode)
+            {
+                Console.WriteLine(i);
+                Console.WriteLine("came in");
+                return orderItems[i];
+            }
         }
         throw new Exception("item not found in order");
     }
     public OrderItem[] GetOrderItem()
     {
-        OrderItem[] _orderItems = new OrderItem[DataSource.Config._orderItemIndex];
-        for(int i=0;i<DataSource.Config._orderItemIndex;i++)
+        OrderItem[] _orderItems = new OrderItem[_orderItemIndex];
+        for(int i=0;i<_orderItemIndex;i++)
         {
-            _orderItems[i]=DataSource.orderItems[i];
+            _orderItems[i]=orderItems[i];
         }
-        return _orderItems;
+        if (_orderItems.Length>0)
+             return _orderItems;
+        throw new Exception("no items found");
+
     }
-    public void DeleteOrderItem(int _myNumOrder, int myProductBarcode)
+    public OrderItem[] GetOrderItems(int _myNumOrder)
     {
-        for (int i = 0; i < DataSource.Config._orderItemIndex; i++)
+        OrderItem[] _orderItemsTemp=new OrderItem[_orderItemIndex];
+        int counter = 0;
+        for (int i = 0; i < _orderItemIndex; i++)
         {
-            if (DataSource.orderItems[i].orderId == _myNumOrder && DataSource.orderItems[i].itemId == myProductBarcode)
+            if (orderItems[i].orderId == _myNumOrder)
+                _orderItemsTemp[counter++] = orderItems[i];
+        }
+        if (counter > 0)
+        {
+            OrderItem[] _orderItems = new OrderItem[counter];
+            for(int i = 0; i < counter; i++)
             {
-                DataSource.orderItems[i] = DataSource.orderItems[DataSource.Config._orderItemIndex];
-                DataSource.Config._orderItemIndex--;
-                break;
+                _orderItems[i] = _orderItemsTemp[i];
+            }
+            return _orderItems;
+
+        }
+        throw new Exception("no items found in order");
+    }
+    public void DeleteOrderItem(int _myNumOrder, int _myProductBarcode)
+    {
+        for (int i = 0; i <_orderItemIndex; i++)
+        {
+            if (orderItems[i].orderId == _myNumOrder && orderItems[i].itemId==_myProductBarcode)
+            {
+                if (i == _orderItemIndex - 1)//wanted found in last place in product arrey
+                {
+                   _orderItemIndex--;
+                    return;
+                }
+                else//found in middle-coppeis last product in array to temp and coppeis wntwd space to temp 
+                {
+                    OrderItem tempOrderItem = orderItems[_orderItemIndex - 1];
+                    orderItems[i].orderId=tempOrderItem.orderId;
+                    orderItems[i].itemId=tempOrderItem.itemId;
+                    orderItems[i].price=tempOrderItem.price;
+                    orderItems[i].amount=tempOrderItem.amount;
+                    _orderItemIndex--;
+                    return;
+                }
             }
         }
-        throw new Exception("utem not found in order");
+        throw new Exception("product not found");
     }
     public void UpdateOrderItem(OrderItem _newOrderItem)
     {
-        for (int i = 0; i < DataSource.Config._orderItemIndex; i++)
+        for (int i = 0; i < _orderItemIndex; i++)
         {
-            if (DataSource.orderItems[i].orderId == _newOrderItem.orderId && DataSource.orderItems[i].itemId == _newOrderItem.itemId)
+            if (orderItems[i].orderId == _newOrderItem.orderId && orderItems[i].itemId == _newOrderItem.itemId)
             {
-                DataSource.orderItems[i] = _newOrderItem;
-                break;
+               orderItems[i].orderId = _newOrderItem.orderId;
+                orderItems[i].itemId=_newOrderItem.itemId;
+                orderItems[i].price=_newOrderItem.price;
+                orderItems[i].amount=_newOrderItem.amount;
+              return;
             }
         }
+        throw new Exception("order item not found");
     }
 }

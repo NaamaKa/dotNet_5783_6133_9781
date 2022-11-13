@@ -9,12 +9,13 @@ namespace Dal;
 
 public static class DataSource
 {
-    
+
     static DataSource()
     {
         s_Initialize();
     }
-   
+    
+
     static readonly Random  rnd = new Random();
     internal static  Product[] products = new Product[50];
     internal static OrderItem[] orderItems = new OrderItem[200];
@@ -25,19 +26,19 @@ public static class DataSource
     }
     static private void addNewProduct(string PName,int PCategory,double PPrice,int PInStock)
     {
-        products[Config._productIndex].barkode = Config.ProductID;
+     
+       products[Config._productIndex].barkode = Config.ProductID;
         products[Config._productIndex].productName = PName;
         products[Config._productIndex].productCategory =PCategory;
         products[Config._productIndex].productPrice = PPrice;
         products[Config._productIndex].inStock =PInStock;
         Config._productIndex++;
     }
-    
-    static private void addNewOrder(string Oname,string Omail,string Oaddress, DateTime OorderDate, DateTime OshippingDate,DateTime OarrivleDate) 
+    static private void addNewOrder(string Oname,string Omail,string Oaddress, DateTime OorderDate, DateTime OshippingDate,DateTime OarrivleDate)
     {
         orders[Config._orderIndex].OrderNum = Config.OrderID;
         orders[Config._orderIndex].OrderDate = DateTime.Now;
-        orders[Config._orderIndex].OrderNum = 123;
+        orders[Config._orderIndex].OrderNum = Config.OrderID;
         orders[Config._orderIndex].costumerName = Oname;
         orders[Config._orderIndex].shippingDate =OshippingDate;
         orders[Config._orderIndex].arrivleDate =OarrivleDate;
@@ -45,7 +46,7 @@ public static class DataSource
         orders[Config._orderIndex].address = Oaddress;
         Config._orderIndex++;
     }
-    static private void addNewOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress) 
+    static private void addNewOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress)
     {
         DateTime _today = DateTime.Now;
         int daysAgo = new Random().Next(600);
@@ -58,41 +59,38 @@ public static class DataSource
 
 
     }
-
-    static private void addNewOrderItem(int OrderItemId,int OrderId,double Oprice,int Oamount)  
+    static private void addNewOrderItem(int OrderItemId,int OrderId,double Oprice,int Oamount)
     {
-       // orderItems[Config._orderItemIndex].OrderNum = 123;
         orderItems[Config._orderItemIndex].itemId =OrderItemId;
         orderItems[Config._orderItemIndex].orderId =OrderId;
         orderItems[Config._orderItemIndex].price = Oprice;
         orderItems[Config._orderItemIndex].amount = Oamount;
         Config._orderItemIndex++;
     }
-    
     static private void s_Initialize()  ///
     {
         #region new products
-          addNewProduct("fuzzy carpet", (int)(Category.Home), 12.5, 38);//100000
-          addNewProduct("Wardrobe", (int)(Category.Home), 659, 53);     //100001
-          addNewProduct("Fabric sofa", (int)(Category.Home), 4999, 35);//100002
-          addNewProduct("Leather sofa", (int)(Category.Home), 7075, 20);//100003
-          addNewProduct("single bed", (int)(Category.Home), 1300, 45);  //100004
-          addNewProduct("Double bed", (int)(Category.Home), 3000, 50);   //100005
-          addNewProduct("living room table", (int)(Category.Home), 2900, 35);//100006
-          addNewProduct("Soft bedding", (int)(Category.Textile), 69.9, 100);//100007
-          addNewProduct("6 face towels", (int)(Category.Textile), 35.9,108);//100008
-          addNewProduct("6 glass cups", (int)(Category.Kitchen), 12.5, 100);//100009
-          addNewProduct("6 glass plate", (int)(Category.Kitchen), 25, 110);//100010
-          addNewProduct("office chair", (int)(Category.Office), 350, 82);//100011
-          addNewProduct("Computer desk", (int)(Category.Office), 1020, 25);//100012
-          addNewProduct("Garden dining area", (int)(Category.Garden), 2499, 43);//100013
-          addNewProduct("Storage bench", (int)(Category.Garden), 350, 30);//100014
-          addNewProduct("playing surface", (int)(Category.Toys), 79.9, 50);//100015
-          addNewProduct("Dinosaur doll", (int)(Category.Toys), 19.9, 100);//100016
-          addNewProduct("Cutting Board", (int)(Category.Kitchen), 19, 60);//100017
-          addNewProduct("2 serving plates", (int)(Category.Kitchen), 30, 15);//100018
-          addNewProduct("forks", (int)(Category.Kitchen), 22, 100);//100019
-          addNewProduct("12 markers", (int)(Category.Toys), 19.9, 0);//100020
+        addNewProduct("fuzzy carpet", (int)(Category.Home), 12.5, 38);//100000
+        addNewProduct("Wardrobe", (int)(Category.Home), 659, 53);     //100001
+        addNewProduct("Fabric sofa", (int)(Category.Home), 4999, 35);//100002
+        addNewProduct("Leather sofa", (int)(Category.Home), 7075, 20);//100003
+        addNewProduct("single bed", (int)(Category.Home), 1300, 45);  //100004
+        addNewProduct("Double bed", (int)(Category.Home), 3000, 50);   //100005
+        addNewProduct("living room table", (int)(Category.Home), 2900, 35);//100006
+        addNewProduct("Soft bedding", (int)(Category.Textile), 69.9, 100);//100007
+        addNewProduct("6 face towels", (int)(Category.Textile), 35.9, 108);//100008
+        addNewProduct("6 glass cups", (int)(Category.Kitchen), 12.5, 100);//100009
+        addNewProduct("6 glass plate", (int)(Category.Kitchen), 25, 110);//100010
+        addNewProduct("office chair", (int)(Category.Office), 350, 82);//100011
+        addNewProduct("Computer desk", (int)(Category.Office), 1020, 25);//100012
+        addNewProduct("Garden dining area", (int)(Category.Garden), 2499, 43);//100013
+        addNewProduct("Storage bench", (int)(Category.Garden), 350, 30);//100014
+        addNewProduct("playing surface", (int)(Category.Toys), 79.9, 50);//100015
+        addNewProduct("Dinosaur doll", (int)(Category.Toys), 19.9, 100);//100016
+        addNewProduct("Cutting Board", (int)(Category.Kitchen), 19, 60);//100017
+        addNewProduct("2 serving plates", (int)(Category.Kitchen), 30, 15);//100018
+        addNewProduct("forks", (int)(Category.Kitchen), 22, 100);//100019
+        addNewProduct("12 markers", (int)(Category.Toys), 19.9, 0);//100020
 
 
 
@@ -106,7 +104,7 @@ public static class DataSource
 
         addNewOrderItem(100000, 500002, 12.5, 1);
         addNewOrderItem(100001, 500002, 1318, 2);
-        addNewOrderItem(100002, 500002, 14,997, 3);
+        addNewOrderItem(100002, 500002, 14, 3);
         addNewOrderItem(100004, 500002, 2600, 2);
 
         addNewOrderItem(100008, 500003, 71.8, 2);
@@ -123,7 +121,7 @@ public static class DataSource
 
         addNewOrderItem(100001, 500008, 1318, 2);
         addNewOrderItem(100015, 500008, 79.9, 1);
-        
+
         addNewOrderItem(100016, 500009, 59.7, 3);
         addNewOrderItem(100013, 500009, 2499, 1);
         addNewOrderItem(100001, 500009, 659, 1);
@@ -162,7 +160,7 @@ public static class DataSource
         #endregion
         #region new order
 
-         Random rnd = new Random();
+        Random rnd = new Random();
         addNewOrder("David Levi", "david@gmail.com", "buksboim 12", DateTime.Now.AddDays(-(rnd.Next(9))), DateTime.Now, DateTime.MinValue);
         addNewOrder("Shimon Cohen", "Shimon@gmail.com", "shaulzon 9", DateTime.Now.AddDays(-(rnd.Next(9))), DateTime.Now, DateTime.MinValue);
         addNewOrder("Chaim Uzan", "Chaim@gmail.com", "Ruzin 10", DateTime.Now.AddDays(-(rnd.Next(9))), DateTime.Now, DateTime.MinValue);
@@ -183,12 +181,10 @@ public static class DataSource
         addNewOrder("Kobi Green", "Kobi@gmail.com", "Pisga 12", DateTime.Now.AddDays(-(rnd.Next(9))), DateTime.Now, DateTime.MinValue);
         addNewOrder("Moshe Chaim", "Moshe@gmail.com", "Torah 67", DateTime.Now.AddDays(-(rnd.Next(9))), DateTime.Now, DateTime.MinValue);
         addNewOrder("Aharon Rabi", "Aharon@gmail.com", "Baal Hatania 24", DateTime.Now.AddDays(-(rnd.Next(9))), DateTime.Now, DateTime.MinValue);
-
         #endregion
-
-
     }
-    
+
+
     internal static class Config
     {
         static internal int _productIndex=0 ;
@@ -205,6 +201,6 @@ public static class DataSource
         {
             get { return _orderID++; }
         }
-   
+    
     }
 }

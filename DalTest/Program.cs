@@ -1,4 +1,5 @@
-﻿﻿// See https://aka.ms/new-console-template for more information
+﻿
+﻿// See https://aka.ms/new-console-template for more information
 using DO;
 using System.Linq.Expressions;
 //using DalList;
@@ -42,47 +43,136 @@ namespace DalTest
             }
         }
 
-
-
+        #region product menu
         static void productMenu()
         {
-
             Console.WriteLine("Enter your choice " +
-                "1-add,   " +
-                "2-get one product,  " +
-                "3-get all products,   " +
-                "4-delete," +
-                "5-update:");
+      "1-add,   " +
+      "2-get one product,  " +
+      "3-get all products,   " +
+      "4-delete," +
+      "5-update:");
+
             int productChoice;
-            DalProduct p = new Dal.DalProduct();
+            DalProduct p = new DalProduct();
             int parse;
             double parse2;
             float parse3;
             int.TryParse(Console.ReadLine(), out parse);
             productChoice = parse;
 
-            while (productChoice != 0)
+            switch (productChoice)
             {
 
-                switch (productChoice)
-                {
-
-                    case 1://add
-                        Console.WriteLine("Enter product details:");
-                        Console.WriteLine("Name:");
-                        product.productName = Console.ReadLine();
-                        Console.WriteLine("Price:");
+                case 1://add
+                    Console.WriteLine("Enter product details:");
+                    Console.WriteLine("Name:");
+                    product.productName = Console.ReadLine();
+                    Console.WriteLine("Price:");
+                    double.TryParse(Console.ReadLine(), out parse2);
+                    product.productPrice = parse2;
+                    Console.WriteLine("type 0 for category Home, 1 - textile, 2 - kitchen, 3 - office, 4-garden, 5-toys");
+                    int category = int.Parse(Console.ReadLine());
+                    switch (category)
+                    {
+                        case 0:
+                            product.productCategory = (int)(Enums.Category.Home);
+                            break;
+                        case 1:
+                            product.productCategory = (int)(Enums.Category.Textile);
+                            break;
+                        case 2:
+                            product.productCategory = (int)(Enums.Category.Office);
+                            break;
+                        case 3:
+                            product.productCategory = (int)(Enums.Category.Kitchen);
+                            break;
+                        case 4:
+                            product.productCategory = (int)(Enums.Category.Garden);
+                            break;
+                        case 5:
+                            product.productCategory = (int)(Enums.Category.Toys);
+                            break;
+                    }
+                    Console.WriteLine("Amount in stock:");
+                    int.TryParse(Console.ReadLine(), out parse);
+                    product.inStock = parse;
+                    try
+                    {
+                        p.AddNewProduct(product);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    break;
+                case 2:
+                    {
+                        Console.WriteLine("Enter an Id of product:");
                         int.TryParse(Console.ReadLine(), out parse);
-                        product.productPrice = parse;
+                        product.barkode = parse;
+                        try
+                        {
+                            Console.WriteLine(p.GetProduct(product.barkode));
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    }
+                    break;
+                case 3:
+                    foreach (Product myProduct in p.GetProduct())
+                    {
+                        Console.WriteLine(myProduct);
+                    }
+                    break;
+                case 4:
+                    Console.WriteLine("Enter an Id of product:");
+                    int id = int.Parse(Console.ReadLine());
+                    try
+                    {
+                        p.DeleteProduct(id);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    break;
+                case 5://update
+                    {
+
+                        Console.WriteLine("Enter an Id of product:");
+                        int barcode = int.Parse(Console.ReadLine());
+                        string name;
+                        double price;
+                        int amountInStock;
+
+                        try
+                        {
+                            product = p.GetProduct(barcode);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                        Console.WriteLine("the product to update is" + product);
+                        Console.WriteLine("Enter the new details of the product:");
+                        Console.WriteLine("name:");
+                        name = Console.ReadLine();
+                        Console.WriteLine("price:");
+                        double.TryParse(Console.ReadLine(), out parse2);
+                        price = parse2;
+                        Console.WriteLine("category:");
                         Console.WriteLine("type 0 for category Home, 1 - textile, 2 - kitchen, 3 - office, 4-garden, 5-toys");
-                        int category = int.Parse(Console.ReadLine());
-                        switch (category)
+                        int categoryTemp = int.Parse(Console.ReadLine());
+                        switch (categoryTemp)
                         {
                             case 0:
-                                product.productCategory =(int)( Enums.Category.Home);
+                                product.productCategory = (int)(Enums.Category.Home);
                                 break;
                             case 1:
-                                product.productCategory =(int)( Enums.Category.Textile);
+                                product.productCategory = (int)(Enums.Category.Textile);
                                 break;
                             case 2:
                                 product.productCategory = (int)(Enums.Category.Office);
@@ -97,86 +187,18 @@ namespace DalTest
                                 product.productCategory = (int)(Enums.Category.Toys);
                                 break;
                         }
-                        Console.WriteLine("Amount in stock:");
+                        Console.WriteLine("amount");
                         int.TryParse(Console.ReadLine(), out parse);
-                        product.inStock = parse;
-                        try
-                        {
-                            p.AddNewProduct(product);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                        }
+                        amountInStock = parse;
+                        Product proTOUpdata = new Product() { barkode = barcode,productCategory=categoryTemp, productName = name, productPrice = price, inStock = amountInStock };
+                        p.UpdateProduct(proTOUpdata);
                         break;
-                    case 2:
-                        {
-                            Console.WriteLine("Enter an Id of product:");
-                            int.TryParse(Console.ReadLine(), out parse);
-                            product.barkode= parse;
-                            try
-                            {
-                                Console.WriteLine(p.GetProduct(product.barkode));
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e);
-                            }
-                            break;
-                        }
-                    case 3:
-                        foreach (Product myProduct in p.GetProduct())
-                        {
-                            Console.WriteLine(myProduct);
-                        }
-                        break;
-                    case 4:
-                        Console.WriteLine("Enter an Id of product:");
-                        int id = int.Parse(Console.ReadLine());
-                        try
-                        {
-                            p.DeleteProduct(id);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e);
-                        }
-                        break;
-                    case 5://update
-                        {
-
-                            Console.WriteLine("Enter an Id of product:");
-                            int barcode = int.Parse(Console.ReadLine());
-                            string name;
-                            float price;
-                            int amountInStock;
-
-                            try
-                            {
-                                product = p.GetProduct(barcode);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e);
-                            }
-                            Console.WriteLine("the product to update is" + product);
-                            Console.WriteLine("Enter the new details of the product:");
-                            Console.WriteLine("name:");
-                            name = Console.ReadLine();
-                            Console.WriteLine("price:");
-                            float.TryParse(Console.ReadLine(), out parse3);
-                            price = parse3;
-                            Console.WriteLine("amount");
-                            int.TryParse(Console.ReadLine(), out parse);
-                            amountInStock = parse;
-                            Product proTOUpdata = new Product() { barkode = barcode, productName = name, productPrice = price, inStock = amountInStock };
-                            p.UpdateProduct(proTOUpdata);
-                            break;
-                        }
-                }
-
+                    }
             }
         }
+        #endregion
+
+        #region order menu
         static void orderMenu()
         {
             int parse;
@@ -196,16 +218,12 @@ namespace DalTest
                 case 1://add
                     DateTime date;
                     Console.WriteLine("Enter order details:");
-                    // int.TryParse(Console.ReadLine(), out parse);
-                    order.costumerName= Console.ReadLine();
+                    Console.WriteLine("name");
+                    order.costumerName = Console.ReadLine();
+                    Console.WriteLine("email");
                     order.mail = Console.ReadLine();
-                    order.address= Console.ReadLine();
-                    //DateTime.TryParse(Console.ReadLine(), out date);
-                    //order._orderDate = date;
-                    //DateTime.TryParse(Console.ReadLine(), out date);
-                    //order._shippingDate = date;
-                    //DateTime.TryParse(Console.ReadLine(), out date);
-                    //order._deliveryDate = date;
+                    Console.WriteLine("address");
+                    order.address = Console.ReadLine();
                     o.AddNewOrder(order);
                     break;
 
@@ -266,7 +284,7 @@ namespace DalTest
                     DateTime.TryParse(Console.ReadLine(), out date);
                     orderToUpdate.OrderDate = date;
                     DateTime.TryParse(Console.ReadLine(), out date);
-                    orderToUpdate.shippingDate= date;
+                    orderToUpdate.shippingDate = date;
                     DateTime.TryParse(Console.ReadLine(), out date);
                     orderToUpdate.arrivleDate = date;
                     o.UpdateOrder(orderToUpdate);
@@ -274,7 +292,9 @@ namespace DalTest
             }
         }
 
+        #endregion
 
+        #region order item menu
         static void orderItemMenu()
         {
             Console.WriteLine("Enter your choice:" +
@@ -285,7 +305,7 @@ namespace DalTest
            "5-update,   " +
            "6-see al items in order:");
             int parse;
-            float parse3;
+            double parse3;
             int choiceOrderItem;
             int.TryParse(Console.ReadLine(), out parse);
             choiceOrderItem = parse;
@@ -294,44 +314,48 @@ namespace DalTest
             {
                 case 1://add
                     Console.WriteLine("Enter order item details:");
+                    Console.WriteLine("Enter order Id:");
                     int.TryParse(Console.ReadLine(), out parse);
-                    orderItem.orderId= parse;
+                    orderItem.orderId = parse;
+                    Console.WriteLine("Enter items barcode");
                     int.TryParse(Console.ReadLine(), out parse);
-                    orderItem.itemId= parse;
-                    float.TryParse(Console.ReadLine(), out parse3);
+                    orderItem.itemId = parse;
+                    Console.WriteLine("Enter orders price:");
+                    double.TryParse(Console.ReadLine(), out parse3);
                     orderItem.price = parse3;
+                    Console.WriteLine("Enter items amount:");
                     int.TryParse(Console.ReadLine(), out parse);
-                    orderItem.amount= parse;
+                    orderItem.amount = parse;
                     OI.AddNewOrderItem(orderItem);
                     break;
-                case 2:
+                case 2://get order item
                     Console.WriteLine("Enter an Id of the order of the order item:");
                     int OrderId = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter an Id of the product of the order item:");
                     int ProductId = int.Parse(Console.ReadLine());
                     try
                     {
-                        Console.WriteLine(OI.GetOrderItem(ProductId, OrderId));
+                        Console.WriteLine(OI.GetOrderItem(OrderId, ProductId));
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
                     }
                     break;
-                case 3:
+                case 3://get all order items
                     foreach (OrderItem myOrderItem in OI.GetOrderItem())
                     {
-                        Console.WriteLine(myOrderItem);//אולי צריך את toString??
+                        Console.WriteLine(myOrderItem);
                     }
                     break;
                 case 4://delete
-                    Console.WriteLine("Enter an Id of the product of the order item:");
-                    int ProductIdToDelete = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter an Id of the order of the order item:");
                     int OrderIdToDelete = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter an Id of the product of the order item:");
+                    int ProductIdToDelete = int.Parse(Console.ReadLine());
                     try
                     {
-                        OI.DeleteOrderItem(ProductIdToDelete, OrderIdToDelete);
+                        OI.DeleteOrderItem( OrderIdToDelete,ProductIdToDelete);
                     }
                     catch (Exception e)
                     {
@@ -345,7 +369,7 @@ namespace DalTest
                     int ProductIdTouodate = int.Parse(Console.ReadLine());
                     try
                     {
-                        orderItem = OI.GetOrderItem(ProductIdTouodate, OrderIdToUpdate);
+                        orderItem = OI.GetOrderItem(OrderIdToUpdate,ProductIdTouodate);
                     }
                     catch (Exception e)
                     {
@@ -362,23 +386,23 @@ namespace DalTest
                     orderItem.itemId = productId;
                     Console.WriteLine("price:");
                     int pricePerUnit = int.Parse(Console.ReadLine());
-                    orderItem.price= pricePerUnit;
+                    orderItem.price = pricePerUnit;
                     Console.WriteLine("amount");
                     int quantity = int.Parse(Console.ReadLine());
                     orderItem.amount = quantity;
                     OI.UpdateOrderItem(orderItem);
                     break;
 
-                case 6:
+                case 6://get all items from spesific orders
                     Console.WriteLine("Enter Id of an order:");
                     int IdOrder = int.Parse(Console.ReadLine());
                     try
                     {
-                        //foreach (OrderItem myOrderItem in OI.GetOrderItem(IdOrder))
-                        //{
-                        //    if (myOrderItem.OrderID != 0)
-                        //        Console.WriteLine(myOrderItem);
-                        //}
+                        foreach (OrderItem myOrderItem in OI.GetOrderItems(IdOrder))
+                        {
+                            Console.WriteLine(myOrderItem);
+                        }
+
                     }
                     catch (Exception e)
                     {
@@ -388,9 +412,7 @@ namespace DalTest
 
             }
         }
-
-
-
-
     }
 }
+#endregion
+

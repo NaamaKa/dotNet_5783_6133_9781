@@ -34,7 +34,7 @@ public class Enums
         update,
         delete
     }
-       public enum Category
+   public enum Category
     {
         Home,
         Textile,

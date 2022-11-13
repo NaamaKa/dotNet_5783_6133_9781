@@ -2,6 +2,8 @@
 
 using DO;
 using static Dal.DataSource;
+using static Dal.DataSource.Config;
+
 
 namespace Dal;
 
@@ -9,24 +11,24 @@ public class DalOrder
 {
     public int AddNewOrder(Order _newOrder)
     {
-        _newOrder.OrderNum = DataSource.Config.OrderID;
-        DataSource.orders[DataSource.Config._orderIndex]=_newOrder;
-        DataSource.Config._orderIndex++;
+        _newOrder.OrderNum =OrderID;
+       orders[_orderIndex]=_newOrder;
+        _orderIndex++;
         return _newOrder.OrderNum;
     }
     public Order GetOrder(int _myNum)
     {
-        for (int i = 0; i < DataSource.Config._orderIndex; i++)
+        for (int i = 0; i < _orderIndex; i++)
         {
-            if (DataSource.orders[i].OrderNum == _myNum)
-                return DataSource.orders[i];
+            if (orders[i].OrderNum == _myNum)
+                return orders[i];
         }
         throw new Exception("order not found");
     }
     public Order[] GetOrder()
     {
-        Order[] tempList = new Order[DataSource.Config._orderIndex];
-        for(int i = 0; i < DataSource.Config._orderIndex; i++)
+        Order[] tempList = new Order[_orderIndex];
+        for(int i = 0; i < _orderIndex; i++)
         {
             tempList[i]= DataSource.orders[i];
         }
@@ -34,24 +36,38 @@ public class DalOrder
     }
     public void DeleteOrder(int _myNum)
     {
-        for (int i = 0; i < DataSource.Config._orderIndex; i++)
+        for (int i = 0; i < _orderIndex; i++)
         {
-            if (DataSource.orders[i].OrderNum == _myNum)
+            if (orders[i].OrderNum == _myNum)
             {
-                DataSource.orders[i] = DataSource.orders[DataSource.Config._orderIndex];
-                DataSource.Config._orderIndex--;
-                break;
+                if (i ==_orderIndex - 1)//wanted found in last place in product arrey
+                {
+                   _orderIndex--;
+                    return;
+                }
+                else//found in middle-coppeis last product in array to temp and coppeis wntwd space to temp 
+                {
+                    Order tempOrder = orders[_orderIndex - 1];
+                    orders[i].OrderNum =tempOrder.OrderNum;
+                    orders[i].costumerName= tempOrder.costumerName;
+                    orders[i].mail= tempOrder.mail;
+                    orders[i].OrderDate= tempOrder.OrderDate;
+                    orders[i].shippingDate=tempOrder.shippingDate;
+                    orders[i].arrivleDate=tempOrder.arrivleDate;
+                    _orderIndex--;
+                    return;
+                }
             }
         }
-        throw new Exception("order not found");
+        throw new Exception("product not found");
     }
     public void UpdateOrder(Order _newOrder)
     {
-        for (int i = 0; i < DataSource.Config._orderIndex; i++)
+        for (int i = 0; i < _orderIndex; i++)
         {
-            if (DataSource.orders[i].OrderNum == _newOrder.OrderNum)
+            if (orders[i].OrderNum == _newOrder.OrderNum)
             {
-                DataSource.orders[i] = _newOrder;
+                orders[i] = _newOrder;
                 break;
             }
         }
