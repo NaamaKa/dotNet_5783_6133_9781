@@ -11,7 +11,7 @@ public class DalOrder
 {
     public int AddNewOrder(Order _newOrder)
     {
-        /////
+       
         _newOrder.OrderNum =OrderID;
        orders[_orderIndex]=_newOrder;
         _orderIndex++;
