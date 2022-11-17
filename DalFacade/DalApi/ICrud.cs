@@ -8,6 +8,6 @@ namespace DalApi
 {
     public interface ICrud<T>
     {
-        public void 
+       
     }
 }
