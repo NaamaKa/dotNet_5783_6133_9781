@@ -8,5 +8,7 @@ namespace DalApi;
 
 public interface IOrderItem : ICrud<OrderItem>
 {
-    public IOrderItem GetOrderItem(int _myNumOrder, int myProductBarcode);
+    public OrderItem GetOrderItem(int _myNumOrder, int myProductBarcode);
+    public List<OrderItem> GetOrderItemsFromOrder(int _orderId);
+    public List<OrderItem> GetOrdersOforderItems(int _itemId);
 }

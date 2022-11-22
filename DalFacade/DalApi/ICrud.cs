@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DalApi
+namespace DalApi;
+
+public interface ICrud<T>
 {
-    public interface ICrud<T>
-    {
-       public void Add(T entity);
-       public void Update(T entity);
-       public void Delete(T entity);
-       public T Get(int id);
-       public IEnumerable<T> GetAll();
-    }
+    public void Add(T entity);
+    public void Update(T entity);
+    public void Delete(int id);
+    public T Get(int id);
+    public List<T> GetAll();
 }

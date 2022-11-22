@@ -1,12 +1,11 @@
-﻿
-using DO;
-
+﻿using DO;
+using DalApi;
 namespace Dal;
 using static Dal.DataSource;
 using static Dal.DataSource.Config;
 
 
-public class DalProduct
+internal class DalProduct : IProduct
 {
     /// <summary>
     /// gets a prodect and adds it to array of products
@@ -14,27 +13,26 @@ public class DalProduct
     /// <param name="_newProduct">product for putting in</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public int AddNewProduct(Product _newProduct)
+    public void Add(Product _newProduct)
     {
         if (products.Count() < 50)
         {
-            _newProduct.barkode =ProductID;
+            _newProduct.barkode = ProductID;
             products.Add(_newProduct);
-            return _newProduct.barkode;
         }
         throw new Exception("no place for more products");
     }
     /// <summary>
-    /// returns a spesific product 
+    /// returns a spesific product
     /// </summary>
     /// <param name="_myBarcode">barcode of broduct wanted</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public Product GetProduct(int _myBarcode)
+    public Product Get(int _myBarcode)
     {
         foreach (var product in products)
         {
-            if(product.barkode == _myBarcode)
+            if (product.barkode == _myBarcode)
             {
                 return product;
             }
@@ -45,11 +43,11 @@ public class DalProduct
     /// gets all products and puts them in array
     /// </summary>
     /// <returns>returns array</returns>
-    public List<Product> GetProduct()
+    public List<Product> GetAll()
     {
 
         List<Product> tempProducts = new List<Product>();
-       foreach (var product in products)
+        foreach (var product in products)
         {
             tempProducts.Add(product);
         }
@@ -60,9 +58,9 @@ public class DalProduct
     /// </summary>
     /// <param name="_myBarcode">product wated to be deleted</param>
     /// <exception cref="Exception"></exception>
-    public void DeleteProduct(int _myBarcode)
+    public void Delete(int _myBarcode)
     {
-        foreach(var product in products)
+        foreach (var product in products)
         {
             if (product.barkode == _myBarcode)
             {
@@ -75,17 +73,16 @@ public class DalProduct
     /// updates a spesific product
     /// </summary>
     /// <param name="_newProduct">product to be replaced insead</param>
-    public void UpdateProduct(Product _newProduct)
+    public void Update(Product _newProduct)
     {
         foreach (var product in products)
         {
-            if(product.barkode == _newProduct.barkode)
+            if (product.barkode == _newProduct.barkode)
             {
-                products.Remove(product);
-                products.Add(_newProduct);
+                products.Add(product);
                 break;
             }
         }
-          
+
     }
 }

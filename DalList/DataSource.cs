@@ -1,6 +1,4 @@
-﻿
-
-using DO;
+﻿using DO;
 using System;
 using System.Diagnostics;
 using System.Net;
@@ -17,11 +15,10 @@ public static class DataSource
         s_Initialize();
     }
 
-
     static readonly Random rnd = new Random();
     internal static List<Product> products = new List<Product>();
     internal static List<OrderItem> orderItems = new List<OrderItem>();
-    internal static List<Order> orders = new List<Order>() ;
+    internal static List<Order> orders = new List<Order>();
     static public void startProgram()
     {
         return;
@@ -46,12 +43,10 @@ public static class DataSource
         int daysbetweenDeliveryToShip = new Random().Next(7);
         DateTime newDeliveryDate = newShipDate.AddDays(daysbetweenDeliveryToShip);
         addNewOrder(newCustomerName, newCustomerEmail, newCustomerAdress, NewOrderDate, newShipDate, newDeliveryDate);
-
-
     }
-    static private void addNewOrderItem(int OrderItemId, int OrderId, double Oprice, int Oamount)
+    static private void addNewOrderItem(int _id, int OrderItemId, int OrderId, double Oprice, int Oamount)
     {
-        OrderItem oi = new OrderItem() { itemId = OrderItemId, orderId = OrderId, price = Oprice, amount = Oamount };
+        OrderItem oi = new OrderItem() { id = _id, itemId = OrderItemId, orderId = OrderId, price = Oprice, amount = Oamount };
         orderItems.Add(oi);
     }
     static private void s_Initialize()  ///
@@ -84,66 +79,66 @@ public static class DataSource
         #endregion
         #region new order item
 
-        addNewOrderItem(100000, 500001, 25, 2);
-        addNewOrderItem(100002, 500001, 4999, 1);
-        addNewOrderItem(100008, 500001, 35.9, 1);
-        addNewOrderItem(100011, 500001, 700, 2);
+        addNewOrderItem(Config.IdOrderItem, 100000, 500001, 25, 2);
+        addNewOrderItem(Config.IdOrderItem, 100002, 500001, 4999, 1);
+        addNewOrderItem(Config.IdOrderItem, 100008, 500001, 35.9, 1);
+        addNewOrderItem(Config.IdOrderItem, 100011, 500001, 700, 2);
 
-        addNewOrderItem(100000, 500002, 12.5, 1);
-        addNewOrderItem(100001, 500002, 1318, 2);
-        addNewOrderItem(100002, 500002, 14, 3);
-        addNewOrderItem(100004, 500002, 2600, 2);
+        addNewOrderItem(Config.IdOrderItem, 100000, 500002, 12.5, 1);
+        addNewOrderItem(Config.IdOrderItem, 100001, 500002, 1318, 2);
+        addNewOrderItem(Config.IdOrderItem, 100002, 500002, 14, 3);
+        addNewOrderItem(Config.IdOrderItem, 100004, 500002, 2600, 2);
 
-        addNewOrderItem(100008, 500003, 71.8, 2);
-        addNewOrderItem(100004, 500003, 2600, 2);
+        addNewOrderItem(Config.IdOrderItem, 100008, 500003, 71.8, 2);
+        addNewOrderItem(Config.IdOrderItem, 100004, 500003, 2600, 2);
 
-        addNewOrderItem(100008, 500004, 71.8, 2);
+        addNewOrderItem(Config.IdOrderItem, 100008, 500004, 71.8, 2);
 
-        addNewOrderItem(100011, 500005, 700, 2);
+        addNewOrderItem(Config.IdOrderItem, 100011, 500005, 700, 2);
 
-        addNewOrderItem(100002, 500006, 4999, 1);
+        addNewOrderItem(Config.IdOrderItem, 100002, 500006, 4999, 1);
 
-        addNewOrderItem(100009, 500007, 50, 4);
-        addNewOrderItem(100002, 500007, 4999, 1);
+        addNewOrderItem(Config.IdOrderItem, 100009, 500007, 50, 4);
+        addNewOrderItem(Config.IdOrderItem, 100002, 500007, 4999, 1);
 
-        addNewOrderItem(100001, 500008, 1318, 2);
-        addNewOrderItem(100015, 500008, 79.9, 1);
+        addNewOrderItem(Config.IdOrderItem, 100001, 500008, 1318, 2);
+        addNewOrderItem(Config.IdOrderItem, 100015, 500008, 79.9, 1);
 
-        addNewOrderItem(100016, 500009, 59.7, 3);
-        addNewOrderItem(100013, 500009, 2499, 1);
-        addNewOrderItem(100001, 500009, 659, 1);
+        addNewOrderItem(Config.IdOrderItem, 100016, 500009, 59.7, 3);
+        addNewOrderItem(Config.IdOrderItem, 100013, 500009, 2499, 1);
+        addNewOrderItem(Config.IdOrderItem, 100001, 500009, 659, 1);
 
-        addNewOrderItem(100009, 500010, 62.5, 5);
+        addNewOrderItem(Config.IdOrderItem, 100009, 500010, 62.5, 5);
 
-        addNewOrderItem(100010, 500011, 50, 2);
-        addNewOrderItem(100011, 500011, 700, 2);
+        addNewOrderItem(Config.IdOrderItem, 100010, 500011, 50, 2);
+        addNewOrderItem(Config.IdOrderItem, 100011, 500011, 700, 2);
 
 
-        addNewOrderItem(100009, 500012, 62.5, 5);
-        addNewOrderItem(100010, 500012, 50, 2);
+        addNewOrderItem(Config.IdOrderItem, 100009, 500012, 62.5, 5);
+        addNewOrderItem(Config.IdOrderItem, 100010, 500012, 50, 2);
 
-        addNewOrderItem(100009, 500013, 50, 4);
-        addNewOrderItem(100011, 500013, 700, 2);
+        addNewOrderItem(Config.IdOrderItem, 100009, 500013, 50, 4);
+        addNewOrderItem(Config.IdOrderItem, 100011, 500013, 700, 2);
 
-        addNewOrderItem(100008, 500014, 71.8, 2);
-        addNewOrderItem(100002, 500014, 4999, 1);
+        addNewOrderItem(Config.IdOrderItem, 100008, 500014, 71.8, 2);
+        addNewOrderItem(Config.IdOrderItem, 100002, 500014, 4999, 1);
 
-        addNewOrderItem(100000, 500015, 12.5, 1);
-        addNewOrderItem(100004, 500015, 2600, 2);
+        addNewOrderItem(Config.IdOrderItem, 100000, 500015, 12.5, 1);
+        addNewOrderItem(Config.IdOrderItem, 100004, 500015, 2600, 2);
 
-        addNewOrderItem(100008, 500016, 35.9, 1);
-        addNewOrderItem(100011, 500016, 700, 2);
+        addNewOrderItem(Config.IdOrderItem, 100008, 500016, 35.9, 1);
+        addNewOrderItem(Config.IdOrderItem, 100011, 500016, 700, 2);
 
-        addNewOrderItem(100001, 500017, 1318, 2);
-        addNewOrderItem(100004, 500017, 2600, 2);
+        addNewOrderItem(Config.IdOrderItem, 100001, 500017, 1318, 2);
+        addNewOrderItem(Config.IdOrderItem, 100004, 500017, 2600, 2);
 
-        addNewOrderItem(100009, 500018, 62.5, 5);
-        addNewOrderItem(100011, 500018, 700, 2);
+        addNewOrderItem(Config.IdOrderItem, 100009, 500018, 62.5, 5);
+        addNewOrderItem(Config.IdOrderItem, 100011, 500018, 700, 2);
 
-        addNewOrderItem(100013, 500019, 2499, 1);
-        addNewOrderItem(100001, 500019, 1318, 2);
+        addNewOrderItem(Config.IdOrderItem, 100013, 500019, 2499, 1);
+        addNewOrderItem(Config.IdOrderItem, 100001, 500019, 1318, 2);
 
-        addNewOrderItem(100002, 500020, 4999, 1);
+        addNewOrderItem(Config.IdOrderItem, 100002, 500020, 4999, 1);
         #endregion
         #region new order
 
@@ -176,7 +171,10 @@ public static class DataSource
     {
         static private int _orderID = 100000;
         static private int _productID = 500000;
-
+        internal static int idOrderItem = 1;
+        internal static int IdOrderItem { get { return idOrderItem++; } }
+        //האינדקס פו הוא בשביל מספר רץ לבדוק מה עושים עם זה
+        //public static int IdOrderOfIdOrderItem { get { return num.Next(indexOrders); } }
         public static int ProductID
         {
             get { return _productID++; }
