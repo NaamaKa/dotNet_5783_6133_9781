@@ -20,8 +20,8 @@ public static class DataSource
 
     static readonly Random rnd = new Random();
     internal static List<Product> products = new List<Product>();
-    internal static List<OrderItem> orderItems = new();
-    internal static List<Order> orders = new();
+    internal static List<OrderItem> orderItems = new List<OrderItem>();
+    internal static List<Order> orders = new List<Order>() ;
     static public void startProgram()
     {
         return;
@@ -51,7 +51,7 @@ public static class DataSource
     }
     static private void addNewOrderItem(int OrderItemId, int OrderId, double Oprice, int Oamount)
     {
-        OrderItem oi = new OrderItem() { itemId = OrderItemId, orderId = OrderItemId, price = Oprice, amount = Oamount };
+        OrderItem oi = new OrderItem() { itemId = OrderItemId, orderId = OrderId, price = Oprice, amount = Oamount };
         orderItems.Add(oi);
     }
     static private void s_Initialize()  ///

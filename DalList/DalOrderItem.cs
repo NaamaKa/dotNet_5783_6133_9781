@@ -73,10 +73,7 @@ public class DalOrderItem
                 else//found in middle-coppeis last product in array to temp and coppeis wntwd space to temp 
                 {
                     OrderItem tempOrderItem = orderItems[_orderItemIndex - 1];
-                    orderItems[i].orderId=tempOrderItem.orderId;
-                    orderItems[i].itemId=tempOrderItem.itemId;
-                    orderItems[i].price=tempOrderItem.price;
-                    orderItems[i].amount=tempOrderItem.amount;
+                    orderItems[i] = tempOrderItem;
                     _orderItemIndex--;
                     return;
                 }
@@ -90,10 +87,7 @@ public class DalOrderItem
         {
             if (orderItems[i].orderId == _newOrderItem.orderId && orderItems[i].itemId == _newOrderItem.itemId)
             {
-               orderItems[i].orderId = _newOrderItem.orderId;
-                orderItems[i].itemId=_newOrderItem.itemId;
-                orderItems[i].price=_newOrderItem.price;
-                orderItems[i].amount=_newOrderItem.amount;
+                orderItems[i] = _newOrderItem;
               return;
             }
         }

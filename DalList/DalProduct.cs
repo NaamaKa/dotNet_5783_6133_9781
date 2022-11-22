@@ -73,11 +73,7 @@ public class DalProduct
                 {
                     Product tempProduct = products[_productIndex-1];
                     Console.WriteLine(_productIndex);
-                    products[i].barkode=tempProduct.barkode;
-                    products[i].productName=tempProduct.productName;
-                    products[i].productCategory=tempProduct.productCategory;
-                    products[i].productPrice=tempProduct.productPrice;
-                    products[i].inStock=tempProduct.inStock;
+                    products[i] = tempProduct;
                     _productIndex--;
                     return ;
                 }

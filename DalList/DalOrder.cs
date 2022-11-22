@@ -49,12 +49,7 @@ public class DalOrder
                 else//found in middle-coppeis last product in array to temp and coppeis wntwd space to temp 
                 {
                     Order tempOrder = orders[_orderIndex - 1];
-                    orders[i].OrderNum =tempOrder.OrderNum;
-                    orders[i].costumerName= tempOrder.costumerName;
-                    orders[i].mail= tempOrder.mail;
-                    orders[i].OrderDate= tempOrder.OrderDate;
-                    orders[i].shippingDate=tempOrder.shippingDate;
-                    orders[i].arrivleDate=tempOrder.arrivleDate;
+                    orders[i] = tempOrder;
                     _orderIndex--;
                     return;
                 }
