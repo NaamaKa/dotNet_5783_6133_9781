@@ -2,6 +2,8 @@
 
 using DO;
 using System;
+using System.Diagnostics;
+using System.Net;
 using System.Reflection.PortableExecutable;
 using static DO.Enums;
 
@@ -14,37 +16,25 @@ public static class DataSource
     {
         s_Initialize();
     }
-    
 
-    static readonly Random  rnd = new Random();
-    internal static  Product[] products = new Product[50];
-    internal static OrderItem[] orderItems = new OrderItem[200];
-    internal static Order[] orders = new Order[100];
+
+    static readonly Random rnd = new Random();
+    internal static List<Product> products = new List<Product>();
+    internal static List<OrderItem> orderItems = new();
+    internal static List<Order> orders = new();
     static public void startProgram()
     {
         return;
     }
-    static private void addNewProduct(string PName,int PCategory,double PPrice,int PInStock)
+    static private void addNewProduct(string PName, int PCategory, double PPrice, int PInStock)
     {
-     
-       products[Config._productIndex].barkode = Config.ProductID;
-        products[Config._productIndex].productName = PName;
-        products[Config._productIndex].productCategory =PCategory;
-        products[Config._productIndex].productPrice = PPrice;
-        products[Config._productIndex].inStock =PInStock;
-        Config._productIndex++;
+        Product p = new Product() { barkode = Config.ProductID, productName = PName, productCategory = PCategory, productPrice = PPrice, inStock = PInStock };
+        products.Add(p);
     }
-    static private void addNewOrder(string Oname,string Omail,string Oaddress, DateTime OorderDate, DateTime OshippingDate,DateTime OarrivleDate)
+    static private void addNewOrder(string Oname, string Omail, string Oaddress, DateTime OorderDate, DateTime OshippingDate, DateTime OarrivleDate)
     {
-        orders[Config._orderIndex].OrderNum = Config.OrderID;
-        orders[Config._orderIndex].OrderDate = DateTime.Now;
-        orders[Config._orderIndex].OrderNum = Config.OrderID;
-        orders[Config._orderIndex].costumerName = Oname;
-        orders[Config._orderIndex].shippingDate =OshippingDate;
-        orders[Config._orderIndex].arrivleDate =OarrivleDate;
-        orders[Config._orderIndex].mail = Omail;
-        orders[Config._orderIndex].address = Oaddress;
-        Config._orderIndex++;
+        Order o = new Order() { OrderNum = Config.OrderID, OrderDate = DateTime.Now, costumerName = Oname, shippingDate = OshippingDate, arrivleDate = OarrivleDate, mail = Omail, address = Oaddress };
+        orders.Add(o);
     }
     static private void addNewOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress)
     {
@@ -59,13 +49,10 @@ public static class DataSource
 
 
     }
-    static private void addNewOrderItem(int OrderItemId,int OrderId,double Oprice,int Oamount)
+    static private void addNewOrderItem(int OrderItemId, int OrderId, double Oprice, int Oamount)
     {
-        orderItems[Config._orderItemIndex].itemId =OrderItemId;
-        orderItems[Config._orderItemIndex].orderId =OrderId;
-        orderItems[Config._orderItemIndex].price = Oprice;
-        orderItems[Config._orderItemIndex].amount = Oamount;
-        Config._orderItemIndex++;
+        OrderItem oi = new OrderItem() { itemId = OrderItemId, orderId = OrderItemId, price = Oprice, amount = Oamount };
+        orderItems.Add(oi);
     }
     static private void s_Initialize()  ///
     {
@@ -187,12 +174,12 @@ public static class DataSource
 
     internal static class Config
     {
-        static internal int _productIndex=0 ;
-        static internal int _orderIndex=0;
-        static internal int _orderItemIndex=0;
+        static internal int _productIndex = 0;
+        static internal int _orderIndex = 0;
+        static internal int _orderItemIndex = 0;
         static private int _orderID = 100000;
         static private int _productID = 500000;
-       
+
         public static int ProductID
         {
             get { return _productID++; }
@@ -201,6 +188,6 @@ public static class DataSource
         {
             get { return _orderID++; }
         }
-    
+
     }
 }
