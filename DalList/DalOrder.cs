@@ -13,57 +13,47 @@ public class DalOrder
     {
        
         _newOrder.OrderNum =OrderID;
-       orders[_orderIndex]=_newOrder;
-        _orderIndex++;
+       orders.Add(_newOrder);
         return _newOrder.OrderNum;
     }
     public Order GetOrder(int _myNum)
     {
-        for (int i = 0; i < _orderIndex; i++)
+        foreach(var order in orders)
         {
-            if (orders[i].OrderNum == _myNum)
-                return orders[i];
+            if(order.OrderNum == _myNum)
+                return order;
         }
         throw new Exception("order not found");
     }
-    public Order[] GetOrder()
+    public List<Order> GetOrder()
     {
-        Order[] tempList = new Order[_orderIndex];
-        for(int i = 0; i < _orderIndex; i++)
+        List<Order> tempOrders = new List<Order>();
+        foreach(var order in orders)
         {
-            tempList[i]= DataSource.orders[i];
+            tempOrders.Add(order);
         }
-        return tempList;
+        return tempOrders;
     }
     public void DeleteOrder(int _myNum)
     {
-        for (int i = 0; i < _orderIndex; i++)
+        foreach(Order _order in orders)
         {
-            if (orders[i].OrderNum == _myNum)
+            if(OrderID == _myNum)
             {
-                if (i ==_orderIndex - 1)//wanted found in last place in product arrey
-                {
-                   _orderIndex--;
-                    return;
-                }
-                else//found in middle-coppeis last product in array to temp and coppeis wntwd space to temp 
-                {
-                    Order tempOrder = orders[_orderIndex - 1];
-                    orders[i] = tempOrder;
-                    _orderIndex--;
-                    return;
-                }
+                orders.Remove(_order);
+                break;
             }
         }
         throw new Exception("product not found");
     }
     public void UpdateOrder(Order _newOrder)
     {
-        for (int i = 0; i < _orderIndex; i++)
+        foreach(Order _order in orders)
         {
-            if (orders[i].OrderNum == _newOrder.OrderNum)
+            if(_order.OrderNum== _newOrder.OrderNum)
             {
-                orders[i] = _newOrder;
+                orders.Remove(_order);
+                orders.Add(_newOrder);
                 break;
             }
         }

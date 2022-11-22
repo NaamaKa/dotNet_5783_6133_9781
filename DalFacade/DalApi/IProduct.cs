@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DO;
+namespace DalApi;
 
-namespace DalApi
+/// <summary>
+/// 
+/// </summary>
+public interface IProduct : ICrud<Product>
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface IProduct : ICrud<IProduct>
-    {
 
-    }
 }

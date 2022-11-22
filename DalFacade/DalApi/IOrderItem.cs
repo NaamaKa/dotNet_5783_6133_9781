@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DO;
+namespace DalApi;
 
-namespace DalApi
+public interface IOrderItem : ICrud<OrderItem>
 {
-    public interface IOrderItem : ICrud<IOrderItem>
-    {
-        public IOrderItem GetOrderItem(int _myNumOrder, int myProductBarcode);
-    }
+    public IOrderItem GetOrderItem(int _myNumOrder, int myProductBarcode);
 }

@@ -10,85 +10,64 @@ public class DalOrderItem
 {
     public void AddNewOrderItem(OrderItem _newOrderItem)
     {
-       orderItems[_orderItemIndex] = _newOrderItem;
-        _orderItemIndex++;
+       orderItems.Add(_newOrderItem) ;
     }
-    public OrderItem GetOrderItem(int _myNumOrder,int myProductBarcode)
+    public OrderItem GetOrderItem(int _myNumOrder, int myProductBarcode)
     {
-        for (int i = 0; i < _orderItemIndex; i++)
+        foreach (OrderItem item in orderItems)
         {
-            if (orderItems[i].orderId == _myNumOrder && orderItems[i].itemId == myProductBarcode)
-            {
-                Console.WriteLine(i);
-                Console.WriteLine("came in");
-                return orderItems[i];
-            }
+            if (item.orderId == _myNumOrder && item.itemId == myProductBarcode)
+                return item;
         }
         throw new Exception("item not found in order");
     }
-    public OrderItem[] GetOrderItem()
+    public List<OrderItem> GetOrderItem()
     {
-        OrderItem[] _orderItems = new OrderItem[_orderItemIndex];
-        for(int i=0;i<_orderItemIndex;i++)
+        List<OrderItem> tempOrderItems = new List<OrderItem>();
+        foreach(OrderItem item in orderItems)
         {
-            _orderItems[i]=orderItems[i];
+            tempOrderItems.Add(item);
         }
-        if (_orderItems.Length>0)
-             return _orderItems;
+        if(tempOrderItems.Count > 0)
+            return tempOrderItems;
         throw new Exception("no items found");
 
     }
-    public OrderItem[] GetOrderItems(int _myNumOrder)
+    public List<OrderItem> GetOrderItems(int _myNumOrder)
     {
-        OrderItem[] _orderItemsTemp=new OrderItem[_orderItemIndex];
-        int counter = 0;
-        for (int i = 0; i < _orderItemIndex; i++)
+        List<OrderItem> tempOrderItems = new List<OrderItem>();
+        foreach(OrderItem item in orderItems)
         {
-            if (orderItems[i].orderId == _myNumOrder)
-                _orderItemsTemp[counter++] = orderItems[i];
-        }
-        if (counter > 0)
-        {
-            OrderItem[] _orderItems = new OrderItem[counter];
-            for(int i = 0; i < counter; i++)
+            if(item.orderId== _myNumOrder)
             {
-                _orderItems[i] = _orderItemsTemp[i];
+                tempOrderItems.Add((OrderItem)item);
             }
-            return _orderItems;
-
         }
+        if( tempOrderItems.Count > 0)
+            return tempOrderItems;
         throw new Exception("no items found in order");
     }
     public void DeleteOrderItem(int _myNumOrder, int _myProductBarcode)
     {
-        for (int i = 0; i <_orderItemIndex; i++)
+        foreach(OrderItem item in orderItems)
         {
-            if (orderItems[i].orderId == _myNumOrder && orderItems[i].itemId==_myProductBarcode)
+            if(item.orderId== _myNumOrder&&item.itemId== _myProductBarcode)
             {
-                if (i == _orderItemIndex - 1)//wanted found in last place in product arrey
-                {
-                   _orderItemIndex--;
-                    return;
-                }
-                else//found in middle-coppeis last product in array to temp and coppeis wntwd space to temp 
-                {
-                    OrderItem tempOrderItem = orderItems[_orderItemIndex - 1];
-                    orderItems[i] = tempOrderItem;
-                    _orderItemIndex--;
-                    return;
-                }
+                orderItems.Remove(item);
+                break;
             }
         }
         throw new Exception("product not found");
     }
     public void UpdateOrderItem(OrderItem _newOrderItem)
     {
-        for (int i = 0; i < _orderItemIndex; i++)
+        foreach(OrderItem item in orderItems)
         {
-            if (orderItems[i].orderId == _newOrderItem.orderId && orderItems[i].itemId == _newOrderItem.itemId)
+            if(item.orderId== _newOrderItem.orderId&&item.itemId== _newOrderItem.itemId)
             {
-                orderItems[i] = _newOrderItem;
-              return;
+                orderItems.Remove(item);
+                orderItems.Add(_newOrderItem);
+                break;
             }
         }
         throw new Exception("order item not found");

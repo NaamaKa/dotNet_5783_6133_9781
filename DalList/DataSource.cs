@@ -174,9 +174,6 @@ public static class DataSource
 
     internal static class Config
     {
-        static internal int _productIndex = 0;
-        static internal int _orderIndex = 0;
-        static internal int _orderItemIndex = 0;
         static private int _orderID = 100000;
         static private int _productID = 500000;
 

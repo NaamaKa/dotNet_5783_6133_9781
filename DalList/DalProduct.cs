@@ -16,11 +16,10 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public int AddNewProduct(Product _newProduct)
     {
-        if (_productIndex < 50)
+        if (products.Count() < 50)
         {
             _newProduct.barkode =ProductID;
-            products[_productIndex] = _newProduct;
-           _productIndex++;
+            products.Add(_newProduct);
             return _newProduct.barkode;
         }
         throw new Exception("no place for more products");
@@ -33,10 +32,12 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public Product GetProduct(int _myBarcode)
     {
-        for(int i=0;i< _productIndex; i++)
+        foreach (var product in products)
         {
-            if (products[i].barkode==_myBarcode)
-                return products[i];
+            if(product.barkode == _myBarcode)
+            {
+                return product;
+            }
         }
         throw new Exception("product not found");
     }
@@ -44,14 +45,15 @@ public class DalProduct
     /// gets all products and puts them in array
     /// </summary>
     /// <returns>returns array</returns>
-    public Product[] GetProduct()
+    public List<Product> GetProduct()
     {
-       Product[] tempList= new Product[_productIndex];
-        for (int i=0;i< _productIndex; i++)
+
+        List<Product> tempProducts = new List<Product>();
+       foreach (var product in products)
         {
-            tempList[i]=products[i];
+            tempProducts.Add(product);
         }
-        return tempList;
+        return tempProducts;
     }
     /// <summary>
     /// deletsa spesific product
@@ -60,23 +62,11 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public void DeleteProduct(int _myBarcode)
     {
-        for (int i = 0; i < _productIndex; i++)
+        foreach(var product in products)
         {
-            if (products[i].barkode == _myBarcode)
+            if (product.barkode == _myBarcode)
             {
-                if (i== _productIndex-1)//wanted found in last place in product arrey
-                {
-                    _productIndex--;
-                    return;
-                }
-                else//found in middle-coppeis last product in array to temp and coppeis wntwd space to temp 
-                {
-                    Product tempProduct = products[_productIndex-1];
-                    Console.WriteLine(_productIndex);
-                    products[i] = tempProduct;
-                    _productIndex--;
-                    return ;
-                }
+                products.Remove(product);
             }
         }
         throw new Exception("product not found");
@@ -87,13 +77,15 @@ public class DalProduct
     /// <param name="_newProduct">product to be replaced insead</param>
     public void UpdateProduct(Product _newProduct)
     {
-        for (int i = 0; i < _productIndex; i++)
+        foreach (var product in products)
         {
-            if (products[i].barkode == _newProduct.barkode)
+            if(product.barkode == _newProduct.barkode)
             {
-                products[i] = _newProduct;
+                products.Remove(product);
+                products.Add(_newProduct);
                 break;
             }
         }
+          
     }
 }
