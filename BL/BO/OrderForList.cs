@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.BO;
+namespace BO;
 
-internal class OrderItem
+public class OrderForList
 {
     public int ID { get; set; }
-    public string Name { get; set; }
-    public int ProductId { get; set; }
-    public double Price { get; set; }
-    public int Amount { get; set; }
+    public string CostumerName { get; set; }
+    public OrderStatus Status { get; set; }
+    public int AmountOfItems { get; set; }
     public double TotalPrice { get; set; }
     public override string ToString() => $@"
         id={ID},
