@@ -8,9 +8,19 @@ namespace BO;
 
 public class Enums
 {
-    public class Category
+    public enum Category
     {
-        public string Name { get; set; }
-
+        Home,
+        Textile,
+        Kitchen,
+        Office,
+        Garden,
+        Toys
+    }
+    public  enum OrderStatus
+    {
+        Submitted,
+        Sent,
+        Arrived
     }
 }

@@ -12,7 +12,6 @@ internal class Order
     public string CostumerName { get; set; }
     public string CostumerEmail { get; set; }
     public string CostumerAddress { get; set; }
-    public DateTime OrderDate { get; set; }
     public OrderStatus Status { get; set; }
     public DateTime PaymentDate { get; set; }
     public DateTime ShippingDate { get; set; }
@@ -29,7 +28,6 @@ internal class Order
     	Shipping date: {ShippingDate},
     	delivery date: {DeliveryDate},
         items in order :{Items},
-
-        
+        total price:{TotalPrice} 
     ";
 }

@@ -15,9 +15,7 @@ public class ProductForList
     public override string ToString() => $@"
         id={ID},
         name :{Name}, 
-        product id : {ProductId},
     	Price : {Price},
-    	Amount: {Amount},
-        tatal price :{TotalPrice}
+        category: {Category}
     ";
 }
