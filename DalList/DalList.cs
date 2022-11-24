@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
-namespace DalList;
+namespace Dal;
 
 sealed public class DalList : IDal
 {
-    public IProduct Product => new DalProduct();
-    public IOrder Order => new DalOrder(); 
-    public IOrderItem OrderItem => new DalOrderItem();
+    public IProduct product => new DalProduct();
+    public IOrder order => new DalOrder();
+    public IOrderItem orderItem => new DalOrderItem();
 }
