@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.BO;
+namespace BO;
 
-internal class Order
+public class Order
 {
     public int ID { get; set; }
     public string CostumerName { get; set; }
@@ -20,7 +20,7 @@ internal class Order
     public double TotalPrice { get; set; }
 
     public override string ToString() => $@"
-        Order number={Id}, 
+        Order number={ID}, 
         name :{CostumerName},
     	email: {CostumerEmail},
     	address: {CostumerAddress},
