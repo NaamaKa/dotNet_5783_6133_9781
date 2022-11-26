@@ -56,7 +56,7 @@ public class DalOrderItem : IOrderItem
             return tempOrderItems;
         throw new Exception("no items found in order");
     }
-    public List<OrderItem> GetOrdersOforderItems(int _myItemId)
+    public List<OrderItem> GetOrdersOfOrderItems(int _myItemId)
     {
         List<OrderItem> tempOrders = new List<OrderItem>();
         foreach (OrderItem item in orderItems)
@@ -68,7 +68,7 @@ public class DalOrderItem : IOrderItem
         }
         if (tempOrders.Count > 0)
             return tempOrders;
-        throw new Exception("item doesnt agsist in any order");
+        throw new Exception("item doesnt axist in any order");
     }
     #endregion
 
