@@ -1,140 +1,226 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
-namespace Bllmplementation;
+﻿using BlApi;
 using DalApi;
-using System.Data.Common;
+using DO;
+using System;
+using System.Diagnostics;
+using System.Xml.Linq;
 
-internal class Product:BlApi.IProduct
+namespace BlImplementation;
+
+
+public class Product : BlApi.IProduct
 {
+
     private IDal Dal = new Dal.DalList();
-    public List<BO.ProductForList> GetProducts()
-    {
-        List<BO.ProductForList> products = new List<BO.ProductForList>();
 
-        List<DO.Product> product1=new List<DO.Product>();
-        product1=Dal.product.GetAll();
-        int count=0;
-        foreach(BO.ProductForList product in products)
+
+    #region Methodes
+
+    public IEnumerable<BO.ProductForList> GetListOfProduct()
+    {
+        IEnumerable<DO.Product> productsList = new List<DO.Product>();
+        List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
+        productsList = Dal.product.GetAll();
+        foreach (var item in productsList)
         {
-            product.Id = product1[count].barkode;
-            product.Name = product1[count].productName;
-            //product.Category = product1[count].productCategory;
-            product.Price = product1[count].productPrice;
-            count++;
+            productsForList.Add(new BO.ProductForList()
+            {
+                Id = item.barkode,
+                Name = item.productName,
+                Price = item.productPrice,
+                Category = (BO.Enums.Category)item.productCategory
+            });
+
         }
-        return products;
+        return productsForList;
     }
-     public BO.Product GetProduct(int id)
-    {
-        
-        if (id > 0)
-        {
-            DO.Product newProduct = new DO.Product();
-            try
-            {
-            newProduct = Dal.product.Get(id);
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-            BO.Product productToReturn=new BO.Product();
-            productToReturn.ID = newProduct.barkode;
-            productToReturn.ID = newProduct.barkode;
-            productToReturn.ID = newProduct.barkode;
-            productToReturn.ID = newProduct.barkode;
-            return productToReturn;
 
-        }
-        else {
-            throw new Exception("id not ligal");
-        }
-    }
-    public BO.ProductForList GetProductForList(int id)
-    {
-        if (id > 0)
-        {
-            BO.ProductForList newProduct = new BO.ProductForList();
-            try
-            {
-            List <DO.Product> productList=new List<DO.Product>();
-            productList= Dal.product.GetAll();
-            
-                newProduct.Price = productList[id].productPrice;
-                newProduct.Id = productList[id].barkode;
-                newProduct.Name = productList[id].productName;
-                //newProduct.Category = productList[id].productCategory;
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return newProduct;
+    //עבור מנהל 
+    public BO.Product GetProductItem(int id)
+    {
+        if (id <= 0)
+        {
+            throw new BO.NegativeIdException("negative id") { NegativeId = id.ToString() };
         }
         else
         {
-            throw new Exception("id not ligal");
-        }
-    }
-    public void AddProduct(int id,string name,float price,int amount)
-    {
-        if (id > 0&&name!="" && price >0 && amount >=0)
-        {
+            DO.Product p = new DO.Product();
             try
             {
-                DO.Product product = new DO.Product();
-                product.barkode = id;
-                product.productName = name;
-                product.productPrice = price;
-                Dal.product.Add(product);
+                p = Dal.product.Get(id);
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw new BO.NegativeIdException("negative id") { NegativeId = id.ToString() };
+
             }
+            BO.Product p1 = new BO.Product();
+
+            p1 = DOToBO(p);
+            return p1;
+
         }
     }
+
+    //קטלוג קונה
+    public BO.ProductItem GetProductItemForCatalog(int id, BO.Cart CostumerCart)
+    {
+        if (id <= 0)
+        {
+            throw new BO.NegativeIdException("negative id") { NegativeId = id.ToString() };
+        }
+        else
+        {
+            DO.Product p = new DO.Product();
+            try
+            {
+                p = Dal.product.Get(id);
+            }
+            catch
+            {
+                throw new BO.NegativeIdException("negative id") { NegativeId = id.ToString() };
+
+            }
+            BO.ProductItem PI = new BO.ProductItem()
+            {
+                Id = p.barkode,
+                Name = p.productName,
+                Category = (BO.Enums.Category)p.productCategory,
+                Price = p.productPrice,
+                InStock=true,
+                Amount = CostumerCart.Items.FindAll(e => e.ID == id).Count(),
+                
+            };
+            return PI;
+        }
+    }
+
+    //עבור מנהל
+    public void AddProduct(DO.Product p)
+    {
+
+        CheckCorectData(p.barkode, p.productName, (BO.Enums.Category)p.productCategory, p.productPrice, p.inStock);
+        try
+        {
+            Dal.product.Add(p);
+        }
+        catch (DO.ItemAlreadyExistsException)
+        {
+            throw new BO.ProductAlreadyExistsException("product already exists") { ProductAlreadyExists = p.ToString() };
+
+        }
+    }
+
+    public void UpdateProduct(BO.Product item)
+    {
+
+        CheckCorectData(item.ID, item.Name, item.Category, item.Price, item.InStock);
+        try
+        {
+            Dal.product.Update(newProductWithData(item.ID, item.Name, item.Category, item.Price, item.InStock));
+        }
+        catch (DO.RequestedItemNotFoundException)
+        {
+            throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = item.ToString() };
+
+        }
+
+    }
+
     public void DeleteProduct(int id)
     {
-        List<DO.OrderItem> orderList=new List<DO.OrderItem>();
-        orderList=Dal.orderItem.GetAll();
-        int count=0;
-        foreach(DO.OrderItem order in orderList)
+        IEnumerable<DO.OrderItem> orderList = new List<DO.OrderItem>();
+        orderList = Dal.orderItem.GetAll();
+        bool flag = false;
+        foreach (var OI in orderList)
         {
-            if (order.id != id)
-                count++;
-        }
-        if (count == orderList.Count())
-        {
-            try
+            if (OI.orderId == id)
             {
-                Dal.orderItem.Delete(id);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                flag = true;
             }
         }
+        if (flag)
+        {
+            throw new BO.ProductInUseException("product in use") { ProductInUse = id.ToString() };
+        }
+        try
+        {
+            Dal.product.Delete(id);
+        }
+        catch
+        {
+            throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = id.ToString() };
+        }
+
     }
-    public void UpdateProduct(DO.Product productToUpdate)
+
+
+
+
+
+    #endregion
+    #region help methodes
+
+    #region DO to BO
+    private BO.Product DOToBO(DO.Product p)
     {
-        if (productToUpdate.barkode > 0  && productToUpdate.productPrice > 0 && productToUpdate.productName != ""&& productToUpdate.inStock>=0)
+        BO.Product p1 = new BO.Product()
         {
-            try
-            {
-                Dal.product.Update(productToUpdate);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+            ID = p.barkode,
+            Name = p.productName,
+            Price = p.productPrice,
+            Category = (BO.Enums.Category)p.productCategory,
+            InStock = p.inStock
+        };
+        return p1;
     }
+    #endregion
+
+    #region check corect data
+    public void CheckCorectData(int id, string name, BO.Enums.Category category, double price, int inStock)
+    {
+        if (id < 0)
+        {
+            throw new BO.NegativeIdException("negative id") { NegativeId = id.ToString() };
+        }
+        if (name is null)
+        {
+            throw new BO.EmptyNameException("empty name") { EmptyName = name.ToString() };
+        }
+        if (price <= 0)
+        {
+            throw new BO.NegativePriceException("empty name") { NegativePrice = price.ToString() };
+        }
+        if (inStock < 0)
+        {
+            throw new BO.NegativeStockException("empty name") { NegativeStock = inStock.ToString() };
+        }
+        return;
+
+    }
+    #endregion
+
+    #region new product with data
+
+    private static DO.Product newProductWithData(int id, string name, BO.Enums.Category category, double price, int inStock)
+    {
+        DO.Product p = new DO.Product();
+        p.barkode = id;
+        p.productName = name;
+        p.productCategory = (DO.Enums.Category)category;
+        p.productPrice = price;
+        p.inStock = inStock;
+        return new DO.Product();
+    }
+    #endregion
+    #endregion
+
+
 
 
 }
+
+
+
+

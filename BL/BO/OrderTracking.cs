@@ -1,18 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.Net.NetworkInformation;
+using static BO.Enums;
+
 namespace BO;
+//מעקב הזמנה ללקוח
 
-public  class OrderTracking
+public class OrderTracking
 {
-    public int ID { get; set; }
-    public Enums.OrderStatus Status { get; set; }
-    public List<DateTime> StatusDate { get; set; }
+    #region orderTracking properties
 
+    public int ID { get; set; }
+    public OrderStatus Status { get; set; }
+    public List<StatusAndDate> listOfStatus { get; set; }
+
+    #endregion
+
+    #region class Status and date
+    public class StatusAndDate
+    {
+        public DateTime Date { get; set; }
+        public OrderStatus Status { get; set; }
+    }
+
+    #endregion
+
+    #region methods
+    /// <summary>
+    /// override the string function
+    /// </summary>
+    /// <returns>string with the properties of the order tracking class</returns>
     public override string ToString() => $@"
-        id={ID},
-        status= {Status}
-    ";
+    Order tracking ID={ID}
+    Status:{Status}
+
+";
+    #endregion
+
 }

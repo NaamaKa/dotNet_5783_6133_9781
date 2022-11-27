@@ -1,5 +1,4 @@
-﻿
-// See https://aka.ms/new-console-template for more information
+﻿// See https://aka.ms/new-console-template for more information
 using DO;
 using System.Linq.Expressions;
 using System.Net.Http.Headers;
@@ -78,19 +77,19 @@ public class Programm
                         product.productCategory = (int)(Enums.Category.Home);
                         break;
                     case 1:
-                        product.productCategory = (int)(Enums.Category.Textile);
+                        product.productCategory = (Enums.Category.Textile);
                         break;
                     case 2:
-                        product.productCategory = (int)(Enums.Category.Office);
+                        product.productCategory = (Enums.Category.Office);
                         break;
                     case 3:
-                        product.productCategory = (int)(Enums.Category.Kitchen);
+                        product.productCategory = (Enums.Category.Kitchen);
                         break;
                     case 4:
-                        product.productCategory = (int)(Enums.Category.Garden);
+                        product.productCategory = (Enums.Category.Garden);
                         break;
                     case 5:
-                        product.productCategory = (int)(Enums.Category.Toys);
+                        product.productCategory = (Enums.Category.Toys);
                         break;
                 }
                 Console.WriteLine("Amount in stock:");
@@ -165,28 +164,28 @@ public class Programm
                     switch (categoryTemp)
                     {
                         case 0:
-                            product.productCategory = (int)(Enums.Category.Home);
+                            product.productCategory = (Enums.Category.Home);
                             break;
                         case 1:
-                            product.productCategory = (int)(Enums.Category.Textile);
+                            product.productCategory = (Enums.Category.Textile);
                             break;
                         case 2:
-                            product.productCategory = (int)(Enums.Category.Office);
+                            product.productCategory = (Enums.Category.Office);
                             break;
                         case 3:
-                            product.productCategory = (int)(Enums.Category.Kitchen);
+                            product.productCategory = (Enums.Category.Kitchen);
                             break;
                         case 4:
-                            product.productCategory = (int)(Enums.Category.Garden);
+                            product.productCategory = (Enums.Category.Garden);
                             break;
                         case 5:
-                            product.productCategory = (int)(Enums.Category.Toys);
+                            product.productCategory = (Enums.Category.Toys);
                             break;
                     }
                     Console.WriteLine("amount");
                     int.TryParse(Console.ReadLine(), out parse);
                     amountInStock = parse;
-                    Product proTOUpdata = new Product() { barkode = barcode, productCategory = categoryTemp, productName = name, productPrice = price, inStock = amountInStock };
+                    Product proTOUpdata = new Product() { barkode = barcode, productCategory = (Enums.Category)categoryTemp, productName = name, productPrice = price, inStock = amountInStock };
                     IDalVariable.product.Add(proTOUpdata);
                     break;
                 }
@@ -363,7 +362,7 @@ public class Programm
                 int itemBarcode = int.Parse(Console.ReadLine());
                 try
                 {
-                    Console.WriteLine(IDalVariable.orderItem.GetOrdersOforderItems(itemBarcode));
+                    //Console.WriteLine(IDalVariable.orderItem.GetOrdersOforderItems(itemBarcode));
                 }
                 catch (Exception e)
                 {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,11 +14,13 @@ internal class Cart : ICart
     private IDal Dal = new Dal.DalList();
     public BO.Cart AddItemToCart(BO.Cart _myCart, int _id)
     {
+        DO.Product _wantedProduct= Dal.product.Get(_id);
+        
         foreach (var item in _myCart.Items)
         {
-            if (item.ProductId == _id)
+            if (item.ID == _id)
             {
-                if (GetProduct(_id).InStock >= item.Amount + 1)
+                if (_wantedProduct .inStock>= item.Amount + 1)
                 {
                     item.Amount++;
                     double pricetoAdd = item.Price;
@@ -35,27 +36,27 @@ internal class Cart : ICart
         }
         #region product not in cart
         //check if product aggsists
-        BO.Product _product = new BO.Product();
+        DO.Product _product = new DO.Product();
 
         try
         {
-            _product = GetProduct(_id);
+            _product = Dal.product.Get(_id);
         }
         catch (Exception ex)
         {
             throw ex;
         }
         //check if product is inStock
-        if (_product.InStock >= 1)
+        if (_product.inStock >= 1)
         {
             BO.OrderItem _myNeworderItem = new BO.OrderItem();
-            _myNeworderItem.ProductId = _id;
-            _myNeworderItem.Name = _product.Name;
-            _myNeworderItem.Price = _product.Price;
+            _myNeworderItem.ID = _id;
+            _myNeworderItem.Name = _product.productName;
+            _myNeworderItem.Price = _product.productPrice;
             _myNeworderItem.Amount = 1;
-            _myNeworderItem.TotalPrice = _product.Price;
+            _myNeworderItem.TotalPrice = _product.productPrice;
             _myCart.Items.Add(_myNeworderItem);
-            _myCart.Price += _product.Price;
+            _myCart.Price += _product.productPrice;
             return _myCart;
         }
         else
@@ -71,12 +72,12 @@ internal class Cart : ICart
         //check cart
         if (_myCart.Items.Count > 0)//cart isn't empty
         {
-            BO.Product _tempProduct = new BO.Product();
+            DO.Product _tempProduct = new DO.Product();
             foreach (var item in _myCart.Items)
             {
                 try
                 {
-                    _tempProduct = GetProduct(item.ProductId);
+                    _tempProduct = Dal.product.Get(item.ID);
                 }
                 catch (Exception ex)
                 {
@@ -85,8 +86,8 @@ internal class Cart : ICart
                 }
                 if (item.Amount < 0)
                     throw new Exception("amount of items is illegal");
-                if (_tempProduct.InStock < item.Amount)
-                    throw new Exception("prodoct " + _tempProduct.Name + " not enough in stock. only enough for " + _tempProduct.InStock);
+                if (_tempProduct.inStock < item.Amount)
+                    throw new Exception("prodoct " + _tempProduct.productName + " not enough in stock. only enough for " + _tempProduct.inStock);
             }
         }
         else
@@ -137,14 +138,14 @@ internal class Cart : ICart
             {
                 id = 0,
                 orderId = _newOrderID,
-                itemId = item.ProductId,
+                itemId = item.ID,
                 amount = item.Amount,
                 price = item.TotalPrice,
             });
             DO.Product _tempProduct = new DO.Product();
             try
             {
-                _tempProduct = GetProduct(item.ProductId);
+                _tempProduct = Dal.product.Get(item.ID);
                 _tempProduct.inStock -= item.Amount;
             }
             catch (Exception ex)
@@ -168,7 +169,7 @@ internal class Cart : ICart
     {
         foreach (var item in _myCart.Items)
         {
-            if (item.ProductId == _id)
+            if (item.ID == _id)
             {
                 if (_newAmount == 0)
                 {
@@ -176,7 +177,7 @@ internal class Cart : ICart
                 }
                 else if (item.Amount > _newAmount)
                 {
-                    if (GetProduct(_id).InStock >= item.Amount + _newAmount)
+                    if (Dal.product.Get(_id).inStock >= item.Amount + _newAmount)
                     {
                         item.Amount = _newAmount;
                         double pricetoAdd = item.Price * item.Amount;

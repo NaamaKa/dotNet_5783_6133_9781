@@ -8,6 +8,7 @@ namespace BO;
 
 public class Order
 {
+    #region proporties
     public int ID { get; set; }
     public string CostumerName { get; set; }
     public string CostumerEmail { get; set; }
@@ -18,7 +19,9 @@ public class Order
     public DateTime DeliveryDate { get; set; }
     public List<OrderItem> Items { get; set; }
     public double TotalPrice { get; set; }
+    #endregion
 
+    #region tostring
     public override string ToString() => $@"
         Order number={ID}, 
         name :{CostumerName},
@@ -30,4 +33,6 @@ public class Order
         items in order :{Items},
         total price:{TotalPrice} 
     ";
+    #endregion
+
 }

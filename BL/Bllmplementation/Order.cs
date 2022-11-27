@@ -1,16 +1,287 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
+using BO;
+using DalApi;
+using static BO.Enums;
 
 namespace Bllmplementation;
 
-internal class Order:IOrder
+internal class Order :BlApi.IOrder
 {
-    public List<OrderForList> GetOrders()
-    {
+    private IDal Dal = new Dal.DalList();
 
-    };
+    public IEnumerable<OrderForList> GetListOfOrders()
+    {
+        IEnumerable<DO.Order> orderList = new List<DO.Order>();
+        List<BO.OrderForList> ordersForList = new List<OrderForList>();
+        orderList = Dal.order.GetAll();
+
+        IEnumerable<OrderTracking> orderTracking = new List<OrderTracking>();
+        foreach (var item in orderList)
+        {
+            ordersForList.Add(new OrderForList()
+            {
+                ID = item.OrderNum,
+                CostumerName = item.costumerName,
+                Status = CheckStatus(item.OrderDate, item.shippingDate, item.arrivleDate),
+                AmountOfItems= GetAmountItems(item.OrderNum),
+                TotalPrice = CheckTotalSum(item.OrderNum)
+            });
+
+        }
+        return ordersForList;
+    }
+
+    public BO.Order GetOrderDetails(int id)
+    {
+        if (id <= 0)
+        {
+            throw new BO.NegativeIdException("negative id") { NegativeId = id.ToString() };
+        }
+        else
+        {
+            DO.Order o = new DO.Order();
+            try
+            {
+                o = Dal.order.Get(id);
+            }
+            catch (DO.RequestedItemNotFoundException)
+            {
+                throw new BO.OrderNotExistsException("order not exists") { OrderNotExists = o.ToString() };
+
+            }
+            return DOorderToBOorder(o);
+
+
+        }
+    }
+
+  
+        public BO.OrderTracking GetOrderTracking(int orderId)
+        {
+            DO.Order o = new DO.Order();
+            try
+            {
+                o = Dal.order.Get(orderId);
+            }
+            catch (DO.RequestedItemNotFoundException)
+            {
+                throw new BO.OrderNotExistsException("order not exists") { OrderNotExists = o.ToString() };
+
+            }
+            BO.OrderTracking orderTracking = new BO.OrderTracking();
+            orderTracking.ID = orderId;
+            orderTracking.Status = CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate);
+            switch (orderTracking.Status)
+            {
+                case OrderStatus.Arrived:
+                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    {
+                        Date = o.OrderDate,
+                        Status = BO.Enums.OrderStatus.Arrived
+                    });
+                    break;
+                case OrderStatus.Sent:
+                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    {
+                        Date = o.OrderDate,
+                        Status = BO.Enums.OrderStatus.Arrived
+                    });
+                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    {
+                        Date = o.shippingDate,
+                        Status = BO.Enums.OrderStatus.Sent
+
+                    });
+                    break;
+                case OrderStatus.Submitted:
+                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    {
+                        Date = o.OrderDate,
+                        Status = BO.Enums.OrderStatus.Arrived
+                    });
+                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    {
+                        Date = o.shippingDate,
+                        Status = BO.Enums.OrderStatus.Sent
+
+                    }); orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    {
+                        Date = o.arrivleDate,
+                        Status = BO.Enums.OrderStatus.Submitted
+
+                    });
+                    break;
+            }
+            return orderTracking;
+
+        }
+ 
+
+    public BO.Order UpdateDeliveryDate(int orderId)
+    {
+        DO.Order o = new DO.Order();
+        try
+        {
+            o = Dal.order.Get(orderId);
+        }
+        catch
+        {
+            throw new BO.OrderNotExistsException("order not exists") { OrderNotExists = o.ToString() };
+
+        }
+        try
+        {
+            if (CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate) == BO.Enums.OrderStatus.Sent)
+            {
+                o.arrivleDate = DateTime.Now;
+                try
+                {
+                    Dal.order.Update(o);
+                }
+                catch (DO.RequestedUpdateItemNotFoundException)
+                {
+
+                    throw new BO.UpdateOrderNotSucceedException("update order not succeed") { UpdateOrderNotSucceed = o.ToString() };
+                }
+
+
+            }
+
+        }
+        catch
+        {
+            throw new BO.OrderHasAlreadyProvidedException("Order has already sent") { OrderHasAlreadyProvided = orderId.ToString() };
+
+        }
+        return DOorderToBOorder(o); ;
+    }
+
+    public BO.Order UpdateShipDate(int orderId)
+    {
+        DO.Order o = new DO.Order();
+        try
+        {
+            o = Dal.order.Get(orderId);
+        }
+        catch (DO.RequestedItemNotFoundException)
+        {
+            throw new BO.OrderNotExistsException("order not exists") { OrderNotExists = o.ToString() };
+
+        }
+        try
+        {
+            if (CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate) == BO.Enums.OrderStatus.Arrived)
+            {
+                o.shippingDate = DateTime.Now;
+                try
+                {
+                    Dal.order.Update(o);
+                }
+                catch (DO.RequestedUpdateItemNotFoundException)
+                {
+
+                    throw new BO.UpdateOrderNotSucceedException("update order not succeed") { UpdateOrderNotSucceed = o.ToString() };
+                }
+
+
+            }
+
+        }
+        catch
+        {
+            throw new BO.OrderHasAlreadySentException("Order has already sent") { OrderHasAlreadySent = orderId.ToString() };
+
+        }
+        return DOorderToBOorder(o); ;
+    }
+    #region ezer
+    public BO.Order DOorderToBOorder(DO.Order o)
+    {
+        BO.Order newOrder = new BO.Order()
+        {
+            ID = o.OrderNum,
+            CostumerName = o.costumerName,
+            CostumerEmail = o.mail,
+            CostumerAddress = o.address,
+            Status = CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate),
+            PaymentDate = o.OrderDate,
+            ShippingDate = o.shippingDate,
+            DeliveryDate = o.arrivleDate,
+            Items = GetAllItemsToOrder(o.OrderNum),
+            TotalPrice = CheckTotalSum(o.OrderNum)
+
+
+        };
+        return newOrder;
+    }
+    public BO.Enums.OrderStatus CheckStatus(DateTime OrderDate, DateTime ShipDate, DateTime DeliveryDate)
+    {
+        DateTime today = DateTime.Now;
+        if (today.Equals(OrderDate) && today.Equals(ShipDate) && today.Equals(DeliveryDate))
+            return OrderStatus.Submitted;
+        else if (today.Equals(OrderDate) && today.Equals(ShipDate))
+            return OrderStatus.Sent;
+        else
+            return OrderStatus.Arrived;
+    }
+    public int GetAmountItems(int id)
+    {
+        IEnumerable<DO.OrderItem> orderItemList = new List<DO.OrderItem>();
+        orderItemList = Dal.orderItem.GetOrderItemsFromOrder(id);
+        int sum = 0;
+        foreach (var item in orderItemList)
+        {
+            sum += item.amount;
+        }
+        return sum;
+
+    }
+    public double CheckTotalSum(int id)
+    {
+        IEnumerable<DO.OrderItem> orderItemList = new List<DO.OrderItem>();
+        orderItemList = Dal.orderItem.GetOrderItemsFromOrder(id);
+        double sum = 0;
+        foreach (var item in orderItemList)
+        {
+            sum = sum + item.price * item.amount;
+        }
+        return sum;
+    }
+    public List<BO.OrderItem> GetAllItemsToOrder(int id)
+    {
+        IEnumerable<DO.OrderItem> orderItemList = new List<DO.OrderItem>();
+        List<BO.OrderItem> BOorderItemList = new List<BO.OrderItem>();
+        orderItemList = Dal.orderItem.GetOrderItemsFromOrder(id);
+        int count = 0;
+        foreach (var item in orderItemList)
+        {
+            BOorderItemList.Add(new BO.OrderItem()
+            {
+                NumInOrder = count++,
+                ID = item.id,
+                Name = getOrderItemName(item.itemId),
+                Price = item.price,
+                Amount = item.amount,
+                TotalPrice = item.price * item.amount
+
+            });
+        }
+        return BOorderItemList;
+
+    }
+    public string getOrderItemName(int productId)
+    {
+        DO.Product product = new DO.Product();
+        product = Dal.product.Get(productId);
+        return product.productName;
+    }
+
+
+    #endregion
 }
