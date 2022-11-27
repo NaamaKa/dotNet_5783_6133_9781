@@ -7,11 +7,11 @@ namespace Dal;
 
 public class DalOrder : IOrder
 {
-    public void Add(Order _newOrder)
+    public int Add(Order _newOrder)
     {
-        //xcvcfgb
         _newOrder.OrderNum = OrderID;
         orders.Add(_newOrder);
+        return _newOrder.OrderNum;
     }
     public Order Get(int _myNum)
     {

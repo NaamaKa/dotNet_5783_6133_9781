@@ -10,8 +10,9 @@ namespace BlApi;
 public interface IProduct
 {
     public List<ProductForList> GetProducts();
-    public Product GetProductForProduct(int id);
+    public BO.Product GetProduct(int id);
     public ProductForList GetProductForList(int id);
     public void AddProduct(int id,string name,float price,int amount);
     public void DeleteProduct(int id);
+    public void UpdateProduct(Product productToUpdate);
 }

@@ -171,8 +171,11 @@ public static class DataSource
     {
         static private int _orderID = 100000;
         static private int _productID = 500000;
-        internal static int idOrderItem = 1;
-        internal static int IdOrderItem { get { return idOrderItem++; } }
+        static private int _idOrderItem = 200000;
+        public static int IdOrderItem
+        {
+            get { return _idOrderItem++; }
+        }
         //האינדקס פו הוא בשביל מספר רץ לבדוק מה עושים עם זה
         //public static int IdOrderOfIdOrderItem { get { return num.Next(indexOrders); } }
         public static int ProductID

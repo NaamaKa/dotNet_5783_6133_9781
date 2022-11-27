@@ -8,7 +8,7 @@ namespace DalApi;
 
 public interface ICrud<T>
 {
-    public void Add(T entity);
+    public int Add(T entity);
     public void Update(T entity);
     public void Delete(int id);
     public T Get(int id);

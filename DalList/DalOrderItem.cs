@@ -1,13 +1,16 @@
 ﻿using DO;
 using DalApi;
 namespace Dal;
+using static Dal.DataSource.Config;
 using static Dal.DataSource;
 
 public class DalOrderItem : IOrderItem
 {
-    public void Add(OrderItem _newOrderItem)
+    public int Add(OrderItem _newOrderItem)
     {
+        _newOrderItem.id = IdOrderItem;
         orderItems.Add(_newOrderItem);
+        return _newOrderItem.id;
     }
     #region get functions
     public OrderItem GetOrderItem(int _myNumOrder, int myProductBarcode)

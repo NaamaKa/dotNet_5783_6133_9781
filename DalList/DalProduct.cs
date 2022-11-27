@@ -13,14 +13,18 @@ internal class DalProduct : IProduct
     /// <param name="_newProduct">product for putting in</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public void Add(Product _newProduct)
+    public int Add(Product _newProduct)
     {
         if (products.Count() < 50)
         {
             _newProduct.barkode = ProductID;
             products.Add(_newProduct);
         }
-        throw new Exception("no place for more products");
+        else
+        {
+            throw new Exception("no place for more products");
+        }
+        return _newProduct.barkode;
     }
     /// <summary>
     /// returns a spesific product
@@ -79,7 +83,8 @@ internal class DalProduct : IProduct
         {
             if (product.barkode == _newProduct.barkode)
             {
-                products.Add(product);
+                products.Remove(product);
+                products.Add(_newProduct);
                 break;
             }
         }
