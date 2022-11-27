@@ -15,11 +15,11 @@ public class ProductItem
     public int Amount { get; set; }
     public bool InStock { get; set; }
     public override string ToString() => $@"
-        id={ID},
+        id={Id},
         name :{Name}, 
-        product id : {ProductId},
+        category: {Category} ,
     	Price : {Price},
     	Amount: {Amount},
-        tatal price :{TotalPrice}
+        inStock: {InStock}
     ";
 }

@@ -13,7 +13,7 @@ public class ProductForList
     public double Price { get; set; }
     public Enums.Category Category { get; set; }
     public override string ToString() => $@"
-        id={ID},
+        id={Id},
         name :{Name}, 
     	Price : {Price},
         category: {Category}
