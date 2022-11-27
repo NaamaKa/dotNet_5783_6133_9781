@@ -8,7 +8,7 @@ public struct Product
 {
     public int barkode { get; set; }
     public string productName{ get; set; }
-    public int productCategory{ get; set; }
+    public Enums.Category productCategory{ get; set; }
     public double productPrice{ get; set; }
     public int inStock { get; set; }
     public override string ToString() => $@"

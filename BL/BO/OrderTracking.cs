@@ -9,7 +9,7 @@ public  class OrderTracking
 {
     public int ID { get; set; }
     public Enums.OrderStatus Status { get; set; }
-    public List<DateTime,OrderStatus> StatusDate { get; set; }
+    public List<DateTime> StatusDate { get; set; }
 
     public override string ToString() => $@"
         id={ID},

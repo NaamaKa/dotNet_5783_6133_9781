@@ -23,7 +23,7 @@ public static class DataSource
     {
         return;
     }
-    static private void addNewProduct(string PName, int PCategory, double PPrice, int PInStock)
+    static private void addNewProduct(string PName, Enums.Category PCategory, double PPrice, int PInStock)
     {
         Product p = new Product() { barkode = Config.ProductID, productName = PName, productCategory = PCategory, productPrice = PPrice, inStock = PInStock };
         products.Add(p);
@@ -52,27 +52,27 @@ public static class DataSource
     static private void s_Initialize()  ///
     {
         #region new products
-        addNewProduct("fuzzy carpet", (int)(Category.Home), 12.5, 38);//100000
-        addNewProduct("Wardrobe", (int)(Category.Home), 659, 53);     //100001
-        addNewProduct("Fabric sofa", (int)(Category.Home), 4999, 35);//100002
-        addNewProduct("Leather sofa", (int)(Category.Home), 7075, 20);//100003
-        addNewProduct("single bed", (int)(Category.Home), 1300, 45);  //100004
-        addNewProduct("Double bed", (int)(Category.Home), 3000, 50);   //100005
-        addNewProduct("living room table", (int)(Category.Home), 2900, 35);//100006
-        addNewProduct("Soft bedding", (int)(Category.Textile), 69.9, 100);//100007
-        addNewProduct("6 face towels", (int)(Category.Textile), 35.9, 108);//100008
-        addNewProduct("6 glass cups", (int)(Category.Kitchen), 12.5, 100);//100009
-        addNewProduct("6 glass plate", (int)(Category.Kitchen), 25, 110);//100010
-        addNewProduct("office chair", (int)(Category.Office), 350, 82);//100011
-        addNewProduct("Computer desk", (int)(Category.Office), 1020, 25);//100012
-        addNewProduct("Garden dining area", (int)(Category.Garden), 2499, 43);//100013
-        addNewProduct("Storage bench", (int)(Category.Garden), 350, 30);//100014
-        addNewProduct("playing surface", (int)(Category.Toys), 79.9, 50);//100015
-        addNewProduct("Dinosaur doll", (int)(Category.Toys), 19.9, 100);//100016
-        addNewProduct("Cutting Board", (int)(Category.Kitchen), 19, 60);//100017
-        addNewProduct("2 serving plates", (int)(Category.Kitchen), 30, 15);//100018
-        addNewProduct("forks", (int)(Category.Kitchen), 22, 100);//100019
-        addNewProduct("12 markers", (int)(Category.Toys), 19.9, 0);//100020
+        addNewProduct("fuzzy carpet", (Category.Home), 12.5, 38);//100000
+        addNewProduct("Wardrobe", (Category.Home), 659, 53);     //100001
+        addNewProduct("Fabric sofa", (Category.Home), 4999, 35);//100002
+        addNewProduct("Leather sofa", (Category.Home), 7075, 20);//100003
+        addNewProduct("single bed", (Category.Home), 1300, 45);  //100004
+        addNewProduct("Double bed", (Category.Home), 3000, 50);   //100005
+        addNewProduct("living room table", (Category.Home), 2900, 35);//100006
+        addNewProduct("Soft bedding", (Category.Textile), 69.9, 100);//100007
+        addNewProduct("6 face towels", (Category.Textile), 35.9, 108);//100008
+        addNewProduct("6 glass cups", (Category.Kitchen), 12.5, 100);//100009
+        addNewProduct("6 glass plate", (Category.Kitchen), 25, 110);//100010
+        addNewProduct("office chair", (Category.Office), 350, 82);//100011
+        addNewProduct("Computer desk", (Category.Office), 1020, 25);//100012
+        addNewProduct("Garden dining area", (Category.Garden), 2499, 43);//100013
+        addNewProduct("Storage bench", (Category.Garden), 350, 30);//100014
+        addNewProduct("playing surface", (Category.Toys), 79.9, 50);//100015
+        addNewProduct("Dinosaur doll", (Category.Toys), 19.9, 100);//100016
+        addNewProduct("Cutting Board", (Category.Kitchen), 19, 60);//100017
+        addNewProduct("2 serving plates", (Category.Kitchen), 30, 15);//100018
+        addNewProduct("forks", (Category.Kitchen), 22, 100);//100019
+        addNewProduct("12 markers", (Category.Toys), 19.9, 0);//100020
 
 
 

@@ -8,20 +8,21 @@ namespace Bllmplementation;
 using DalApi;
 using System.Data.Common;
 
-internal class Product:IProduct
+internal class Product:BlApi.IProduct
 {
     private IDal Dal = new Dal.DalList();
     public List<BO.ProductForList> GetProducts()
     {
         List<BO.ProductForList> products = new List<BO.ProductForList>();
 
-        List<DO.Product> product1=Dal.product.getAll();
+        List<DO.Product> product1=new List<DO.Product>();
+        product1=Dal.product.GetAll();
         int count=0;
-        foreach(Product product in products)
+        foreach(BO.ProductForList product in products)
         {
             product.Id = product1[count].barkode;
             product.Name = product1[count].productName;
-            product.Category = product1[count].productCategory;
+            //product.Category = product1[count].productCategory;
             product.Price = product1[count].productPrice;
             count++;
         }
@@ -50,44 +51,60 @@ internal class Product:IProduct
 
         }
         else {
-            throw new Exception('id not ligal');
+            throw new Exception("id not ligal");
         }
     }
-    public ProductForList GetProductForList(int id)
+    public BO.ProductForList GetProductForList(int id)
     {
         if (id > 0)
         {
+            BO.ProductForList newProduct = new BO.ProductForList();
             try
             {
-            List <Do.product> productList=DalProduct.getAll();
-            ProductForList newProduct = new ProductForList(productList[id].Barkode,productList[id].ProductName,productList[id].ProductPrice,productList[id].ProductCategory);
+            List <DO.Product> productList=new List<DO.Product>();
+            productList= Dal.product.GetAll();
+            
+                newProduct.Price = productList[id].productPrice;
+                newProduct.Id = productList[id].barkode;
+                newProduct.Name = productList[id].productName;
+                //newProduct.Category = productList[id].productCategory;
+
             }
-            catch
+            catch (Exception ex)
             {
-                throw Exception;
+                throw ex;
             }
             return newProduct;
+        }
+        else
+        {
+            throw new Exception("id not ligal");
         }
     }
     public void AddProduct(int id,string name,float price,int amount)
     {
-        if (id > 0&&name>0 && price >0 && amount >=0)
+        if (id > 0&&name!="" && price >0 && amount >=0)
         {
             try
             {
-                Dal.product.Add(id, name, price, amount);
+                DO.Product product = new DO.Product();
+                product.barkode = id;
+                product.productName = name;
+                product.productPrice = price;
+                Dal.product.Add(product);
             }
-            catch
+            catch (Exception ex)
             {
-                throw Exception;
+                throw ex;
             }
         }
     }
     public void DeleteProduct(int id)
     {
-        List<DO.OrderItem> orderList=Dal.orderItem.GetAll();
+        List<DO.OrderItem> orderList=new List<DO.OrderItem>();
+        orderList=Dal.orderItem.GetAll();
         int count=0;
-        foreach(Order order in orderList)
+        foreach(DO.OrderItem order in orderList)
         {
             if (order.id != id)
                 count++;
@@ -96,26 +113,28 @@ internal class Product:IProduct
         {
             try
             {
-                Dal.orderItem.Dalete(id);
+                Dal.orderItem.Delete(id);
             }
-            catch 
+            catch (Exception ex)
             {
-                throw Exception;
+                throw ex;
             }
         }
     }
-    public void UpdateProduct(Product productToUpdate)
+    public void UpdateProduct(DO.Product productToUpdate)
     {
-        if (id > 0 && productToUpdate.name > 0 && productToUpdate.price > 0 && productToUpdate.amount >= 0)
+        if (productToUpdate.barkode > 0  && productToUpdate.productPrice > 0 && productToUpdate.productName != ""&& productToUpdate.inStock>=0)
         {
             try
             {
                 Dal.product.Update(productToUpdate);
             }
-            catch
+            catch (Exception ex)
             {
-                throw Exception;
+                throw ex;
             }
         }
     }
+
+
 }
