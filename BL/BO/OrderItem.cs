@@ -9,7 +9,7 @@ namespace BO;
 public class OrderItem
 {
     public int ID { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public int NumInOrder { get; set; }
     public double Price { get; set; }
     public int Amount { get; set; }

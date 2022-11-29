@@ -10,7 +10,7 @@ namespace DO;
 
 public class RequestedItemNotFoundException : Exception
 {
-    public string RequestedItemNotFound { get; set; }
+    public string? RequestedItemNotFound { get; set; }
 
     public RequestedItemNotFoundException(string msg) : base(msg)
     {
@@ -19,7 +19,7 @@ public class RequestedItemNotFoundException : Exception
 }
 public class RequestedUpdateItemNotFoundException : Exception
 {
-    public string RequestedUpdateItemNotFound { get; set; }
+    public string? RequestedUpdateItemNotFound { get; set; }
 
     public RequestedUpdateItemNotFoundException(string msg) : base(msg)
     {
@@ -30,7 +30,7 @@ public class RequestedUpdateItemNotFoundException : Exception
 
 public class ItemAlreadyExistsException : Exception
 {
-    public string ItemAlreadyExists { get; set; }
+    public string? ItemAlreadyExists { get; set; }
 
     public ItemAlreadyExistsException(string msg) : base(msg)
     {

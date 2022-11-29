@@ -9,12 +9,12 @@ namespace BlApi;
 
 public interface IOrder
 {
-    public IEnumerable<BO.OrderForList> GetListOfOrders();
+    public IEnumerable<BO.OrderForList>? GetListOfOrders();
 
-    public BO.Order GetOrderDetails(int id);
+    public BO.Order? GetOrderDetails(int id);
 
-    public BO.Order UpdateShipDate(int orderId);
-    public BO.Order UpdateDeliveryDate(int orderId);
+    public BO.Order? UpdateShipDate(int orderId);
+    public BO.Order? UpdateDeliveryDate(int orderId);
 
-    public BO.OrderTracking GetOrderTracking(int orderId);
+    public BO.OrderTracking? GetOrderTracking(int orderId);
 }

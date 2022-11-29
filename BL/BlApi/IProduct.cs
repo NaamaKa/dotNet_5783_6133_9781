@@ -10,14 +10,14 @@ namespace BlApi;
 public interface IProduct
 {
     //  הבור מנהל ועבור קטלוג ראשי
-    public IEnumerable<BO.ProductForList> GetListOfProduct();
+    public IEnumerable<BO.ProductForList>? GetListOfProduct();
 
 
     //עבור מנהל 
-    public BO.Product GetProductItem(int id);
+    public BO.Product? GetProductItem(int id);
 
     //קטלוג קונה
-    public BO.ProductItem GetProductItemForCatalog(int id, BO.Cart CostumerCart);
+    public BO.ProductItem? GetProductItemForCatalog(int id, BO.Cart CostumerCart);
 
     //עבור מנהל
     public void AddProduct(DO.Product p);

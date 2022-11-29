@@ -18,8 +18,8 @@ public class OrderTracking
     #region class Status and date
     public class StatusAndDate
     {
-        public DateTime Date { get; set; }
-        public OrderStatus Status { get; set; }
+        public DateTime? Date { get; set; }
+        public OrderStatus? Status { get; set; }
     }
 
     #endregion
