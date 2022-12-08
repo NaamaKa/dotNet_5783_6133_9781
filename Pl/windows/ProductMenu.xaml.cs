@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.windows
+namespace Pl.windows
 {
     /// <summary>
-    /// Interaction logic for EditProduct.xaml
+    /// Interaction logic for ProductMenu.xaml
     /// </summary>
-    public partial class EditProduct : Window
+    public partial class ProductMenu : Window
     {
-        public EditProduct()
+        public ProductMenu()
         {
             InitializeComponent();
         }
