@@ -16,9 +16,9 @@ public static class DataSource
     }
 
     static readonly Random rnd = new Random();
-    internal static List<Product> products = new List<Product>();
-    internal static List<OrderItem> orderItems = new List<OrderItem>();
-    internal static List<Order> orders = new List<Order>();
+    internal static List<Product?> products = new List<Product?>();
+    internal static List<OrderItem?> orderItems = new List<OrderItem?>();
+    internal static List<Order?> orders = new List<Order?>();
     static public void startProgram()
     {
         return;
@@ -176,8 +176,6 @@ public static class DataSource
         {
             get { return _idOrderItem++; }
         }
-        //האינדקס פו הוא בשביל מספר רץ לבדוק מה עושים עם זה
-        //public static int IdOrderOfIdOrderItem { get { return num.Next(indexOrders); } }
         public static int ProductID
         {
             get { return _productID++; }

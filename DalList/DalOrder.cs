@@ -17,14 +17,15 @@ public class DalOrder : IOrder
     {
         foreach (var order in orders)
         {
-            if (order.OrderNum == _myNum)
-                return order;
+            if(order != null)
+                if (order?.OrderNum == _myNum)
+                    return (Order)order;
         }
         throw new Exception("order not found");
     }
-    public List<Order> GetAll()
+    public List<Order?> GetAll()
     {
-        List<Order> tempOrders = new List<Order>();
+        List<Order?> tempOrders = new List<Order?>();
         foreach (var order in orders)
         {
             tempOrders.Add(order);
@@ -33,7 +34,7 @@ public class DalOrder : IOrder
     }
     public void Delete(int _myNum)
     {
-        foreach (Order _order in orders)
+        foreach (var _order in orders)
         {
             if (OrderID == _myNum)
             {

@@ -18,17 +18,18 @@ public class Product : BlApi.IProduct
 
     public IEnumerable<BO.ProductForList> GetListOfProduct()
     {
-        IEnumerable<DO.Product> productsList = new List<DO.Product>();
+        IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
         List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
         productsList = Dal.product.GetAll();
         foreach (var item in productsList)
         {
+            if(item != null)
             productsForList.Add(new BO.ProductForList()
             {
-                Id = item.barkode,
-                Name = item.productName,
-                Price = item.productPrice,
-                Category = (BO.Enums.Category)item.productCategory
+                Id = item.Value.barkode,
+                Name = item.Value.productName,
+                Price = item.Value.productPrice,
+                Category = (BO.Enums.Category)item.Value.productCategory
             });
 
         }
@@ -130,14 +131,17 @@ public class Product : BlApi.IProduct
 
     public void DeleteProduct(int id)
     {
-        IEnumerable<DO.OrderItem> orderList = new List<DO.OrderItem>();
+        IEnumerable<DO.OrderItem?> orderList = new List<DO.OrderItem?>();
         orderList = Dal.orderItem.GetAll();
         bool flag = false;
         foreach (var OI in orderList)
         {
-            if (OI.orderId == id)
+            if (OI != null)
             {
-                flag = true;
+                if (OI?.orderId == id)
+                {
+                    flag = true;
+                }
             }
         }
         if (flag)

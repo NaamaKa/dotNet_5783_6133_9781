@@ -22,12 +22,13 @@ public class DalOrderItem : IOrderItem
         }
         throw new Exception("item not found in order");
     }
-    public List<OrderItem> GetAll()
+    public List<OrderItem?> GetAll()
     {
-        List<OrderItem> tempOrderItems = new List<OrderItem>();
-        foreach (OrderItem item in orderItems)
+        List<OrderItem?> tempOrderItems = new List<OrderItem?>();
+        foreach (var item in orderItems)
         {
-            tempOrderItems.Add(item);
+            if(item != null)
+                tempOrderItems.Add(item);
         }
         if (tempOrderItems.Count > 0)
             return tempOrderItems;

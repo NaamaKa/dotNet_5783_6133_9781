@@ -19,20 +19,22 @@ internal class Order :BlApi.IOrder
     {
         _ = new List<DO.Order>();
         List<BO.OrderForList> ordersForList = new List<OrderForList>();
-        IEnumerable<DO.Order>? orderList = Dal.order.GetAll();
+        IEnumerable<DO.Order?> orderList = Dal.order.GetAll();
         _ = new List<OrderTracking>();
         if (orderList != null) {
             foreach (var item in orderList)
             {
-                ordersForList.Add(new OrderForList()
+                if(item != null)
                 {
-                    ID = item.OrderNum,
-                    CostumerName = item.costumerName,
-                    Status = CheckStatus(item.OrderDate, item.shippingDate, item.arrivleDate),
-                    AmountOfItems = GetAmountItems(item.OrderNum),
-                    TotalPrice = CheckTotalSum(item.OrderNum)
-                });
-
+                    ordersForList.Add(new OrderForList()
+                    {
+                        ID = item.Value.OrderNum,
+                        CostumerName = item.Value.costumerName,
+                        Status = CheckStatus(item.Value.OrderDate, item.Value.shippingDate, item.Value.arrivleDate),
+                        AmountOfItems = GetAmountItems(item.Value.OrderNum),
+                        TotalPrice = CheckTotalSum(item.Value.OrderNum)
+                    });
+                }
             }
             return ordersForList;
         }

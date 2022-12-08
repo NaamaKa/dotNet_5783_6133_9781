@@ -36,9 +36,12 @@ internal class DalProduct : IProduct
     {
         foreach (var product in products)
         {
-            if (product.barkode == _myBarcode)
+            if (product != null)
             {
-                return product;
+                if (product?.barkode == _myBarcode)
+                {
+                    return (Product)product;
+                }
             }
         }
         throw new Exception("product not found");
@@ -47,15 +50,17 @@ internal class DalProduct : IProduct
     /// gets all products and puts them in array
     /// </summary>
     /// <returns>returns array</returns>
-    public List<Product> GetAll()
+    public List<Product?> GetAll()
     {
-
-        List<Product> tempProducts = new List<Product>();
+        List<Product?> tempProducts = new List<Product?>();
         foreach (var product in products)
         {
-            tempProducts.Add(product);
+            if(product!=null)
+                tempProducts.Add(product);
         }
-        return tempProducts;
+        if(tempProducts.Count>0)
+            return tempProducts;
+        throw new Exception("no products found");
     }
     /// <summary>
     /// deletsa spesific product
@@ -66,9 +71,12 @@ internal class DalProduct : IProduct
     {
         foreach (var product in products)
         {
-            if (product.barkode == _myBarcode)
+            if (product != null)
             {
-                products.Remove(product);
+                if (product?.barkode == _myBarcode)
+                {
+                    products.Remove(product);
+                }
             }
         }
         throw new Exception("product not found");
@@ -81,13 +89,15 @@ internal class DalProduct : IProduct
     {
         foreach (var product in products)
         {
-            if (product.barkode == _newProduct.barkode)
+            if (product != null)
             {
-                products.Remove(product);
-                products.Add(_newProduct);
-                break;
+                if (product?.barkode == _newProduct.barkode)
+                {
+                    products.Remove(product);
+                    products.Add(_newProduct);
+                    break;
+                }
             }
         }
-
     }
 }
