@@ -10,7 +10,7 @@ namespace BlApi;
 public interface IProduct
 {
     //  הבור מנהל ועבור קטלוג ראשי
-    public IEnumerable<BO.ProductForList>? GetListOfProduct();
+    public IEnumerable<BO.ProductForList?>? GetListOfProduct();
 
 
     //עבור מנהל 

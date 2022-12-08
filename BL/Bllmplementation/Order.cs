@@ -13,28 +13,30 @@ namespace Bllmplementation;
 
 internal class Order :BlApi.IOrder
 {
-    private IDal Dal = new Dal.DalList();
+    private readonly IDal Dal = new Dal.DalList();
 
     public IEnumerable<OrderForList> GetListOfOrders()
     {
-        IEnumerable<DO.Order> orderList = new List<DO.Order>();
+        _ = new List<DO.Order>();
         List<BO.OrderForList> ordersForList = new List<OrderForList>();
-        orderList = Dal.order.GetAll();
-
-        IEnumerable<OrderTracking> orderTracking = new List<OrderTracking>();
-        foreach (var item in orderList)
-        {
-            ordersForList.Add(new OrderForList()
+        IEnumerable<DO.Order>? orderList = Dal.order.GetAll();
+        _ = new List<OrderTracking>();
+        if (orderList != null) {
+            foreach (var item in orderList)
             {
-                ID = item.OrderNum,
-                CostumerName = item.costumerName,
-                Status = CheckStatus(item.OrderDate, item.shippingDate, item.arrivleDate),
-                AmountOfItems= GetAmountItems(item.OrderNum),
-                TotalPrice = CheckTotalSum(item.OrderNum)
-            });
+                ordersForList.Add(new OrderForList()
+                {
+                    ID = item.OrderNum,
+                    CostumerName = item.costumerName,
+                    Status = CheckStatus(item.OrderDate, item.shippingDate, item.arrivleDate),
+                    AmountOfItems = GetAmountItems(item.OrderNum),
+                    TotalPrice = CheckTotalSum(item.OrderNum)
+                });
 
+            }
+            return ordersForList;
         }
-        return ordersForList;
+        throw new Exception("no orders");
     }
 
     public BO.Order GetOrderDetails(int id)
@@ -220,7 +222,7 @@ internal class Order :BlApi.IOrder
         };
         return newOrder;
     }
-    public BO.Enums.OrderStatus CheckStatus(DateTime OrderDate, DateTime ShipDate, DateTime DeliveryDate)
+    public BO.Enums.OrderStatus CheckStatus(DateTime? OrderDate, DateTime? ShipDate, DateTime? DeliveryDate)
     {
         DateTime today = DateTime.Now;
         if (today.Equals(OrderDate) && today.Equals(ShipDate) && today.Equals(DeliveryDate))
@@ -277,9 +279,9 @@ internal class Order :BlApi.IOrder
     }
     public string getOrderItemName(int productId)
     {
-        DO.Product product = new DO.Product();
+        DO.Product product = new ();
         product = Dal.product.Get(productId);
-        return product.productName;
+        return product.productName ?? throw new Exception("no product");
     }
 
 

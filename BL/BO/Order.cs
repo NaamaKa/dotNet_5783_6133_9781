@@ -13,11 +13,11 @@ public class Order
     public string? CostumerName { get; set; }
     public string? CostumerEmail { get; set; }
     public string? CostumerAddress { get; set; }
-    public Enums.OrderStatus Status { get; set; }
+    public Enums.OrderStatus? Status { get; set; }
     public DateTime? PaymentDate { get; set; }
     public DateTime? ShippingDate { get; set; }
     public DateTime? DeliveryDate { get; set; }
-    public List<OrderItem> Items { get; set; }
+    public List<OrderItem? > ?Items { get; set; }
     public double TotalPrice { get; set; }
     #endregion
 

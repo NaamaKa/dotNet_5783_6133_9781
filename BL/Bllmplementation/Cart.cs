@@ -11,7 +11,7 @@ namespace Bllmplementation;
 
 internal class Cart : ICart
 {
-    private IDal Dal = new Dal.DalList();
+    private IDal Dal = new DalList();
     public BO.Cart AddItemToCart(BO.Cart _myCart, int _id)
     {
         DO.Product _wantedProduct= Dal.product.Get(_id);
