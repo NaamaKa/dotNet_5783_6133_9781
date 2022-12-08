@@ -13,4 +13,5 @@ public interface ICrud<T>where T : struct
     public void Delete(int id);
     public T Get(int id);
     public List<T?> GetAll();
+
 }
