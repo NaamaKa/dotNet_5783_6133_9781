@@ -9,18 +9,20 @@ namespace BlApi;
 
 public interface IProduct
 {
-    //  הבור מנהל ועבור קטלוג ראשי
-    public IEnumerable<BO.ProductForList?>? GetListOfProduct();
+    //  עבור מנהל ועבור קטלוג ראשי
+    public IEnumerable<BO.ProductForList?> GetListOfProduct();
 
 
-    //עבור מנהל 
+    //עבור מנהל
     public BO.Product? GetProductItem(int id);
 
     //קטלוג קונה
     public BO.ProductItem? GetProductItemForCatalog(int id, BO.Cart CostumerCart);
+    public IEnumerable<BO.ProductForList?> GetProductForListByCategory(string? myCategory);
 
     //עבור מנהל
     public void AddProduct(DO.Product p);
     public void UpdateProduct(BO.Product item);
     public void DeleteProduct(int id);
 }
+

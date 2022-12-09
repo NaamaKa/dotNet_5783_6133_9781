@@ -48,6 +48,7 @@ public class DalOrder : IOrder
     {
         foreach (Order _order in orders)
         {
+            if (_order.address != null|| _order.mail != null|| _order.OrderDate != null|| _order.shippingDate != null|| _order.arrivleDate != null|| _order.costumerName != null) { }
             if (_order.OrderNum == _newOrder.OrderNum)
             {
                 orders.Remove(_order);

@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 using DalApi;
 using DO;
 using System;
@@ -15,7 +16,28 @@ public class Product : BlApi.IProduct
 
 
     #region Methodes
+    public IEnumerable<ProductForList?> GetProductForListByCategory(string? myCategory)
+    {
+        IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
+        List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
+        productsList = Dal.product.GetAll();
+        foreach (var product in productsList)
+        {
+            
+                if ((product?.productCategory).ToString() == myCategory&&product!=null)
+                    productsForList.Add(new BO.ProductForList()
+                    {
+                        Id = product.Value.barkode,
+                        Name = product.Value.productName,
+                        Price = product.Value.productPrice,
+                        Category = (BO.Enums.Category)product.Value.productCategory
+                    });
+            
+        }
+        return productsForList;
 
+        throw new NotImplementedException();
+    }
     public IEnumerable<BO.ProductForList> GetListOfProduct()
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
@@ -23,21 +45,21 @@ public class Product : BlApi.IProduct
         productsList = Dal.product.GetAll();
         foreach (var item in productsList)
         {
-            if(item != null)
-            productsForList.Add(new BO.ProductForList()
-            {
-                Id = item.Value.barkode,
-                Name = item.Value.productName,
-                Price = item.Value.productPrice,
-                Category = (BO.Enums.Category)item.Value.productCategory
-            });
+            if (item != null)
+                productsForList.Add(new BO.ProductForList()
+                {
+                    Id = item.Value.barkode,
+                    Name = item.Value.productName,
+                    Price = item.Value.productPrice,
+                    Category = (BO.Enums.Category)item.Value.productCategory
+                });
 
         }
         return productsForList;
     }
 
 
-    //עבור מנהל 
+    //עבור מנהל
     public BO.Product GetProductItem(int id)
     {
         if (id <= 0)
@@ -89,9 +111,9 @@ public class Product : BlApi.IProduct
                 Name = p.productName,
                 Category = (BO.Enums.Category)p.productCategory,
                 Price = p.productPrice,
-                InStock=true,
+                InStock = true,
                 Amount = CostumerCart.Items.FindAll(e => e.ID == id).Count(),
-                
+
             };
             return PI;
         }
@@ -100,7 +122,7 @@ public class Product : BlApi.IProduct
     //עבור מנהל
     public void AddProduct(DO.Product p)
     {
-
+        if (p.productName != null) { 
         CheckCorectData(p.barkode, p.productName, (BO.Enums.Category)p.productCategory, p.productPrice, p.inStock);
         try
         {
@@ -111,22 +133,35 @@ public class Product : BlApi.IProduct
             throw new BO.ProductAlreadyExistsException("product already exists") { ProductAlreadyExists = p.ToString() };
 
         }
+        }
+        else
+        {
+            throw new Exception("no name to Product");
+        }
     }
 
     public void UpdateProduct(BO.Product item)
     {
-
-        CheckCorectData(item.ID, item.Name, item.Category, item.Price, item.InStock);
-        try
+        if (item != null)
         {
-            Dal.product.Update(newProductWithData(item.ID, item.Name, item.Category, item.Price, item.InStock));
-        }
-        catch (DO.RequestedItemNotFoundException)
-        {
-            throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = item.ToString() };
+            if (item.Name != null)
+            {
+                CheckCorectData(item.ID, item.Name, item.Category, item.Price, item.InStock);
+                try
+                {
+                    Dal.product.Update(newProductWithData(item.ID, item.Name, item.Category, item.Price, item.InStock));
+                }
+                catch (DO.RequestedItemNotFoundException)
+                {
+                    throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = item.ToString() };
 
+                }
+            }
+            else
+                throw new Exception("no name to the item");
         }
-
+        else
+            throw new Exception("no item");
     }
 
     public void DeleteProduct(int id)
@@ -217,6 +252,8 @@ public class Product : BlApi.IProduct
         p.inStock = inStock;
         return new DO.Product();
     }
+
+
     #endregion
     #endregion
 
@@ -224,7 +261,6 @@ public class Product : BlApi.IProduct
 
 
 }
-
 
 
 

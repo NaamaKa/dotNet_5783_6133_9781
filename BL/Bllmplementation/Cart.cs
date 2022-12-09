@@ -14,25 +14,33 @@ internal class Cart : ICart
     private IDal Dal = new DalList();
     public BO.Cart AddItemToCart(BO.Cart _myCart, int _id)
     {
-        DO.Product _wantedProduct= Dal.product.Get(_id);
-        
+        DO.Product _wantedProduct = Dal.product.Get(_id);
+
         foreach (var item in _myCart.Items)
         {
-            if (item.ID == _id)
+            if (item != null)
             {
-                if (_wantedProduct .inStock>= item.Amount + 1)
+                if (item.ID == _id)
                 {
-                    item.Amount++;
-                    double pricetoAdd = item.Price;
-                    item.TotalPrice += pricetoAdd;
-                    _myCart.Price += pricetoAdd;
-                    return _myCart;
-                }
-                else
-                {
-                    throw new Exception("not enough in stock");
+                    if (_wantedProduct.inStock >= item.Amount + 1)
+                    {
+                        item.Amount++;
+                        double pricetoAdd = item.Price;
+                        item.TotalPrice += pricetoAdd;
+                        _myCart.Price += pricetoAdd;
+                        return _myCart;
+                    }
+                    else
+                    {
+                        throw new Exception("not enough in stock");
+                    }
                 }
             }
+            else
+            {
+throw new Exception("no item");
+            }
+
         }
         #region product not in cart
         //check if product aggsists
@@ -42,9 +50,10 @@ internal class Cart : ICart
         {
             _product = Dal.product.Get(_id);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
+            //product dosnt aggsist
+            throw new Exception("product dosnt axist");
         }
         //check if product is inStock
         if (_product.inStock >= 1)
@@ -70,25 +79,33 @@ internal class Cart : ICart
     {
         #region check all data
         //check cart
+       
         if (_myCart.Items.Count > 0)//cart isn't empty
         {
             DO.Product _tempProduct = new DO.Product();
             foreach (var item in _myCart.Items)
             {
-                try
+                if (item != null) { 
+                    try
                 {
                     _tempProduct = Dal.product.Get(item.ID);
                 }
-                catch (Exception ex)
+                catch (Exception )
                 {
-                    //product dosnt aggsist
-                    throw ex;
+                        //product dosnt aggsist
+                        throw new Exception("product dosnt axist");
                 }
                 if (item.Amount < 0)
                     throw new Exception("amount of items is illegal");
                 if (_tempProduct.inStock < item.Amount)
                     throw new Exception("prodoct " + _tempProduct.productName + " not enough in stock. only enough for " + _tempProduct.inStock);
             }
+                else
+                {
+                    throw new Exception("no item");
+                }
+            }
+            
         }
         else
         {
@@ -128,12 +145,13 @@ internal class Cart : ICart
         {
             _newOrderID = Dal.order.Add(_myNewOrder);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
+            throw new Exception("order dosnt axist");
         }
         foreach (var item in _myCart.Items)
         {
+            if (item != null) { 
             Dal.orderItem.Add(new DO.OrderItem()
             {
                 id = 0,
@@ -148,17 +166,22 @@ internal class Cart : ICart
                 _tempProduct = Dal.product.Get(item.ID);
                 _tempProduct.inStock -= item.Amount;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw ex;
+                throw new Exception("Error");
             }
             try
             {
                 Dal.product.Update(_tempProduct);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw ex;
+                    throw new Exception("Error");
+                }
+            }
+            else
+            {
+                throw new Exception("no item");
             }
         }
 
@@ -169,6 +192,7 @@ internal class Cart : ICart
     {
         foreach (var item in _myCart.Items)
         {
+            if (item != null) { 
             if (item.ID == _id)
             {
                 if (_newAmount == 0)
@@ -201,6 +225,11 @@ internal class Cart : ICart
                 else//amounts are equal
                 {
                     return _myCart;
+                }
+                }
+                else
+                {
+                    throw new Exception("no item");
                 }
             }
         }

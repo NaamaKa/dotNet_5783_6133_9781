@@ -81,8 +81,11 @@ internal class Order :BlApi.IOrder
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = orderId;
             orderTracking.Status = CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate);
+        if (orderTracking.listOfStatus != null)
+        {
             switch (orderTracking.Status)
             {
+
                 case OrderStatus.Arrived:
                     orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
                     {
@@ -122,6 +125,11 @@ internal class Order :BlApi.IOrder
                     });
                     break;
             }
+        }
+        else
+        {
+            throw new Exception("no status");
+        }
             return orderTracking;
 
         }
