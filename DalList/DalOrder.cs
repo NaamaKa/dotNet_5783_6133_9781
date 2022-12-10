@@ -90,10 +90,10 @@ public class DalOrder : IOrder
     }
     public void Update(Order _newOrder)
     {
-        foreach (Order _order in orders)
+        foreach (var _order in orders)
         {
-            if (_order.address != null|| _order.mail != null|| _order.OrderDate != null|| _order.shippingDate != null|| _order.arrivleDate != null|| _order.costumerName != null) { }
-            if (_order.OrderNum == _newOrder.OrderNum)
+            if(_order != null)
+            if (_order.Value.OrderNum == _newOrder.OrderNum)
             {
                 orders.Remove(_order);
                 orders.Add(_newOrder);

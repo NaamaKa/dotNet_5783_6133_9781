@@ -49,14 +49,16 @@ public partial class ProductMenu : Window
     {
         if (addOrUpdateButton.Content != null)
         {
-            if (addOrUpdateButton.Content == "add")
+            
+            if ((string)addOrUpdateButton.Content == "add")
                 bl.Product!.AddProduct(createProduct());
             else
             {
                 bl.Product!.UpdateProduct(createProduct());
             }
+            }
             this.Close();
-        }
+        
     }
 
     private BO.Product createProduct()

@@ -112,7 +112,7 @@ public class Product : BlApi.IProduct
                 Category = (BO.Enums.Category)p!.productCategory!,
                 Price = p.productPrice,
                 InStock = true,
-                Amount = CostumerCart.Items.FindAll(e => e.ID == id).Count(),
+                Amount = CostumerCart.Items.FindAll(e => e!.ID == id).Count(),
 
             };
             return PI;

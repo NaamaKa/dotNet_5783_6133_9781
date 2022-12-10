@@ -17,7 +17,7 @@ internal class DalProduct : IProduct
     {
         if (products == null)
         {
-            throw new RequestedItemNotFoundException("order not exists,can not get") { RequestedItemNotFound = predict.ToString() };
+            throw new RequestedItemNotFoundException("order not exists,can not get") { RequestedItemNotFound = predict!.ToString() };
         }
         if (predict == null)
         {

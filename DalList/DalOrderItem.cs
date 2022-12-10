@@ -61,10 +61,11 @@ public class DalOrderItem : IOrderItem
     #region get functions
     public OrderItem GetOrderItem(int _myNumOrder, int myProductBarcode)
     {
-        foreach (OrderItem item in orderItems)
+        foreach (var item in orderItems)
         {
-            if (item.orderId == _myNumOrder && item.itemId == myProductBarcode)
-                return item;
+            if (item != null)
+                if (item.Value.orderId == _myNumOrder && item.Value.itemId == myProductBarcode)
+                    return item.Value;
         }
         throw new Exception("item not found in order");
     }
@@ -73,7 +74,7 @@ public class DalOrderItem : IOrderItem
         List<OrderItem?> tempOrderItems = new List<OrderItem?>();
         foreach (var item in orderItems)
         {
-            if(item != null)
+            if (item != null)
                 tempOrderItems.Add(item);
         }
         if (tempOrderItems.Count > 0)
@@ -83,11 +84,12 @@ public class DalOrderItem : IOrderItem
     }
     public OrderItem Get(int _id)
     {
-        foreach (OrderItem item in orderItems)
+        foreach (var item in orderItems)
         {
-            if (item.id == _id)
+            if(item!=null)
+            if (item.Value.id == _id)
             {
-                return item;
+                return item.Value;
             }
         }
         throw new Exception("no items found in order");
@@ -95,9 +97,10 @@ public class DalOrderItem : IOrderItem
     public List<OrderItem> GetOrderItemsFromOrder(int _myNumOrder)
     {
         List<OrderItem> tempOrderItems = new List<OrderItem>();
-        foreach (OrderItem item in orderItems)
+        foreach (var item in orderItems)
         {
-            if (item.orderId == _myNumOrder)
+            if (item != null)
+                if (item.Value.orderId == _myNumOrder)
             {
                 tempOrderItems.Add((OrderItem)item);
             }
@@ -109,9 +112,10 @@ public class DalOrderItem : IOrderItem
     public List<OrderItem> GetOrdersOfOrderItems(int _myItemId)
     {
         List<OrderItem> tempOrders = new List<OrderItem>();
-        foreach (OrderItem item in orderItems)
+        foreach (var item in orderItems)
         {
-            if (item.itemId == _myItemId)
+            if (item != null)
+                if (item.Value.itemId == _myItemId)
             {
                 tempOrders.Add((OrderItem)item);
             }
@@ -124,9 +128,11 @@ public class DalOrderItem : IOrderItem
 
     public void Delete(int _myNumOrder)
     {
-        foreach (OrderItem item in orderItems)
+       
+            foreach (var item in orderItems)
         {
-            if (item.orderId == _myNumOrder)
+            if (item != null)
+                if (item.Value.orderId == _myNumOrder)
             {
                 orderItems.Remove(item);
             }
@@ -134,9 +140,10 @@ public class DalOrderItem : IOrderItem
     }
     public void Delete(int _myNumOrder, int _myProductBarcode)
     {
-        foreach (OrderItem item in orderItems)
+        foreach (var item in orderItems)
         {
-            if (item.orderId == _myNumOrder && item.itemId == _myProductBarcode)
+            if (item != null)
+                if (item.Value.orderId == _myNumOrder && item.Value.itemId == _myProductBarcode)
             {
                 orderItems.Remove(item);
                 break;
@@ -146,9 +153,11 @@ public class DalOrderItem : IOrderItem
     }
     public void Update(OrderItem _newOrderItem)
     {
-        foreach (OrderItem item in orderItems)
+
+        foreach (var item in orderItems)
         {
-            if (item.orderId == _newOrderItem.orderId && item.itemId == _newOrderItem.itemId)
+            if (item != null)
+                if (item.Value.orderId == _newOrderItem.orderId && item.Value.itemId == _newOrderItem.itemId)
             {
                 orderItems.Remove(item);
                 orderItems.Add(_newOrderItem);

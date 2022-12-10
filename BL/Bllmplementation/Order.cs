@@ -225,7 +225,7 @@ internal class Order :BlApi.IOrder
             PaymentDate = o.OrderDate,
             ShippingDate = o.shippingDate,
             DeliveryDate = o.arrivleDate,
-            Items = GetAllItemsToOrder(o.OrderNum),
+            Items = GetAllItemsToOrder(o.OrderNum)!,
             TotalPrice = CheckTotalSum(o.OrderNum)
 
 
