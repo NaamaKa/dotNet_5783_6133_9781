@@ -184,6 +184,10 @@ public static class DataSource
         {
             get { return _orderID++; }
         }
-
+        public static int DicreaseProductId
+        {
+            get { return _productID--; }
+        }
     }
+
 }

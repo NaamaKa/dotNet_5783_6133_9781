@@ -17,7 +17,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="ikeaLogo.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\BL\BL.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="ikeaLogo.png" />
 	</ItemGroup>
 
 </Project>

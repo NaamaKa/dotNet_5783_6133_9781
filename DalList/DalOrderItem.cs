@@ -6,6 +6,52 @@ using static Dal.DataSource;
 
 public class DalOrderItem : IOrderItem
 {
+    /// <summary>
+    /// return specific item by id and throw exception if it does not exist
+    /// </summary>
+    /// <param name="orderItemID"></param>
+    /// <returns>order item</returns>
+    /// <exception cref="Exception"></exception>
+    public OrderItem Get(Func<OrderItem?, bool>? predict)
+    {
+
+        if (orderItems == null)
+        {
+            throw new RequestedItemNotFoundException("orderItem not exists,can not do get") { RequestedItemNotFound = predict?.ToString() };
+        }
+        if (predict == null)
+        {
+            throw new GetPredictNullException("the predict is empty") { GetPredictNull = null };
+        }
+        OrderItem? _newOrderItem = new OrderItem();
+        _newOrderItem = orderItems.Find(e => predict(e));
+        if (_newOrderItem.HasValue)
+            return (OrderItem)_newOrderItem;
+        throw new RequestedItemNotFoundException("orderItem not exists,can not do get") { RequestedItemNotFound = predict.ToString() };
+
+
+    }
+    /// <summary>
+    /// return all order items and throw exception if it does not exist
+    /// </summary>
+    /// <returns>order item arr</returns>
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? predict = null)
+    {
+        if (orderItems == null)
+        {
+            throw new RequestedItemNotFoundException("order not exists,can not get") { RequestedItemNotFound = predict?.ToString() };
+        }
+        if (predict == null)
+        {
+            return (IEnumerable<OrderItem?>)orderItems;
+
+        }
+
+        List<OrderItem?> _OrderItems = new List<OrderItem?>();
+        _OrderItems = orderItems.FindAll(e => predict(e));
+        return _OrderItems;
+
+    }
     public int Add(OrderItem _newOrderItem)
     {
         _newOrderItem.id = IdOrderItem;

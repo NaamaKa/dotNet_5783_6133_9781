@@ -7,10 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/ikeaLogo.png"/>
+        </Grid.Background>
 
-        <Button Content="Button" HorizontalAlignment="Left" Margin="85,194,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.913,0.552" Width="148" Click="Button_Click" Grid.Column="1" Height="29"/>
+
+        <Button Content="Admin" HorizontalAlignment="Left" Margin="51,337,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.913,0.552" Width="174" Click="Button_Click" Height="54" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1"/>
 
         <Grid.ColumnDefinitions>
+
             <ColumnDefinition Width="47*"/>
             <ColumnDefinition Width="57*"/>
             <ColumnDefinition Width="56*"/>

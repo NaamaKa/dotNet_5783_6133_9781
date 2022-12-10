@@ -5,14 +5,13 @@ using DO;
 using System;
 using System.Diagnostics;
 using System.Xml.Linq;
-
 namespace BlImplementation;
 
 
 public class Product : BlApi.IProduct
 {
 
-    private IDal Dal = new Dal.DalList();
+    private readonly IDal Dal = new Dal.DalList();
 
 
     #region Methodes
@@ -23,16 +22,17 @@ public class Product : BlApi.IProduct
         productsList = Dal.product.GetAll();
         foreach (var product in productsList)
         {
-            
-                if ((product?.productCategory).ToString() == myCategory&&product!=null)
+            if (product != null)
+            {
+                if ((product?.productCategory).ToString() == myCategory)
                     productsForList.Add(new BO.ProductForList()
                     {
-                        Id = product.Value.barkode,
+                        Id = product!.Value.barkode,
                         Name = product.Value.productName,
                         Price = product.Value.productPrice,
-                        Category = (BO.Enums.Category)product.Value.productCategory
+                        Category = (BO.Enums.Category)product!.Value.productCategory!
                     });
-            
+            }
         }
         return productsForList;
 
@@ -51,7 +51,7 @@ public class Product : BlApi.IProduct
                     Id = item.Value.barkode,
                     Name = item.Value.productName,
                     Price = item.Value.productPrice,
-                    Category = (BO.Enums.Category)item.Value.productCategory
+                    Category = (BO.Enums.Category)item!.Value.productCategory!
                 });
 
         }
@@ -109,7 +109,7 @@ public class Product : BlApi.IProduct
             {
                 Id = p.barkode,
                 Name = p.productName,
-                Category = (BO.Enums.Category)p.productCategory,
+                Category = (BO.Enums.Category)p!.productCategory!,
                 Price = p.productPrice,
                 InStock = true,
                 Amount = CostumerCart.Items.FindAll(e => e.ID == id).Count(),
@@ -120,48 +120,35 @@ public class Product : BlApi.IProduct
     }
 
     //עבור מנהל
-    public void AddProduct(DO.Product p)
+    public void AddProduct(BO.Product p)
     {
-        if (p.productName != null) { 
-        CheckCorectData(p.barkode, p.productName, (BO.Enums.Category)p.productCategory, p.productPrice, p.inStock);
+
+        CheckCorectData(p.ID, p.Name!, p.Category, p.Price, p.InStock);
         try
         {
-            Dal.product.Add(p);
+            Dal.product.Add(newProductWithData(p.ID, p.Name!, p.Category, p.Price, p.InStock));
         }
         catch (DO.ItemAlreadyExistsException)
         {
             throw new BO.ProductAlreadyExistsException("product already exists") { ProductAlreadyExists = p.ToString() };
 
         }
-        }
-        else
-        {
-            throw new Exception("no name to Product");
-        }
     }
 
     public void UpdateProduct(BO.Product item)
     {
-        if (item != null)
-        {
-            if (item.Name != null)
-            {
-                CheckCorectData(item.ID, item.Name, item.Category, item.Price, item.InStock);
-                try
-                {
-                    Dal.product.Update(newProductWithData(item.ID, item.Name, item.Category, item.Price, item.InStock));
-                }
-                catch (DO.RequestedItemNotFoundException)
-                {
-                    throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = item.ToString() };
 
-                }
-            }
-            else
-                throw new Exception("no name to the item");
+        CheckCorectData(item.ID, item.Name!, item.Category, item.Price, item.InStock);
+        try
+        {
+            Dal.product.Update(newProductWithData(item.ID, item!.Name!, item.Category, item.Price, item.InStock));
         }
-        else
-            throw new Exception("no item");
+        catch (DO.RequestedItemNotFoundException)
+        {
+            throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = item.ToString() };
+
+        }
+
     }
 
     public void DeleteProduct(int id)
@@ -209,7 +196,7 @@ public class Product : BlApi.IProduct
             ID = p.barkode,
             Name = p.productName,
             Price = p.productPrice,
-            Category = (BO.Enums.Category)p.productCategory,
+            Category = (BO.Enums.Category)p!.productCategory!,
             InStock = p.inStock
         };
         return p1;
@@ -225,7 +212,7 @@ public class Product : BlApi.IProduct
         }
         if (name is null)
         {
-            throw new BO.EmptyNameException("empty name") { EmptyName = name.ToString() };
+            throw new BO.EmptyNameException("empty name") { EmptyName = name!.ToString() };
         }
         if (price <= 0)
         {
@@ -244,13 +231,20 @@ public class Product : BlApi.IProduct
 
     private static DO.Product newProductWithData(int id, string name, BO.Enums.Category category, double price, int inStock)
     {
-        DO.Product p = new DO.Product();
-        p.barkode = id;
-        p.productName = name;
-        p.productCategory = (DO.Enums.Category)category;
-        p.productPrice = price;
-        p.inStock = inStock;
-        return new DO.Product();
+        DO.Product p = new()
+        {
+            barkode = id,
+            productName = name,
+            productCategory = (DO.Enums.Category)category,
+            productPrice = price,
+            inStock = inStock
+        };
+        return p;
+    }
+    public int GetnextidFromDO()
+    {
+        int id = Dal.product.GetNextId();
+        return id;
     }
 
 
@@ -261,6 +255,13 @@ public class Product : BlApi.IProduct
 
 
 }
+
+
+
+
+
+
+
 
 
 

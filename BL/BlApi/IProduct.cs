@@ -12,7 +12,7 @@ public interface IProduct
     //  עבור מנהל ועבור קטלוג ראשי
     public IEnumerable<BO.ProductForList?> GetListOfProduct();
 
-
+    public int GetnextidFromDO();
     //עבור מנהל
     public BO.Product? GetProductItem(int id);
 
@@ -21,8 +21,9 @@ public interface IProduct
     public IEnumerable<BO.ProductForList?> GetProductForListByCategory(string? myCategory);
 
     //עבור מנהל
-    public void AddProduct(DO.Product p);
+    public void AddProduct(BO.Product p);
     public void UpdateProduct(BO.Product item);
     public void DeleteProduct(int id);
 }
+
 
