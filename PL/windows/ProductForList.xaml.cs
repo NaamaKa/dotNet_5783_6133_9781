@@ -42,9 +42,9 @@ public partial class ProductForList : Window
 
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (CategorySelector.SelectedItem.ToString() != null)
+        if (CategorySelector.SelectedItem.ToString() != "")
         {
-            string cat = CategorySelector.SelectedItem.ToString();
+            string? cat = CategorySelector!.SelectedItem!.ToString();
             ProductListview.ItemsSource = bl.Product!.GetProductForListByCategory(cat);
         }
 

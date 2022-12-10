@@ -36,9 +36,9 @@ public partial class ProductMenu : Window
             name.Text = p!.Name!;
             price.Text = p!.Price!.ToString();
             inStock.Text = p!.InStock!.ToString();
-            Category.SelectedIndex = (int)p!.Category!;
+            CategoryComboBox.SelectedIndex = (int)p!.Category!;
         }
-        Category.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
+        CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
     }
     private void Category_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -71,4 +71,6 @@ public partial class ProductMenu : Window
         tempP.Category = BO.Enums.Category.Office;
         return tempP;
     }
+
+   
 }
