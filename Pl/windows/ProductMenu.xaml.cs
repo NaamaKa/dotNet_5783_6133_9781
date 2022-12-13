@@ -22,17 +22,16 @@ namespace Pl.windows;
 /// </summary>
 public partial class ProductMenu : Window
 {
-    IBl bl = new Bl();
+    readonly IBl bl = new Bl();
 
     public ProductMenu(int _id, string _buttoncategory)
     {
         InitializeComponent();
-        addOrUpdateButton.Content = _buttoncategory;
+        AddOrUpdateButton.Content = _buttoncategory;
         id.Text = _id.ToString();
         if (_buttoncategory == "update")
         {
-            BO.Product p = new();
-            p = bl.Product!.GetProductItem(_id)!;
+            BO.Product p = bl.Product!.GetProductItem(_id)!;
             name.Text = p!.Name!;
             price.Text = p!.Price!.ToString();
             inStock.Text = p!.InStock!.ToString();
@@ -44,33 +43,61 @@ public partial class ProductMenu : Window
     {
 
     }
-
-    private void addOrUpdateButton_Click(object sender, RoutedEventArgs e)
+    
+    private void AddOrUpdateButton_Click(object sender, RoutedEventArgs e)
     {
-        if (addOrUpdateButton.Content != null)
+        if (AddOrUpdateButton.Content != null)
         {
-            
-            if ((string)addOrUpdateButton.Content == "add")
-                bl.Product!.AddProduct(createProduct());
+
+            if ((string)AddOrUpdateButton.Content == "add")
+                bl.Product!.AddProduct(CreateProduct());
             else
             {
-                bl.Product!.UpdateProduct(createProduct());
+                bl.Product!.UpdateProduct(CreateProduct());
             }
-            }
-            this.Close();
-        
+        }
+        this.Close();
+
     }
 
-    private BO.Product createProduct()
+    private BO.Product CreateProduct()
     {
-        BO.Product tempP = new BO.Product();
-        tempP.ID = int.Parse(id.Text);
-        tempP.Price = int.Parse(price.Text);
-        tempP.Name = name.Text;
-        tempP.InStock = int.Parse(inStock.Text);
-        tempP.Category = BO.Enums.Category.Office;
+        BO.Product tempP = new()
+        {
+            ID = int.Parse(id.Text),
+            Price = int.Parse(price.Text),
+            Name = name.Text,
+            InStock = int.Parse(inStock.Text)
+        };
+        String selected = CategoryComboBox.Text;
+        switch (selected)
+        {
+            case "Home":
+                tempP.Category = BO.Enums.Category.Home;
+                break;
+            case "Office":
+                tempP.Category = BO.Enums.Category.Office;
+                break;
+            case "Kitchen":
+                tempP.Category = BO.Enums.Category.Kitchen;
+                break;
+            case "Toys":
+                tempP.Category = BO.Enums.Category.Toys;
+                break;
+            case "Textile":
+                tempP.Category = BO.Enums.Category.Textile;
+                break;
+            case "Garden":
+                tempP.Category = BO.Enums.Category.Garden;
+                break;
+        }
+
         return tempP;
     }
 
-   
+    
 }
+
+
+
+
