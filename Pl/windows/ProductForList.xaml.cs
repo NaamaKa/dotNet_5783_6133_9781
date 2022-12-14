@@ -36,7 +36,7 @@ public partial class ProductForList : Window
     {
 
         BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedValue;
-        new ProductMenu(p!.Id!, "update").Show();
+        new ProductMenu(p!.Id!, "update").ShowDialog();
         ProductListview.ItemsSource = bl.Product?.GetListOfProduct();
     }
 
@@ -53,7 +53,7 @@ public partial class ProductForList : Window
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         int nextId = bl.Product!.GetnextidFromDO();
-        new ProductMenu(nextId, "add").Show();
-
+        new ProductMenu(nextId, "add").ShowDialog();
+        ProductListview.ItemsSource = bl.Product?.GetListOfProduct();
     }
 }

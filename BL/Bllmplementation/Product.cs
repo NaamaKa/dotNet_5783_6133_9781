@@ -210,17 +210,17 @@ public class Product : BlApi.IProduct
         {
             throw new BO.NegativeIdException("negative id") { NegativeId = id.ToString() };
         }
-        if (name is null)
+        if (string.IsNullOrEmpty(name))
         {
             throw new BO.EmptyNameException("empty name") { EmptyName = name!.ToString() };
         }
         if (price <= 0)
         {
-            throw new BO.NegativePriceException("empty name") { NegativePrice = price.ToString() };
+            throw new BO.NegativePriceException("Nagative price") { NegativePrice = price.ToString() };
         }
         if (inStock < 0)
         {
-            throw new BO.NegativeStockException("empty name") { NegativeStock = inStock.ToString() };
+            throw new BO.NegativeStockException("Nagative inStock") { NegativeStock = inStock.ToString() };
         }
         return;
 
