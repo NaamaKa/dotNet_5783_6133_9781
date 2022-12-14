@@ -63,7 +63,7 @@ public partial class ProductMenu : Window
                 else
                 {
                     bl.Product!.UpdateProduct(CreateProduct());
-                    MessageBox.Show("the product " + name.Text + " Update");
+                    MessageBox.Show("the product " + name.Text + " update");
 
                 }
             }
