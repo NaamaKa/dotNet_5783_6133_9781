@@ -11,10 +11,22 @@ namespace BlImplementation;
 public class Product : BlApi.IProduct
 {
 
+
+
+
+
+
+
     private readonly IDal Dal = new Dal.DalList();
 
 
     #region Methodes
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="myCategory"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
     public IEnumerable<ProductForList?> GetProductForListByCategory(string? myCategory)
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
@@ -46,19 +58,16 @@ public class Product : BlApi.IProduct
         foreach (var item in productsList)
         {
             if (item != null)
-                productsForList.Add(new BO.ProductForList()
+                productsForList.Add(new ProductForList()
                 {
                     Id = item.Value.barkode,
                     Name = item.Value.productName,
                     Price = item.Value.productPrice,
                     Category = (BO.Enums.Category)item!.Value.productCategory!
                 });
-
         }
         return productsForList;
     }
-
-
     //עבור מנהל
     public BO.Product GetProductItem(int id)
     {
@@ -71,7 +80,7 @@ public class Product : BlApi.IProduct
             DO.Product p = new DO.Product();
             try
             {
-                p = Dal.product.Get(id);
+                p = Dal.product.Get(e => e?.barkode == id);
             }
             catch
             {
@@ -98,7 +107,7 @@ public class Product : BlApi.IProduct
             DO.Product p = new DO.Product();
             try
             {
-                p = Dal.product.Get(id);
+                p = Dal.product.Get(e => e?.barkode == id);
             }
             catch
             {
@@ -112,7 +121,7 @@ public class Product : BlApi.IProduct
                 Category = (BO.Enums.Category)p!.productCategory!,
                 Price = p.productPrice,
                 InStock = true,
-                Amount = CostumerCart.Items.FindAll(e => e!.ID == id).Count(),
+                Amount = CostumerCart!.Items!.FindAll(e => e!.ID == id).Count(),
 
             };
             return PI;
@@ -123,7 +132,7 @@ public class Product : BlApi.IProduct
     public void AddProduct(BO.Product p)
     {
 
-        CheckCorectData(p.ID, p.Name!, p.Category, p.Price, p.InStock);
+        CheckCorrectData(p.ID, p.Name!, p.Category, p.Price, p.InStock);
         try
         {
             Dal.product.Add(newProductWithData(p.ID, p.Name!, p.Category, p.Price, p.InStock));
@@ -138,7 +147,7 @@ public class Product : BlApi.IProduct
     public void UpdateProduct(BO.Product item)
     {
 
-        CheckCorectData(item.ID, item.Name!, item.Category, item.Price, item.InStock);
+        CheckCorrectData(item.ID, item.Name!, item.Category, item.Price, item.InStock);
         try
         {
             Dal.product.Update(newProductWithData(item.ID, item!.Name!, item.Category, item.Price, item.InStock));
@@ -178,13 +187,7 @@ public class Product : BlApi.IProduct
         {
             throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = id.ToString() };
         }
-
     }
-
-
-
-
-
     #endregion
     #region help methodes
 
@@ -203,8 +206,8 @@ public class Product : BlApi.IProduct
     }
     #endregion
 
-    #region check corect data
-    public void CheckCorectData(int id, string name, BO.Enums.Category category, double price, int inStock)
+    #region check correct data
+    public void CheckCorrectData(int id, string name, BO.Enums.Category category, double price, int inStock)
     {
         if (id < 0)
         {

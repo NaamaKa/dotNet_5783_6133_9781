@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BlApi;
+using BO;
 using Dal;
 using DalApi;
 
@@ -12,11 +13,25 @@ namespace Bllmplementation;
 internal class Cart : ICart
 {
     private IDal Dal = new DalList();
+    /// <summary>
+    /// gets a cart and trues to add a wanted product
+    /// </summary>
+    /// <param name="_myCart">cart to add</param>
+    /// <param name="_id">id of wanted product</param>
+    /// <returns>the cart after the try</returns>
+    /// <exception cref="SendEmptyCartException">the cart was empty</exception>
+    /// <exception cref="NotEnoughInStockException">not enough of product in stock</exception>
+    /// <exception cref="FieldToGetProductException">product does not exsist</exception>
+    /// <exception cref="ProductNotInStockException"></exception>
     public BO.Cart AddItemToCart(BO.Cart _myCart, int _id)
     {
-        DO.Product _wantedProduct = Dal.product.Get(_id);
+        if (_myCart == null)
+        {
+            throw new SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = _id.ToString() };
+        }
+        DO.Product _wantedProduct = Dal.product.Get(e => e?.barkode == _id);
 
-        foreach (var item in _myCart.Items)
+        foreach (var item in _myCart!.Items!)
         {
             if (item != null)
             {
@@ -32,80 +47,76 @@ internal class Cart : ICart
                     }
                     else
                     {
-                        throw new Exception("not enough in stock");
+                        throw new NotEnoughInStockException("not enoughf in stock") { NotEnoughInStock = _id.ToString() };
                     }
                 }
             }
-            else
-            {
-throw new Exception("no item");
-            }
-
         }
         #region product not in cart
         //check if product aggsists
         DO.Product _product = new DO.Product();
-
         try
         {
-            _product = Dal.product.Get(_id);
+            _product = Dal.product.Get(e => e?.barkode == _id);
         }
         catch (Exception)
         {
             //product dosnt aggsist
-            throw new Exception("product dosnt axist");
+            throw new FieldToGetProductException("product dosnt axist") { FieldToGetProduct = _id.ToString() };
         }
         //check if product is inStock
         if (_product.inStock >= 1)
         {
-            BO.OrderItem _myNeworderItem = new BO.OrderItem();
-            _myNeworderItem.ID = _id;
-            _myNeworderItem.Name = _product.productName;
-            _myNeworderItem.Price = _product.productPrice;
-            _myNeworderItem.Amount = 1;
-            _myNeworderItem.TotalPrice = _product.productPrice;
+            BO.OrderItem _myNeworderItem = new()
+            {
+                ID = _id,
+                Name = _product.productName,
+                Price = _product.productPrice,
+                Amount = 1,
+                TotalPrice = _product.productPrice
+            };
             _myCart.Items.Add(_myNeworderItem);
             _myCart.Price += _product.productPrice;
             return _myCart;
         }
         else
-            throw new Exception("not enough in stock");
+            throw new ProductNotInStockException("not enough in stock") { ProductNotInStock = _id.ToString() };
 
         #endregion
-        throw new NotImplementedException();
     }
 
     public void SubmitOrder(BO.Cart _myCart, string _cName, string _cEmail, string _cAddress)
     {
         #region check all data
         //check cart
-       
-        if (_myCart.Items.Count > 0)//cart isn't empty
+
+        if (_myCart.Items != null)//cart isn't empty
         {
-            DO.Product _tempProduct = new DO.Product();
+            DO.Product _tempProduct = new();
             foreach (var item in _myCart.Items)
             {
-                if (item != null) { 
+                if (item != null)
+                {
                     try
-                {
-                    _tempProduct = Dal.product.Get(item.ID);
-                }
-                catch (Exception )
-                {
+                    {
+                        _tempProduct = Dal.product.Get(e => e?.barkode == item.ID);
+                    }
+                    catch (Exception)
+                    {
                         //product dosnt aggsist
                         throw new Exception("product dosnt axist");
+                    }
+                    if (item.Amount < 0)
+                        throw new Exception("amount of items is illegal");
+                    if (_tempProduct.inStock < item.Amount)
+                        throw new Exception("prodoct " + _tempProduct.productName + " not enough in stock. only enough for " + _tempProduct.inStock);
                 }
-                if (item.Amount < 0)
-                    throw new Exception("amount of items is illegal");
-                if (_tempProduct.inStock < item.Amount)
-                    throw new Exception("prodoct " + _tempProduct.productName + " not enough in stock. only enough for " + _tempProduct.inStock);
-            }
                 else
                 {
                     throw new Exception("no item");
                 }
             }
-            
+
         }
         else
         {
@@ -151,31 +162,32 @@ throw new Exception("no item");
         }
         foreach (var item in _myCart.Items)
         {
-            if (item != null) { 
-            Dal.orderItem.Add(new DO.OrderItem()
+            if (item != null)
             {
-                id = 0,
-                orderId = _newOrderID,
-                itemId = item.ID,
-                amount = item.Amount,
-                price = item.TotalPrice,
-            });
-            DO.Product _tempProduct = new DO.Product();
-            try
-            {
-                _tempProduct = Dal.product.Get(item.ID);
-                _tempProduct.inStock -= item.Amount;
-            }
-            catch (Exception )
-            {
-                throw new Exception("Error");
-            }
-            try
-            {
-                Dal.product.Update(_tempProduct);
-            }
-            catch (Exception )
-            {
+                Dal.orderItem.Add(new DO.OrderItem()
+                {
+                    id = 0,
+                    orderId = _newOrderID,
+                    itemId = item.ID,
+                    amount = item.Amount,
+                    price = item.TotalPrice,
+                });
+                DO.Product _tempProduct = new DO.Product();
+                try
+                {
+                    _tempProduct = Dal.product.Get(e => e?.barkode == item.ID);
+                    _tempProduct.inStock -= item.Amount;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Error");
+                }
+                try
+                {
+                    Dal.product.Update(_tempProduct);
+                }
+                catch (Exception)
+                {
                     throw new Exception("Error");
                 }
             }
@@ -190,49 +202,51 @@ throw new Exception("no item");
 
     public BO.Cart UpdateAmountOfItem(BO.Cart _myCart, int _id, int _newAmount)
     {
-        foreach (var item in _myCart.Items)
-        {
-            if (item != null) { 
-            if (item.ID == _id)
+        if (_myCart.Items != null)
+            foreach (var item in _myCart.Items)
             {
-                if (_newAmount == 0)
+                if (item != null)
                 {
-                    _myCart.Items.Remove(item);
-                }
-                else if (item.Amount > _newAmount)
-                {
-                    if (Dal.product.Get(_id).inStock >= item.Amount + _newAmount)
+                    if (item.ID == _id)
                     {
-                        item.Amount = _newAmount;
-                        double pricetoAdd = item.Price * item.Amount;
-                        item.TotalPrice = pricetoAdd;
-                        _myCart.Price += pricetoAdd;
-                        return _myCart;
+                        if (_newAmount == 0)
+                        {
+                            _myCart.Items.Remove(item);
+                        }
+                        else if (item.Amount > _newAmount)
+                        {
+                            if (Dal.product.Get(e => e?.barkode == item.ID).inStock >= item.Amount + _newAmount)
+                            {
+                                item.Amount = _newAmount;
+                                double pricetoAdd = item.Price * item.Amount;
+                                item.TotalPrice = pricetoAdd;
+                                _myCart.Price += pricetoAdd;
+                                return _myCart;
+                            }
+                            else
+                            {
+                                throw new Exception("not enough in stock for new amount");
+                            }
+                        }
+                        else if (item.Amount < _newAmount)
+                        {
+                            item.Amount = _newAmount;
+                            double _newPrice = item.TotalPrice - item.Price * _newAmount;
+                            item.TotalPrice = item.Price * _newAmount;
+                            _myCart.Price -= _newPrice;
+                            return _myCart;
+                        }
+                        else//amounts are equal
+                        {
+                            return _myCart;
+                        }
                     }
                     else
                     {
-                        throw new Exception("not enough in stock for new amount");
+                        throw new Exception("no item");
                     }
                 }
-                else if (item.Amount < _newAmount)
-                {
-                    item.Amount = _newAmount;
-                    double _newPrice = item.TotalPrice - item.Price * _newAmount;
-                    item.TotalPrice = item.Price * _newAmount;
-                    _myCart.Price -= _newPrice;
-                    return _myCart;
-                }
-                else//amounts are equal
-                {
-                    return _myCart;
-                }
-                }
-                else
-                {
-                    throw new Exception("no item");
-                }
             }
-        }
         throw new NotImplementedException();
     }
 }

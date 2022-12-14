@@ -11,7 +11,7 @@ using static BO.Enums;
 
 namespace Bllmplementation;
 
-internal class Order :BlApi.IOrder
+internal class Order : BlApi.IOrder
 {
     private readonly IDal Dal = new Dal.DalList();
 
@@ -21,10 +21,11 @@ internal class Order :BlApi.IOrder
         List<BO.OrderForList> ordersForList = new List<OrderForList>();
         IEnumerable<DO.Order?> orderList = Dal.order.GetAll();
         _ = new List<OrderTracking>();
-        if (orderList != null) {
+        if (orderList != null)
+        {
             foreach (var item in orderList)
             {
-                if(item != null)
+                if (item != null)
                 {
                     ordersForList.Add(new OrderForList()
                     {
@@ -52,7 +53,7 @@ internal class Order :BlApi.IOrder
             DO.Order o = new DO.Order();
             try
             {
-                o = Dal.order.Get(id);
+                o = Dal.order.Get(e => e?.OrderNum == id);
             }
             catch (DO.RequestedItemNotFoundException)
             {
@@ -60,27 +61,25 @@ internal class Order :BlApi.IOrder
 
             }
             return DOorderToBOorder(o);
-
-
         }
     }
 
-  
-        public BO.OrderTracking GetOrderTracking(int orderId)
-        {
-            DO.Order o = new DO.Order();
-            try
-            {
-                o = Dal.order.Get(orderId);
-            }
-            catch (DO.RequestedItemNotFoundException)
-            {
-                throw new BO.OrderNotExistsException("order not exists") { OrderNotExists = o.ToString() };
 
-            }
-            BO.OrderTracking orderTracking = new BO.OrderTracking();
-            orderTracking.ID = orderId;
-            orderTracking.Status = CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate);
+    public BO.OrderTracking GetOrderTracking(int orderId)
+    {
+        DO.Order o = new DO.Order();
+        try
+        {
+            o = Dal.order.Get(e => e?.OrderNum == orderId);
+        }
+        catch (DO.RequestedItemNotFoundException)
+        {
+            throw new OrderNotExistsException("order not exists") { OrderNotExists = o.ToString() };
+
+        }
+        BO.OrderTracking orderTracking = new OrderTracking();
+        orderTracking.ID = orderId;
+        orderTracking.Status = CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate);
         if (orderTracking.listOfStatus != null)
         {
             switch (orderTracking.Status)
@@ -130,17 +129,17 @@ internal class Order :BlApi.IOrder
         {
             throw new Exception("no status");
         }
-            return orderTracking;
+        return orderTracking;
 
-        }
- 
+    }
+
 
     public BO.Order UpdateDeliveryDate(int orderId)
     {
         DO.Order o = new DO.Order();
         try
         {
-            o = Dal.order.Get(orderId);
+            o = Dal.order.Get(e => e?.OrderNum == orderId);
         }
         catch
         {
@@ -179,7 +178,7 @@ internal class Order :BlApi.IOrder
         DO.Order o = new DO.Order();
         try
         {
-            o = Dal.order.Get(orderId);
+            o = Dal.order.Get(e => e?.OrderNum == orderId);
         }
         catch (DO.RequestedItemNotFoundException)
         {
@@ -289,8 +288,8 @@ internal class Order :BlApi.IOrder
     }
     public string getOrderItemName(int productId)
     {
-        DO.Product product = new ();
-        product = Dal.product.Get(productId);
+        DO.Product product = new();
+        product = Dal.product.Get(e => e?.barkode == productId);
         return product.productName ?? throw new Exception("no product");
     }
 
