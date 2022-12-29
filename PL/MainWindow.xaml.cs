@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,8 +27,10 @@ public partial class MainWindow : Window
 
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e) => new ProductForList().Show();
-
+    private void Button_Click(object sender, RoutedEventArgs e) {
+        new ProductForList().Show();
+        this.Close();
+    } 
 
 }
 
