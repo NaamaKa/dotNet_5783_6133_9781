@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
-    internal class Factory
+    internal class Factoryכע
     {
     }
 }
