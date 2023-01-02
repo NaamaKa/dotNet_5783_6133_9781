@@ -10,16 +10,7 @@ namespace BlImplementation;
 
 public class Product : BlApi.IProduct
 {
-
-
-
-
-
-
-
-    private readonly IDal Dal = new Dal.DalList();
-
-
+    DalApi.IDal? Dal = DalApi.Factory.Get();
     #region Methodes
     /// <summary>
     ///
@@ -30,43 +21,32 @@ public class Product : BlApi.IProduct
     public IEnumerable<ProductForList?> GetProductForListByCategory(string? myCategory)
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
-        List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
         productsList = Dal.product.GetAll();
-        foreach (var product in productsList)
-        {
-            if (product != null)
+        return productsList
+            .Where(product => product != null && (product?.productCategory).ToString() == myCategory)
+            .Select(product => new ProductForList()
             {
-                if ((product?.productCategory).ToString() == myCategory)
-                    productsForList.Add(new BO.ProductForList()
-                    {
-                        Id = product!.Value.barkode,
-                        Name = product.Value.productName,
-                        Price = product.Value.productPrice,
-                        Category = (BO.Enums.Category)product!.Value.productCategory!
-                    });
-            }
-        }
-        return productsForList;
-
+                Id = product!.Value.barkode,
+                Name = product.Value.productName,
+                Price = product.Value.productPrice,
+                Category = (BO.Enums.Category)product!.Value.productCategory!
+            });
         throw new NotImplementedException();
     }
-    public IEnumerable<BO.ProductForList> GetListOfProduct()
+    public IEnumerable<ProductForList> GetListOfProduct()
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
-        List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
+        List<ProductForList> productsForList = new List<ProductForList>();
         productsList = Dal.product.GetAll();
-        foreach (var item in productsList)
-        {
-            if (item != null)
-                productsForList.Add(new ProductForList()
-                {
-                    Id = item.Value.barkode,
-                    Name = item.Value.productName,
-                    Price = item.Value.productPrice,
-                    Category = (BO.Enums.Category)item!.Value.productCategory!
-                });
-        }
-        return productsForList;
+        return productsList
+            .Where(item => item != null)
+            .Select(item => new ProductForList()
+            {
+                Id = item!.Value.barkode,
+                Name = item.Value.productName,
+                Price = item.Value.productPrice,
+                Category = (BO.Enums.Category)item!.Value.productCategory!
+            });
     }
     //עבור מנהל
     public BO.Product GetProductItem(int id)
@@ -165,19 +145,12 @@ public class Product : BlApi.IProduct
         IEnumerable<DO.OrderItem?> orderList = new List<DO.OrderItem?>();
         orderList = Dal.orderItem.GetAll();
         bool flag = false;
-        foreach (var OI in orderList)
-        {
-            if (OI != null)
-            {
-                if (OI?.orderId == id)
-                {
-                    flag = true;
-                }
-            }
-        }
+        var updateFlag = orderList
+            .Where(OI => OI != null && OI?.orderId == id)
+            .Select(OI => flag = true);
         if (flag)
         {
-            throw new BO.ProductInUseException("product in use") { ProductInUse = id.ToString() };
+            throw new ProductInUseException("product in use") { ProductInUse = id.ToString() };
         }
         try
         {

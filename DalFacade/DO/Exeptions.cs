@@ -14,7 +14,13 @@ public class GetPredictNullException : Exception
     public GetPredictNullException(string msg) : base(msg)
     {
     }
-} 
+}
+[Serializable]
+public class DalConfigException : Exception
+{
+    public DalConfigException(string msg) : base(msg) { }
+    public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
+}
 
 public class RequestedItemNotFoundException : Exception
 {

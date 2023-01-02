@@ -5,14 +5,13 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
-using Dal;
 using DalApi;
 
 namespace Bllmplementation;
 
 internal class Cart : ICart
 {
-    private IDal Dal = new DalList();
+    DalApi.IDal? Dal = DalApi.Factory.Get();
     /// <summary>
     /// gets a cart and trues to add a wanted product
     /// </summary>
@@ -29,7 +28,7 @@ internal class Cart : ICart
         {
             throw new SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = _id.ToString() };
         }
-        DO.Product _wantedProduct = Dal.product.Get(e => e?.barkode == _id);
+        DO.Product _wantedProduct = Dal!.product.Get(e => e?.barkode == _id);
 
         foreach (var item in _myCart!.Items!)
         {
@@ -99,7 +98,7 @@ internal class Cart : ICart
                 {
                     try
                     {
-                        _tempProduct = Dal.product.Get(e => e?.barkode == item.ID);
+                        _tempProduct = Dal!.product.Get(e => e?.barkode == item.ID);
                     }
                     catch (Exception)
                     {
@@ -154,7 +153,7 @@ internal class Cart : ICart
         int _newOrderID = 0;
         try
         {
-            _newOrderID = Dal.order.Add(_myNewOrder);
+            _newOrderID = Dal!.order.Add(_myNewOrder);
         }
         catch (Exception)
         {
@@ -215,7 +214,7 @@ internal class Cart : ICart
                         }
                         else if (item.Amount > _newAmount)
                         {
-                            if (Dal.product.Get(e => e?.barkode == item.ID).inStock >= item.Amount + _newAmount)
+                            if (Dal!.product.Get(e => e?.barkode == item.ID).inStock >= item.Amount + _newAmount)
                             {
                                 item.Amount = _newAmount;
                                 double pricetoAdd = item.Price * item.Amount;
