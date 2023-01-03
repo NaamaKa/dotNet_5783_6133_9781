@@ -29,6 +29,9 @@ internal class Cart : ICart
             throw new SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = _id.ToString() };
         }
         DO.Product _wantedProduct = Dal!.product.Get(e => e?.barkode == _id);
+        //var wantedItem=from OrderItem item in _myCart!.Items!
+        //               where(item != null && item.ID == _id&& _wantedProduct.inStock >= item.Amount + 1)
+        //               select();
 
         foreach (var item in _myCart!.Items!)
         {
@@ -92,6 +95,7 @@ internal class Cart : ICart
         if (_myCart.Items != null)//cart isn't empty
         {
             DO.Product _tempProduct = new();
+
             foreach (var item in _myCart.Items)
             {
                 if (item != null)

@@ -21,7 +21,7 @@ namespace Pl.windows;
 /// </summary>
 public partial class ProductForList : Window
 {
-    IBl bl = new Bl();
+    //IBl bl = new Bl();
     public ProductForList()
     {
         InitializeComponent();

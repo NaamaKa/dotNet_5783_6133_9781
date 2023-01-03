@@ -3,6 +3,8 @@ using static Dal.DataSource;
 using static Dal.DataSource.Config;
 
 using DalApi;
+using System.Linq;
+
 namespace Dal;
 
 public class DalOrder : IOrder
@@ -57,11 +59,17 @@ public class DalOrder : IOrder
         orders.Add(_newOrder);
         return _newOrder.OrderNum;
     }
-    public Order Get(int _myNum)
+    public Order Get(int _myNum) 
     {
+        //return orders.Where ( order=> order. = _myNum)
+        //{
+        //var listToReturn= from Order order in orders
+        //       where order.Equals(true) && order.OrderNum == _myNum
+        //       select order;
+        //return listToReturn.ToList();
         foreach (var order in orders)
         {
-            if(order != null)
+            if (order != null)
                 if (order?.OrderNum == _myNum)
                     return (Order)order;
         }
@@ -69,15 +77,14 @@ public class DalOrder : IOrder
     }
     public List<Order?> GetAll()
     {
-        List<Order?> tempOrders = new List<Order?>();
-        foreach (var order in orders)
-        {
-            tempOrders.Add(order);
-        }
-        return tempOrders;
+        return (from Order? o in orders
+               select o).ToList();
     }
     public void Delete(int _myNum)
     {
+        //var item= orders
+        //    .Where(order=> order !=null)
+        //    .Where(order => order.OrderID = _myNum)
         foreach (var _order in orders)
         {
             if (OrderID == _myNum)

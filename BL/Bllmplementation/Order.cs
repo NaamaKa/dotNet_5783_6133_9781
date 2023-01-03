@@ -17,36 +17,19 @@ internal class Order : BlApi.IOrder
     public IEnumerable<OrderForList> GetListOfOrders()
     {
         _ = new List<DO.Order>();
-        IEnumerable<DO.Order?> orderList = Dal.order.GetAll();
+        IEnumerable<DO.Order?> orderList = Dal!.order.GetAll();
         _ = new List<OrderTracking>();
         return orderList
             .Where(item => item != null)
             .Select(item => new OrderForList()
             {
-                ID = item.Value.OrderNum,
+                ID = item!.Value.OrderNum,
                 CostumerName = item.Value.costumerName,
                 Status = CheckStatus(item.Value.OrderDate, item.Value.shippingDate, item.Value.arrivleDate),
                 AmountOfItems = GetAmountItems(item.Value.OrderNum),
                 TotalPrice = CheckTotalSum(item.Value.OrderNum)
             });
-        //if (orderList != null)
-        //{
-        //    foreach (var item in orderList)
-        //    {
-        //        if (item != null)
-        //        {
-        //            ordersForList.Add(new OrderForList()
-        //            {
-        //                ID = item.Value.OrderNum,
-        //                CostumerName = item.Value.costumerName,
-        //                Status = CheckStatus(item.Value.OrderDate, item.Value.shippingDate, item.Value.arrivleDate),
-        //                AmountOfItems = GetAmountItems(item.Value.OrderNum),
-        //                TotalPrice = CheckTotalSum(item.Value.OrderNum)
-        //            });
-        //        }
-        //    }
-
-        //}
+  
         throw new Exception("no orders");
     }
 
@@ -61,7 +44,7 @@ internal class Order : BlApi.IOrder
             DO.Order o = new DO.Order();
             try
             {
-                o = Dal.order.Get(e => e?.OrderNum == id);
+                o = Dal!.order.Get(e => e?.OrderNum == id);
             }
             catch (DO.RequestedItemNotFoundException)
             {
@@ -78,7 +61,7 @@ internal class Order : BlApi.IOrder
         DO.Order o = new DO.Order();
         try
         {
-            o = Dal.order.Get(e => e?.OrderNum == orderId);
+            o = Dal!.order.Get(e => e?.OrderNum == orderId);
         }
         catch (DO.RequestedItemNotFoundException)
         {
@@ -147,7 +130,7 @@ internal class Order : BlApi.IOrder
         DO.Order o = new DO.Order();
         try
         {
-            o = Dal.order.Get(e => e?.OrderNum == orderId);
+            o = Dal!.order.Get(e => e?.OrderNum == orderId);
         }
         catch
         {
@@ -186,7 +169,7 @@ internal class Order : BlApi.IOrder
         DO.Order o = new DO.Order();
         try
         {
-            o = Dal.order.Get(e => e?.OrderNum == orderId);
+            o = Dal!.order.Get(e => e?.OrderNum == orderId);
         }
         catch (DO.RequestedItemNotFoundException)
         {
@@ -239,7 +222,7 @@ internal class Order : BlApi.IOrder
         };
         return newOrder;
     }
-    public BO.Enums.OrderStatus CheckStatus(DateTime? OrderDate, DateTime? ShipDate, DateTime? DeliveryDate)
+    public OrderStatus CheckStatus(DateTime? OrderDate, DateTime? ShipDate, DateTime? DeliveryDate)
     {
         DateTime today = DateTime.Now;
         if (today.Equals(OrderDate) && today.Equals(ShipDate) && today.Equals(DeliveryDate))
@@ -252,24 +235,26 @@ internal class Order : BlApi.IOrder
     public int GetAmountItems(int id)
     {
         IEnumerable<DO.OrderItem> orderItemList = new List<DO.OrderItem>();
-        orderItemList = Dal.orderItem.GetOrderItemsFromOrder(id);
+        orderItemList = Dal!.orderItem.GetOrderItemsFromOrder(id);
         int sum = 0;
-        var newSum = orderItemList.Select(item => sum += item.amount);
+        var newSum=from OrderItem item in orderItemList
+                   select ( sum += item.Amount).ToString(); 
         return sum;
 
     }
     public double CheckTotalSum(int id)
     {
         IEnumerable<DO.OrderItem> orderItemList = new List<DO.OrderItem>();
-        orderItemList = Dal.orderItem.GetOrderItemsFromOrder(id);
+        orderItemList = Dal!.orderItem.GetOrderItemsFromOrder(id);
         double sum = 0;
-        var newSum = orderItemList.Select(item => sum = sum + item.price * item.amount);
+        var newSum = from OrderItem item in orderItemList
+                     select (sum = sum + item.Price * item.Amount).ToString();
         return sum;
     }
     public List<OrderItem> GetAllItemsToOrder(int id)
     {
         IEnumerable<DO.OrderItem> orderItemList = new List<DO.OrderItem>();
-        orderItemList = Dal.orderItem.GetOrderItemsFromOrder(id);
+        orderItemList = Dal!.orderItem.GetOrderItemsFromOrder(id);
         int count = 0;
         return orderItemList
             .Select(item => new OrderItem()
@@ -285,7 +270,7 @@ internal class Order : BlApi.IOrder
     public string getOrderItemName(int productId)
     {
         DO.Product product = new();
-        product = Dal.product.Get(e => e?.barkode == productId);
+        product = Dal!.product.Get(e => e?.barkode == productId);
         return product.productName ?? throw new Exception("no product");
     }
     #endregion

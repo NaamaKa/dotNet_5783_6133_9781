@@ -21,8 +21,8 @@ public class Product : BlApi.IProduct
     public IEnumerable<ProductForList?> GetProductForListByCategory(string? myCategory)
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
-        productsList = Dal.product.GetAll();
-        return productsList
+        productsList = Dal!.product.GetAll();
+        return productsList 
             .Where(product => product != null && (product?.productCategory).ToString() == myCategory)
             .Select(product => new ProductForList()
             {
@@ -36,8 +36,8 @@ public class Product : BlApi.IProduct
     public IEnumerable<ProductForList> GetListOfProduct()
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
-        List<ProductForList> productsForList = new List<ProductForList>();
-        productsList = Dal.product.GetAll();
+        //List<ProductForList> productsForList = new List<ProductForList>();
+        productsList = Dal!.product.GetAll();
         return productsList
             .Where(item => item != null)
             .Select(item => new ProductForList()
@@ -60,7 +60,7 @@ public class Product : BlApi.IProduct
             DO.Product p = new DO.Product();
             try
             {
-                p = Dal.product.Get(e => e?.barkode == id);
+                p = Dal!.product.Get(e => e?.barkode == id);
             }
             catch
             {
@@ -87,7 +87,7 @@ public class Product : BlApi.IProduct
             DO.Product p = new DO.Product();
             try
             {
-                p = Dal.product.Get(e => e?.barkode == id);
+                p = Dal!.product.Get(e => e?.barkode == id);
             }
             catch
             {
@@ -115,7 +115,7 @@ public class Product : BlApi.IProduct
         CheckCorrectData(p.ID, p.Name!, p.Category, p.Price, p.InStock);
         try
         {
-            Dal.product.Add(newProductWithData(p.ID, p.Name!, p.Category, p.Price, p.InStock));
+            Dal!.product.Add(newProductWithData(p.ID, p.Name!, p.Category, p.Price, p.InStock));
         }
         catch (DO.ItemAlreadyExistsException)
         {
@@ -130,7 +130,7 @@ public class Product : BlApi.IProduct
         CheckCorrectData(item.ID, item.Name!, item.Category, item.Price, item.InStock);
         try
         {
-            Dal.product.Update(newProductWithData(item.ID, item!.Name!, item.Category, item.Price, item.InStock));
+            Dal!.product.Update(newProductWithData(item.ID, item!.Name!, item.Category, item.Price, item.InStock));
         }
         catch (DO.RequestedItemNotFoundException)
         {
@@ -143,7 +143,7 @@ public class Product : BlApi.IProduct
     public void DeleteProduct(int id)
     {
         IEnumerable<DO.OrderItem?> orderList = new List<DO.OrderItem?>();
-        orderList = Dal.orderItem.GetAll();
+        orderList = Dal!.orderItem.GetAll();
         bool flag = false;
         var updateFlag = orderList
             .Where(OI => OI != null && OI?.orderId == id)
@@ -219,7 +219,7 @@ public class Product : BlApi.IProduct
     }
     public int GetnextidFromDO()
     {
-        int id = Dal.product.GetNextId();
+        int id = Dal!.product.GetNextId();
         return id;
     }
 
