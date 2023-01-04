@@ -36,7 +36,6 @@ public class Product : BlApi.IProduct
     public IEnumerable<ProductForList> GetListOfProduct()
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
-        //List<ProductForList> productsForList = new List<ProductForList>();
         productsList = Dal!.product.GetAll();
         return productsList
             .Where(item => item != null)

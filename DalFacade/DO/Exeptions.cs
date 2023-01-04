@@ -40,13 +40,13 @@ public class RequestedUpdateItemNotFoundException : Exception
     }
 
 }
-
-
-public class ItemAlreadyExistsException : Exception
+public class NoStatusExeption : Exception
 {
-    public string? ItemAlreadyExists { get; set; }
+    public string? NoStatus { get; set; }
 
-    public ItemAlreadyExistsException(string msg) : base(msg)
+    public NoStatusExeption(string msg) : base(msg)
     {
     }
+
 }
+

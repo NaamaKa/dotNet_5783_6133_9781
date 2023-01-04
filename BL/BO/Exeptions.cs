@@ -183,5 +183,12 @@ namespace BO
 
         public OrderHasAlreadyProvidedException(string msg) : base(msg) { }
     }
+    public class NoOrdersForListExeption : Exception
+    {
+        public NoOrdersForListExeption(string msg) : base(msg) { }
+    }
+ 
     #endregion
+
+
 }

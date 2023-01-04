@@ -14,30 +14,40 @@ namespace Bllmplementation;
 internal class Order : BlApi.IOrder
 {
     DalApi.IDal? Dal = DalApi.Factory.Get();
+    /// <summary>
+    ///  return all orders for list
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NoOrdersForListExeption">no orders for list found</exception>
     public IEnumerable<OrderForList> GetListOfOrders()
-    {
-        _ = new List<DO.Order>();
+    { 
+    
         IEnumerable<DO.Order?> orderList = Dal!.order.GetAll();
-        _ = new List<OrderTracking>();
-        return orderList
-            .Where(item => item != null)
-            .Select(item => new OrderForList()
-            {
-                ID = item!.Value.OrderNum,
-                CostumerName = item.Value.costumerName,
-                Status = CheckStatus(item.Value.OrderDate, item.Value.shippingDate, item.Value.arrivleDate),
-                AmountOfItems = GetAmountItems(item.Value.OrderNum),
-                TotalPrice = CheckTotalSum(item.Value.OrderNum)
-            });
-  
-        throw new Exception("no orders");
+        try
+        {
+            return orderList
+          .Where(item => item != null)
+          .Select(item => new OrderForList()
+          {
+              ID = item!.Value.OrderNum,
+              CostumerName = item.Value.costumerName,
+              Status = CheckStatus(item.Value.OrderDate, item.Value.shippingDate, item.Value.arrivleDate),
+              AmountOfItems = GetAmountItems(item.Value.OrderNum),
+              TotalPrice = CheckTotalSum(item.Value.OrderNum)
+          });
+        }
+        catch
+        {
+            
+            throw new NoOrdersForListExeption("no orders for list") { };
+        }
     }
 
     public BO.Order GetOrderDetails(int id)
     {
         if (id <= 0)
         {
-            throw new BO.NegativeIdException("negative id") { NegativeId = id.ToString() };
+            throw new NegativeIdException("negative id") { NegativeId = id.ToString() };
         }
         else
         {
@@ -68,7 +78,7 @@ internal class Order : BlApi.IOrder
             throw new OrderNotExistsException("order not exists") { OrderNotExists = o.ToString() };
 
         }
-        BO.OrderTracking orderTracking = new OrderTracking();
+        OrderTracking orderTracking = new OrderTracking();
         orderTracking.ID = orderId;
         orderTracking.Status = CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate);
         if (orderTracking.listOfStatus != null)
@@ -77,19 +87,19 @@ internal class Order : BlApi.IOrder
             {
 
                 case OrderStatus.Arrived:
-                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
                     {
                         Date = o.OrderDate,
                         Status = BO.Enums.OrderStatus.Arrived
                     });
                     break;
                 case OrderStatus.Sent:
-                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
                     {
                         Date = o.OrderDate,
                         Status = BO.Enums.OrderStatus.Arrived
                     });
-                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
                     {
                         Date = o.shippingDate,
                         Status = BO.Enums.OrderStatus.Sent
@@ -97,17 +107,17 @@ internal class Order : BlApi.IOrder
                     });
                     break;
                 case OrderStatus.Submitted:
-                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
                     {
                         Date = o.OrderDate,
                         Status = BO.Enums.OrderStatus.Arrived
                     });
-                    orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
                     {
                         Date = o.shippingDate,
                         Status = BO.Enums.OrderStatus.Sent
 
-                    }); orderTracking.listOfStatus.Add(new BO.OrderTracking.StatusAndDate()
+                    }); orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
                     {
                         Date = o.arrivleDate,
                         Status = BO.Enums.OrderStatus.Submitted
@@ -188,7 +198,7 @@ internal class Order : BlApi.IOrder
                 catch (DO.RequestedUpdateItemNotFoundException)
                 {
 
-                    throw new BO.UpdateOrderNotSucceedException("update order not succeed") { UpdateOrderNotSucceed = o.ToString() };
+                    throw new UpdateOrderNotSucceedException("update order not succeed") { UpdateOrderNotSucceed = o.ToString() };
                 }
 
 

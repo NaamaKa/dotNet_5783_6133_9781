@@ -28,8 +28,6 @@ internal class DalProduct : IProduct
             return (Product)_newProduct;
         else
             throw new RequestedItemNotFoundException("product not exists,can not do get") { RequestedItemNotFound = predict.ToString() };
-
-
     }
 
     /// <summary>
@@ -56,8 +54,8 @@ internal class DalProduct : IProduct
     }
     public int GetNextId()
     {
-        int temp = Config.ProductID;
-        int temp2 = Config.DicreaseProductId;
+        int temp = ProductID;
+        int temp2 = DicreaseProductId;
         return temp;
     }
     /// <summary>

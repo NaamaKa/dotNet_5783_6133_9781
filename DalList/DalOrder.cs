@@ -61,19 +61,11 @@ public class DalOrder : IOrder
     }
     public Order Get(int _myNum) 
     {
-        //return orders.Where ( order=> order. = _myNum)
-        //{
-        //var listToReturn= from Order order in orders
-        //       where order.Equals(true) && order.OrderNum == _myNum
-        //       select order;
-        //return listToReturn.ToList();
-        foreach (var order in orders)
-        {
-            if (order != null)
-                if (order?.OrderNum == _myNum)
-                    return (Order)order;
-        }
-        throw new Exception("order not found");
+            var listToReturn = from Order order in orders
+                               where order.Equals(true) && order.OrderNum == _myNum
+                               select order;
+            return listToReturn.First();
+            throw new Exception("order not found");
     }
     public List<Order?> GetAll()
     {
@@ -82,17 +74,17 @@ public class DalOrder : IOrder
     }
     public void Delete(int _myNum)
     {
-        //var item= orders
-        //    .Where(order=> order !=null)
-        //    .Where(order => order.OrderID = _myNum)
-        foreach (var _order in orders)
-        {
-            if (OrderID == _myNum)
-            {
-                orders.Remove(_order);
-                break;
-            }
-        }
+       orders.Remove(orders 
+           .Where(order=>order.Value. == _myNum)
+
+        //foreach (var _order in orders)
+        //{
+        //    if (OrderID == _myNum)
+        //    {
+        //        orders.Remove(_order);
+        //        break;
+        //    }
+        //}
         throw new Exception("product not found");
     }
     public void Update(Order _newOrder)
