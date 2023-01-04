@@ -4,6 +4,7 @@ using static Dal.DataSource.Config;
 
 using DalApi;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Dal;
 
@@ -46,7 +47,7 @@ public class DalOrder : IOrder
         }
         if (predict == null)
         {
-            return (IEnumerable<Order?>)orders;
+            return orders;
         }
 
         List<Order?> _Orders = new List<Order?>();
@@ -74,30 +75,29 @@ public class DalOrder : IOrder
     }
     public void Delete(int _myNum)
     {
-       orders.Remove(orders 
-           .Where(order=>order.Value. == _myNum)
-
-        //foreach (var _order in orders)
-        //{
-        //    if (OrderID == _myNum)
-        //    {
-        //        orders.Remove(_order);
-        //        break;
-        //    }
-        //}
-        throw new Exception("product not found");
+        try
+        {
+            orders.Remove(orders
+              .Where(o => o is not null && o.Value.OrderNum == _myNum)
+              .Select(order => order).FirstOrDefault());
+        }
+        catch
+        {
+            throw new RequestedOrderNotFoundException("order not foud") { RequestedOrderNotFound = _myNum.ToString() };
+        }
     }
     public void Update(Order _newOrder)
     {
-        foreach (var _order in orders)
+        try
         {
-            if(_order != null)
-            if (_order.Value.OrderNum == _newOrder.OrderNum)
-            {
-                orders.Remove(_order);
-                orders.Add(_newOrder);
-                break;
-            }
+            orders.Remove(orders
+              .Where(order => order is not null && order.Value.OrderNum == _newOrder.OrderNum)
+              .Select(order => order).FirstOrDefault());
+            orders.Add(_newOrder);
+        }
+        catch
+        {
+            throw new RequestedOrderNotFoundException("order not foud") { RequestedOrderNotFound = _myNum.ToString() };
         }
     }
 }

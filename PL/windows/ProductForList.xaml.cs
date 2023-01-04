@@ -48,7 +48,6 @@ public partial class ProductForList : Window
         }
 
     }
-
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         int nextId = bl!.Product!.GetnextidFromDO();
