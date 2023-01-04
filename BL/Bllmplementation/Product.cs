@@ -116,7 +116,7 @@ public class Product : BlApi.IProduct
         {
             Dal!.product.Add(newProductWithData(p.ID, p.Name!, p.Category, p.Price, p.InStock));
         }
-        catch (DO.ItemAlreadyExistsException)
+        catch
         {
             throw new BO.ProductAlreadyExistsException("product already exists") { ProductAlreadyExists = p.ToString() };
 

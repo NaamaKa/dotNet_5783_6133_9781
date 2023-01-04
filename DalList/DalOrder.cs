@@ -97,7 +97,7 @@ public class DalOrder : IOrder
         }
         catch
         {
-            throw new RequestedOrderNotFoundException("order not foud") { RequestedOrderNotFound = _myNum.ToString() };
+            throw new RequestedOrderNotFoundException("order not foud") { RequestedOrderNotFound = _newOrder.ToString() };
         }
     }
 }

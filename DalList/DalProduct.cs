@@ -1,5 +1,6 @@
 ﻿using DO;
 using DalApi;
+using System.Security.Cryptography;
 namespace Dal;
 using static Dal.DataSource;
 using static Dal.DataSource.Config;
@@ -85,17 +86,28 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int _myBarcode)
     {
-        foreach (var product in products)
+        try
         {
-            if (product != null)
-            {
-                if (product?.barkode == _myBarcode)
-                {
-                    return (Product)product;
-                }
-            }
+            return (from Product product in products
+                    where (product.Equals(true) && product.barkode == _myBarcode)
+                    select product).First();
         }
-        throw new Exception("product not found");
+        catch
+        {
+            throw new RequestedProductNotFoundException("product not exist") { RequestedProductNotFound = _myBarcode.ToString() };
+
+        }
+        //foreach (var product in products)
+        //{
+        //    if (product != null)
+        //    {
+        //        if (product?.barkode == _myBarcode)
+        //        {
+        //            return (Product)product;
+        //        }
+        //    }
+        //}
+        //throw new Exception("product not found");
     }
     /// <summary>
     /// gets all products and puts them in array
@@ -104,6 +116,17 @@ internal class DalProduct : IProduct
     public List<Product?> GetAll()
     {
         List<Product?> tempProducts = new List<Product?>();
+        //try
+        //{
+        //    return (from Product product in products
+        //            where (product.Equals(true))
+        //            select product).ToList();
+        //}
+        //catch
+        //{
+        //    throw new RequestedOrderItemNotFoundException("orderItem not exist") { RequestedOrderItemNotFound = _myNumOrder.ToString() };
+
+        //}
         foreach (var product in products)
         {
             if (product != null)
@@ -120,17 +143,27 @@ internal class DalProduct : IProduct
     /// <exception cref="Exception"></exception>
     public void Delete(int _myBarcode)
     {
-        foreach (var product in products)
+        try
         {
-            if (product != null)
-            {
-                if (product?.barkode == _myBarcode)
-                {
-                    products.Remove(product);
-                }
-            }
+            products.Remove(products
+               .Where(p => p is not null && p.Value.barkode == _myBarcode)
+               .Select(p => p).FirstOrDefault());
         }
-        throw new Exception("product not found");
+        catch
+        {
+            throw new RequestedProductNotFoundException("product not exist") { RequestedProductNotFound = _myBarcode.ToString() };
+
+        }
+        //foreach (var product in products)
+        //{
+        //    if (product != null)
+        //    {
+        //        if (product?.barkode == _myBarcode)
+        //        {
+        //            products.Remove(product);
+        //        }
+        //    }
+        //}
     }
     /// <summary>
     /// updates a spesific product
@@ -138,18 +171,31 @@ internal class DalProduct : IProduct
     /// <param name="_newProduct">product to be replaced insead</param>
     public void Update(Product _newProduct)
     {
-        foreach (var product in products)
+        try
         {
-            if (product != null)
-            {
-                if (product?.barkode == _newProduct.barkode)
-                {
-                    products.Remove(product);
-                    products.Add(_newProduct);
-                    break;
-                }
-            }
+            products.Remove(products
+                .Where(p => p is not null && p.Value.barkode == _newProduct.barkode)
+                .Select(p => p).FirstOrDefault());
+            products.Add(_newProduct);
         }
+        catch
+        {
+            throw new RequestedProductNotFoundException("product not exist") { RequestedProductNotFound = _newProduct.barkode.ToString() };
+
+        }
+
+        //foreach (var product in products)
+        //{
+        //    if (product != null)
+        //    {
+        //        if (product?.barkode == _newProduct.barkode)
+        //        {
+        //            products.Remove(product);
+        //            products.Add(_newProduct);
+        //            break;
+        //        }
+        //    }
+        //}
     }
 
 }

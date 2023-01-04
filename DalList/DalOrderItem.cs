@@ -105,7 +105,8 @@ public class DalOrderItem : IOrderItem
     }
     public OrderItem Get(int _id)
     {
-        try {
+        try
+        {
             return (from OrderItem orderItem in orderItems
                     where (orderItem.Equals(true) && orderItem.id == _id)
                     select orderItem).First();
