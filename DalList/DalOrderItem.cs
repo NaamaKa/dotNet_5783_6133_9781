@@ -1,5 +1,7 @@
 ﻿using DO;
 using DalApi;
+using System.Security.Cryptography;
+
 namespace Dal;
 using static Dal.DataSource.Config;
 using static Dal.DataSource;
@@ -88,6 +90,7 @@ public class DalOrderItem : IOrderItem
         }
         catch
         {
+            throw new RequestedOrdersItemNotFoundException("orderItem not exist") {  };
 
         }
         //foreach (var item in orderItems)
@@ -97,50 +100,79 @@ public class DalOrderItem : IOrderItem
         //}
         //if (tempOrderItems.Count > 0)
         //    return tempOrderItems;
-     
+
 
     }
     public OrderItem Get(int _id)
     {
-        foreach (var item in orderItems)
-        {
-            if(item!=null)
-            if (item.Value.id == _id)
-            {
-                return item.Value;
-            }
+        try {
+            return (from OrderItem orderItem in orderItems
+                    where (orderItem.Equals(true) && orderItem.id == _id)
+                    select orderItem).First();
         }
-        throw new Exception("no items found in order");
+        catch
+        {
+            throw new RequestedOrderItemNotFoundException("orderItem not exist") { RequestedOrderItemNotFound = _id.ToString() };
+
+        }
+
+        //foreach (var item in orderItems)
+        //{
+        //    if(item!=null)
+        //    if (item.Value.id == _id)
+        //    {
+        //        return item.Value;
+        //    }
+        //}
     }
     public List<OrderItem> GetOrderItemsFromOrder(int _myNumOrder)
     {
-        List<OrderItem> tempOrderItems = new List<OrderItem>();
-        foreach (var item in orderItems)
+        try
         {
-            if (item != null)
-                if (item.Value.orderId == _myNumOrder)
-            {
-                tempOrderItems.Add((OrderItem)item);
-            }
+            return (from OrderItem orderItem in orderItems
+                    where (orderItem.Equals(true) && orderItem.id == _myNumOrder)
+                    select orderItem).ToList();
         }
-        if (tempOrderItems.Count > 0)
-            return tempOrderItems;
-        throw new Exception("no items found in order");
+        catch
+        {
+            throw new RequestedOrderItemNotFoundException("orderItem not exist") { RequestedOrderItemNotFound = _myNumOrder.ToString() };
+
+        }
+
+        //foreach (var item in orderItems)
+        //{
+        //    if (item != null)
+        //        if (item.Value.orderId == _myNumOrder)
+        //    {
+        //        tempOrderItems.Add((OrderItem)item);
+        //    }
+        //}
+        //if (tempOrderItems.Count > 0)
+        //    return tempOrderItems;
     }
     public List<OrderItem> GetOrdersOfOrderItems(int _myItemId)
     {
-        List<OrderItem> tempOrders = new List<OrderItem>();
-        foreach (var item in orderItems)
+        try
         {
-            if (item != null)
-                if (item.Value.itemId == _myItemId)
-            {
-                tempOrders.Add((OrderItem)item);
-            }
+            return (from OrderItem orderItem in orderItems
+                    where (orderItem.Equals(true) && orderItem.itemId == _myItemId)
+                    select orderItem).ToList();
         }
-        if (tempOrders.Count > 0)
-            return tempOrders;
-        throw new Exception("item doesnt axist in any order");
+        catch
+        {
+            throw new RequestedOrderItemNotFoundException("orderItem not exist") { RequestedOrderItemNotFound = _myItemId.ToString() };
+
+        }
+        //foreach (var item in orderItems)
+        //{
+        //    if (item != null)
+        //        if (item.Value.itemId == _myItemId)
+        //    {
+        //        tempOrders.Add((OrderItem)item);
+        //    }
+        //}
+        //if (tempOrders.Count > 0)
+        //    return tempOrders;
     }
     #endregion
 
