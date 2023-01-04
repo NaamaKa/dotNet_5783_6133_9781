@@ -58,13 +58,13 @@ public class RequestedUpdateItemNotFoundException : Exception
     }
 
 }
-public class NoStatusExeption : Exception
-{
-    public string? NoStatus { get; set; }
+//public class NoStatusExeption : Exception
+//{
+//    public string? NoStatus { get; set; }
 
-    public NoStatusExeption(string msg) : base(msg)
-    {
-    }
+//    public NoStatusExeption(string msg) : base(msg)
+//    {
+//    }
 
-}
+//}
 
