@@ -11,8 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BlApi;
-using Bllmplementation;
+
 
 namespace Pl.windows;
 
@@ -21,7 +20,7 @@ namespace Pl.windows;
 /// </summary>
 public partial class ProductForList : Window
 {
-    //IBl bl = new Bl();
+    BlApi.IBl? bl = BlApi.Factory.Get();
     public ProductForList()
     {
         InitializeComponent();
@@ -30,14 +29,14 @@ public partial class ProductForList : Window
     }
     public void UptadeListView()
     {
-        ProductListview.ItemsSource = bl.Product?.GetListOfProduct();
+        ProductListview.ItemsSource = bl!.Product?.GetListOfProduct();
     }
     private void ProductListview_MouseDoubleClick(object sender, MouseEventArgs e)
     {
 
         BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedValue;
         new ProductMenu(p!.Id!, "update").ShowDialog();
-        ProductListview.ItemsSource = bl.Product?.GetListOfProduct();
+        ProductListview.ItemsSource = bl!.Product?.GetListOfProduct();
     }
 
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -45,14 +44,14 @@ public partial class ProductForList : Window
         if (CategorySelector.SelectedItem.ToString() != "")
         {
             string? cat = CategorySelector!.SelectedItem!.ToString();
-            ProductListview.ItemsSource = bl.Product!.GetProductForListByCategory(cat);
+            ProductListview.ItemsSource = bl!.Product!.GetProductForListByCategory(cat);
         }
 
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        int nextId = bl.Product!.GetnextidFromDO();
+        int nextId = bl!.Product!.GetnextidFromDO();
         new ProductMenu(nextId, "add").ShowDialog();
         ProductListview.ItemsSource = bl.Product?.GetListOfProduct();
     }

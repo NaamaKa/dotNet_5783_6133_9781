@@ -1,5 +1,4 @@
-﻿using BlApi;
-using Bllmplementation;
+﻿
 using BO;
 using System;
 using System.Collections.Generic;
@@ -24,8 +23,7 @@ namespace Pl.windows;
 /// </summary>
 public partial class ProductMenu : Window
 {
-    readonly IBl bl = new Bl();
-
+    BlApi.IBl? bl = BlApi.Factory.Get();
     public ProductMenu(int _id, string _buttoncategory)
     {
         InitializeComponent();
@@ -55,14 +53,14 @@ public partial class ProductMenu : Window
 
                 if ((string)AddOrUpdateButton.Content == "add")
                 {
-                    bl.Product!.AddProduct(CreateProduct());
+                    bl!.Product!.AddProduct(CreateProduct());
                     MessageBox.Show("the product " + name.Text + " add");
 
                 }
 
                 else
                 {
-                    bl.Product!.UpdateProduct(CreateProduct());
+                    bl!.Product!.UpdateProduct(CreateProduct());
                     MessageBox.Show("the product " + name.Text + " update");
 
                 }
@@ -176,7 +174,7 @@ public partial class ProductMenu : Window
         BO.Product tempP = new()
         {
             ID = int.Parse(id.Text),
-            Price = int.Parse(price.Text),
+            Price = float.Parse(price.Text),
             Name = name.Text,
             InStock = int.Parse(inStock.Text)
         };
