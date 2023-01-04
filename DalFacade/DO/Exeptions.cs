@@ -31,6 +31,24 @@ public class RequestedItemNotFoundException : Exception
     }
 
 }
+public class RequestedOrderNotFoundException : Exception
+{
+    public string? RequestedOrderNotFound { get; set; }
+
+    public RequestedOrderNotFoundException(string msg) : base(msg)
+    {
+    }
+
+}
+public class RequestedOrderItemNotFoundException : Exception
+{
+    public string? RequestedOrderItemNotFound { get; set; }
+
+    public RequestedOrderItemNotFoundException(string msg) : base(msg)
+    {
+    }
+
+}
 public class RequestedUpdateItemNotFoundException : Exception
 {
     public string? RequestedUpdateItemNotFound { get; set; }

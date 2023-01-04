@@ -61,25 +61,43 @@ public class DalOrderItem : IOrderItem
     #region get functions
     public OrderItem GetOrderItem(int _myNumOrder, int myProductBarcode)
     {
-        foreach (var item in orderItems)
+        try
         {
-            if (item != null)
-                if (item.Value.orderId == _myNumOrder && item.Value.itemId == myProductBarcode)
-                    return item.Value;
+            return (from OrderItem orderItem in orderItems
+                    where (orderItem.Equals(true) && orderItem.orderId == _myNumOrder && orderItem.itemId == myProductBarcode)
+                    select orderItem).First();
+            //foreach (var item in orderItems)
+            //{
+            //    if (item != null)
+            //        if (item.Value.orderId == _myNumOrder && item.Value.itemId == myProductBarcode)
+            //            return item.Value;
+            //}
         }
-        throw new Exception("item not found in order");
+        catch
+        {
+            throw new RequestedOrderItemNotFoundException("orderItem not exist") { RequestedOrderItemNotFound = _myNumOrder.ToString() };
+        }
+   
     }
     public List<OrderItem?> GetAll()
     {
-        List<OrderItem?> tempOrderItems = new List<OrderItem?>();
-        foreach (var item in orderItems)
-        {
-            if (item != null)
-                tempOrderItems.Add(item);
+        try {
+            return orderItems
+               .Where(oi => oi.Equals(true))
+               .Select(oi => oi).ToList();
         }
-        if (tempOrderItems.Count > 0)
-            return tempOrderItems;
-        throw new Exception("no items found");
+        catch
+        {
+
+        }
+        //foreach (var item in orderItems)
+        //{
+        //    if (item != null)
+        //        tempOrderItems.Add(item);
+        //}
+        //if (tempOrderItems.Count > 0)
+        //    return tempOrderItems;
+     
 
     }
     public OrderItem Get(int _id)
@@ -128,42 +146,72 @@ public class DalOrderItem : IOrderItem
 
     public void Delete(int _myNumOrder)
     {
-       
-            foreach (var item in orderItems)
+        try
         {
-            if (item != null)
-                if (item.Value.orderId == _myNumOrder)
-            {
-                orderItems.Remove(item);
-            }
+            orderItems.Remove(orderItems
+                .Where(item => item is not null && item.Value.orderId == _myNumOrder)
+                .Select(order => order).FirstOrDefault());
+            //foreach (var item in orderItems)
+            //{
+            //if (item != null)
+            //    if (item.Value.orderId == _myNumOrder)
+            //{
+            //    orderItems.Remove(item);
+            //}
+            //}
+        }
+        catch
+        {
+            throw new RequestedOrderNotFoundException("order not exist") { RequestedOrderNotFound = _myNumOrder.ToString() };
+         
         }
     }
     public void Delete(int _myNumOrder, int _myProductBarcode)
     {
-        foreach (var item in orderItems)
-        {
-            if (item != null)
-                if (item.Value.orderId == _myNumOrder && item.Value.itemId == _myProductBarcode)
-            {
-                orderItems.Remove(item);
-                break;
-            }
+        try {
+            orderItems.Remove(orderItems
+               .Where(item => item is not null && item.Value.orderId == _myNumOrder && item.Value.itemId == _myProductBarcode)
+               .Select(order => order).FirstOrDefault());
+            //foreach (var item in orderItems)
+            //{
+            //    if (item != null)
+            //        if (item.Value.orderId == _myNumOrder && item.Value.itemId == _myProductBarcode)
+            //    {
+            //        orderItems.Remove(item);
+            //        break;
+            //    }
+            //}
         }
-        throw new Exception("product not found");
+        catch 
+        {
+            throw new RequestedOrderNotFoundException("order not exist") { RequestedOrderNotFound = _myNumOrder.ToString() };
+        }
+        
+   
+        
     }
     public void Update(OrderItem _newOrderItem)
     {
-
-        foreach (var item in orderItems)
-        {
-            if (item != null)
-                if (item.Value.orderId == _newOrderItem.orderId && item.Value.itemId == _newOrderItem.itemId)
-            {
-                orderItems.Remove(item);
-                orderItems.Add(_newOrderItem);
-                break;
+        try {
+            orderItems.Remove(orderItems
+               .Where(item => item is not null && item.Value.orderId == _newOrderItem.orderId && item.Value.itemId == _newOrderItem.itemId)
+               .Select(order => order).FirstOrDefault());
+            orderItems.Add(_newOrderItem);
+            //foreach (var item in orderItems)
+            //{
+            //    if (item != null)
+            //        if (item.Value.orderId == _newOrderItem.orderId && item.Value.itemId == _newOrderItem.itemId)
+            //    {
+            //        orderItems.Remove(item);
+            //        orderItems.Add(_newOrderItem);
+            //        break;
+            //    }
+            //}
             }
+        catch
+        {
+            throw new RequestedOrderNotFoundException("order not exist") { RequestedOrderNotFound = _newOrderItem.ToString() };
         }
-        throw new Exception("order item not found");
+          
     }
 }
