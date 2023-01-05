@@ -20,38 +20,46 @@ namespace Pl.windows;
 /// </summary>
 public partial class ProductForList : Window
 {
-    BlApi.IBl? bl = BlApi.Factory.Get();
+    static BlApi.IBl? bl = BlApi.Factory.Get();
+    //public    { get; set; }
     public ProductForList()
     {
+        ProductList = bl.Product.GetListOfProduct();
+        Categorys = Enum.GetValues(typeof(BO.Enums.Category));
         InitializeComponent();
-        ProductListview.ItemsSource = bl!.Product!?.GetListOfProduct();
-        CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
     }
-    public void UptadeListView()
+    public Array Categorys { get; set; } 
+  
+    public IEnumerable<BO.ProductForList?> ProductList
     {
-        ProductListview.ItemsSource = bl!.Product?.GetListOfProduct();
+        get { return (IEnumerable<BO.ProductForList?>)GetValue(ProductListProperty); }
+        set { SetValue(ProductListProperty, value); }
     }
+    public static readonly DependencyProperty ProductListProperty =
+        DependencyProperty.Register("ProductList", typeof(IEnumerable<BO.ProductForList?>), typeof(ProductForList));
+
+    public BO.ProductForList Selected
+    {
+        get { return (BO.ProductForList)GetValue(SelectedProperty); }
+        set { SetValue(SelectedProperty, value); }
+    }
+    public static readonly DependencyProperty SelectedProperty =
+        DependencyProperty.Register("Selected", typeof(BO.ProductForList), typeof(ProductForList));
+
     private void ProductListview_MouseDoubleClick(object sender, MouseEventArgs e)
     {
-
-        BO.ProductForList p = (BO.ProductForList)ProductListview.SelectedValue;
+        BO.ProductForList p = Selected;
         new ProductMenu(p!.Id!, "update").ShowDialog();
-        ProductListview.ItemsSource = bl!.Product?.GetListOfProduct();
     }
-
+    public BO.Enums.Category Categoryselected { get; set; }
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (CategorySelector.SelectedItem.ToString() != "")
-        {
-            string? cat = CategorySelector!.SelectedItem!.ToString();
-            ProductListview.ItemsSource = bl!.Product!.GetProductForListByCategory(cat);
-        }
-
+        string? cat = Categoryselected.ToString();
+        ProductList = bl!.Product!.GetProductForListByCategory(cat);
     }
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         int nextId = bl!.Product!.GetnextidFromDO();
         new ProductMenu(nextId, "add").ShowDialog();
-        ProductListview.ItemsSource = bl.Product?.GetListOfProduct();
     }
 }
