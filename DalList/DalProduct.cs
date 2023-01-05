@@ -39,7 +39,7 @@ internal class DalProduct : IProduct
     {
         if (products == null)
         {
-            throw new RequestedItemNotFoundException("order not exists,can not get") { RequestedItemNotFound = "jjj".ToString() };
+            throw new RequestedItemNotFoundException("order not exists,cannot get") { RequestedItemNotFound = "jjj".ToString() };
         }
         if (predict == null)
         {
@@ -97,17 +97,7 @@ internal class DalProduct : IProduct
             throw new RequestedProductNotFoundException("product not exist") { RequestedProductNotFound = _myBarcode.ToString() };
 
         }
-        //foreach (var product in products)
-        //{
-        //    if (product != null)
-        //    {
-        //        if (product?.barkode == _myBarcode)
-        //        {
-        //            return (Product)product;
-        //        }
-        //    }
-        //}
-        //throw new Exception("product not found");
+     
     }
     /// <summary>
     /// gets all products and puts them in array
@@ -116,25 +106,16 @@ internal class DalProduct : IProduct
     public List<Product?> GetAll()
     {
         List<Product?> tempProducts = new List<Product?>();
-        //try
-        //{
-        //    return (from Product product in products
-        //            where (product.Equals(true))
-        //            select product).ToList();
-        //}
-        //catch
-        //{
-        //    throw new RequestedOrderItemNotFoundException("orderItem not exist") { RequestedOrderItemNotFound = _myNumOrder.ToString() };
-
-        //}
-        foreach (var product in products)
+        try
         {
-            if (product != null)
-                tempProducts.Add(product);
+            return (from Product? product in products
+                    where product.Equals(true)
+                    select product).ToList();
         }
-        if (tempProducts.Count > 0)
-            return tempProducts;
-        throw new Exception("no products found");
+        catch
+        {
+            throw new RequestedProductNotFoundException("orderItem not exist") { };
+        }
     }
     /// <summary>
     /// deletsa spesific product
@@ -154,16 +135,7 @@ internal class DalProduct : IProduct
             throw new RequestedProductNotFoundException("product not exist") { RequestedProductNotFound = _myBarcode.ToString() };
 
         }
-        //foreach (var product in products)
-        //{
-        //    if (product != null)
-        //    {
-        //        if (product?.barkode == _myBarcode)
-        //        {
-        //            products.Remove(product);
-        //        }
-        //    }
-        //}
+   
     }
     /// <summary>
     /// updates a spesific product
@@ -184,18 +156,6 @@ internal class DalProduct : IProduct
 
         }
 
-        //foreach (var product in products)
-        //{
-        //    if (product != null)
-        //    {
-        //        if (product?.barkode == _newProduct.barkode)
-        //        {
-        //            products.Remove(product);
-        //            products.Add(_newProduct);
-        //            break;
-        //        }
-        //    }
-        //}
     }
 
 }
