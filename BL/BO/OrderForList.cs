@@ -17,7 +17,7 @@ public class OrderForList
         id={ID},
         name :{CostumerName},
         status: {Status},
-    	Amount: {AmountOfItems},
-        tatal price :{TotalPrice}
+    	amount: {AmountOfItems},
+        total price :{TotalPrice}
     ";
 }

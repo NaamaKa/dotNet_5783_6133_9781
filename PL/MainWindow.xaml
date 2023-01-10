@@ -12,7 +12,9 @@
         </Grid.Background>
 
 
-        <Button Content="Admin" HorizontalAlignment="Left" Margin="51,337,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.913,0.552" Width="174" Click="Button_Click" Height="54" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1"/>
+        <Button Content="Manager" HorizontalAlignment="Left" Margin="51,337,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.913,0.552" Width="174" Click="Manager_Button_Click" Height="54" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1"/>
+        <Button Content="New Order" HorizontalAlignment="Left" Margin="81,337,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.913,0.552" Width="174" Click="Order_Button_Click" Height="54" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1" Grid.Column="1"/>
+        <Button Content="Tracking" HorizontalAlignment="Center" Margin="0,337,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.913,0.552" Width="174" Click="Tracking_Button_Click" Height="54" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1" Grid.Column="2"/>
 
         <Grid.ColumnDefinitions>
 

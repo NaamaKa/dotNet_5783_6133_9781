@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Pl.windows;
+using Pl.windows.Manager;
+
 namespace Pl;
 
 /// <summary>
@@ -27,10 +29,21 @@ public partial class MainWindow : Window
 
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e) {
-        new ProductForList().Show();
-        this.Close();
-    } 
+    private void Manager_Button_Click(object sender, RoutedEventArgs e) {
+        //new ProductForList().Show();
+        new Orders().Show();
 
+        this.Close();
+    }
+
+    private void Order_Button_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void Tracking_Button_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
 }
 
