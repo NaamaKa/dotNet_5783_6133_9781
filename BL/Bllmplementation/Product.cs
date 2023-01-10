@@ -33,6 +33,7 @@ public class Product : BlApi.IProduct
             });
         throw new NotImplementedException();
     }
+    
     public IEnumerable<ProductForList> GetListOfProduct()
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();

@@ -17,7 +17,7 @@ public class Enums
         Garden,
         Toys
     }
-    public  enum OrderStatus
+    public enum OrderStatus
     {
         Submitted,
         Sent,

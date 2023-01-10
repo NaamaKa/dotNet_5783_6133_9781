@@ -21,23 +21,13 @@ namespace Pl.windows.Manager;
 public partial class Orders : Window
 {
     BlApi.IBl? bl = BlApi.Factory.Get();
-
+    
     public Orders()
     {
         OrdersList = bl!.Order.GetListOfOrders();
         InitializeComponent();
        
     }
-
-
-    //public IEnumerable<BO.ProductForList?> ProductList
-    //{
-    //    get { return (IEnumerable<BO.ProductForList?>)GetValue(ProductListProperty); }
-    //    set { SetValue(ProductListProperty, value); }
-    //}
-    //public static readonly DependencyProperty ProductListProperty =
-    //    DependencyProperty.Register("ProductList", typeof(IEnumerable<BO.ProductForList?>), typeof(ProductForList));
-
 
     public IEnumerable<OrderForList> OrdersList
     {

@@ -31,7 +31,7 @@ public partial class MainWindow : Window
 
     private void Manager_Button_Click(object sender, RoutedEventArgs e) {
         //new ProductForList().Show();
-        new Orders().Show();
+        new Manager(true).Show();
 
         this.Close();
     }

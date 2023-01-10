@@ -42,7 +42,24 @@ internal class Order : BlApi.IOrder
             throw new NoOrdersForListExeption("no orders for list") { };
         }
     }
-
+    //public IEnumerable<OrderForList?> GetOrderForListByStatus(string? myStatus)
+    //{
+    //    IEnumerable<DO.Order?> ordersList = new List<DO.Order?>();
+    //    ordersList = Dal!.order.GetAll();
+    //    return ordersList
+    //        .Where(order => order != null && ().ToString() == myStatus)
+    //        .Select(order => new OrderForList()
+    //        {
+    //            CostumerName= order.CostumerName,
+    //            ID=order!.Value.OrderNum,
+    //            Status=order.Value.Status,
+    //            Id = product!.Value.barkode,
+    //            Name = product.Value.productName,
+    //            Price = product.Value.productPrice,
+    //            Category = (BO.Enums.Category)product!.Value.productCategory!
+    //        });
+    //    throw new NotImplementedException();
+    //}
     public BO.Order GetOrderDetails(int id)
     {
         if (id <= 0)
