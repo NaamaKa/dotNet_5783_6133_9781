@@ -11,22 +11,30 @@
         <TabControl>
             <TabItem Header="products">
                 <Grid Name="MainGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="41*"/>
+                        <ColumnDefinition Width="35*"/>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="23*"/>
+                        <ColumnDefinition Width="76*"/>
+                        <ColumnDefinition Width="605*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40*"/>
-                        <RowDefinition Height="500*"/>
+                        <RowDefinition Height="30.08"/>
+                        <RowDefinition/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Grid/>
+                    <Grid Grid.ColumnSpan="6"/>
 
-                    <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Margin="0,-6,0,337" Grid.RowSpan="2">
+                    <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Margin="0,-6,0,337" Grid.RowSpan="2" Grid.ColumnSpan="6">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions >
-                        <ComboBox  Name="CategorySelector" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" ItemsSource="{Binding Categorys}" SelectedItem="{Binding Categoryselected}" Margin="0,3,0,-38"/>
+                        <ComboBox  Name="CategorySelector" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" ItemsSource="{Binding Categorys}" SelectedItem="{Binding Categoryselected}" Margin="0,3,0,0"/>
                         <Label Content="Category" HorizontalAlignment="Left" Margin="177,9,0,0" VerticalAlignment="Top" Grid.Column="0"/>
                     </Grid>
-                    <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList,Mode=TwoWay}" Margin="0,17,0,16" SelectionChanged="ProductListview_SelectionChanged">
+                    <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList,Mode=TwoWay}" Margin="0,17,0,16" SelectionChanged="ProductListview_SelectionChanged" Grid.ColumnSpan="6">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn/>
@@ -34,7 +42,7 @@
                         </ListView.View>
                     </ListView>
 
-                    <Button Content="Add new Product" Grid.Row="1" HorizontalAlignment="Left" Margin="571,0,0,43" Padding="5" Width="155" Height="28" VerticalAlignment="Bottom" Click="Add_Button_Click" />
+                    <Button Content="Add new Product" Grid.Row="1" HorizontalAlignment="Left" Margin="382,0,0,43" Padding="5" Width="155" Height="28" VerticalAlignment="Bottom" Click="Add_Button_Click" Grid.Column="5" />
 
 
 

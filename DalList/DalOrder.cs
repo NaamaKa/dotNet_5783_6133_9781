@@ -86,6 +86,12 @@ public class DalOrder : IOrder
             throw new RequestedOrderNotFoundException("order not foud") { RequestedOrderNotFound = _myNum.ToString() };
         }
     }
+    public int GetNextId()
+    {
+        int temp = OrderID;
+        int temp2 = DicreaseProductId;
+        return temp;
+    }
     public void Update(Order _newOrder)
     {
         try

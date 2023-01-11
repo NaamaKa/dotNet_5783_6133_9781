@@ -21,7 +21,6 @@ namespace Pl.windows;
 public partial class ProductForList : Window
 {
     static BlApi.IBl? bl = BlApi.Factory.Get();
-    //public    { get; set; }
     public ProductForList()
     {
         ProductList = bl.Product.GetListOfProduct();

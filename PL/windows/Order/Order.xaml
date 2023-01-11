@@ -30,7 +30,7 @@
             <Label Content="Items In The Order" HorizontalAlignment="Left" Margin="147,334,0,0" VerticalAlignment="Top"/>
             <Label Content="Total Price" HorizontalAlignment="Left" Margin="147,365,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.358,-0.414"/>
             <TextBox IsEnabled="{Binding IsReadOnly}" HorizontalAlignment="Left" Margin="237,373,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-            <Button Visibility="Visible" Content="Button" HorizontalAlignment="Left" Margin="693,349,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+            <Button Visibility="Visible" Content="Button" HorizontalAlignment="Left" Margin="602,382,0,0" VerticalAlignment="Top" Click="Button_Click"/>
 
         </Grid>
 

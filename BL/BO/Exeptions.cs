@@ -187,7 +187,18 @@ namespace BO
     {
         public NoOrdersForListExeption(string msg) : base(msg) { }
     }
- 
+    public class EmptyAddressException : Exception
+    {
+        public string? EmptyAddress { get; set; }
+
+        public EmptyAddressException(string msg) : base(msg) { }
+    }
+    public class EmptyEmailException : Exception
+    {
+        public string? EmptyEmail { get; set; }
+
+        public EmptyEmailException(string msg) : base(msg) { }
+    }
     #endregion
 
 

@@ -22,6 +22,29 @@ internal class Cart : ICart
     /// <exception cref="NotEnoughInStockException">not enough of product in stock</exception>
     /// <exception cref="FieldToGetProductException">product does not exsist</exception>
     /// <exception cref="ProductNotInStockException"></exception>
+
+    public void OpenCart(BO.Cart myCart)
+    {
+
+        CheckCorrectData(myCart!.CostumerName, myCart.CostumerAddress, myCart.CostumerEmail);
+    }
+    public void CheckCorrectData( string name, string address, string Email)
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new BO.EmptyNameException("empty name") { EmptyName = name!.ToString() };
+        }
+        if (string.IsNullOrEmpty(address))
+        {
+            throw new BO.EmptyAddressException("empty address") { EmptyAddress = name!.ToString() };
+        }
+        if (string.IsNullOrEmpty(Email))
+        {
+            throw new BO.EmptyEmailException("empty Email") { EmptyEmail = name!.ToString() };
+        }
+        return;
+
+    }
     public BO.Cart AddItemToCart(BO.Cart _myCart, int _id)
     {
         if (_myCart == null)

@@ -8,7 +8,6 @@ using BlApi;
 using BO;
 using DalApi;
 using static BO.Enums;
-
 namespace Bllmplementation;
 
 internal class Order : BlApi.IOrder
@@ -21,7 +20,6 @@ internal class Order : BlApi.IOrder
     /// <exception cref="NoOrdersForListExeption">no orders for list found</exception>
     public IEnumerable<OrderForList> GetListOfOrders()
     { 
-    
         IEnumerable<DO.Order?> orderList = Dal!.order.GetAll();
         try
         {
@@ -42,24 +40,52 @@ internal class Order : BlApi.IOrder
             throw new NoOrdersForListExeption("no orders for list") { };
         }
     }
-    //public IEnumerable<OrderForList?> GetOrderForListByStatus(string? myStatus)
-    //{
-    //    IEnumerable<DO.Order?> ordersList = new List<DO.Order?>();
-    //    ordersList = Dal!.order.GetAll();
-    //    return ordersList
-    //        .Where(order => order != null && ().ToString() == myStatus)
-    //        .Select(order => new OrderForList()
-    //        {
-    //            CostumerName= order.CostumerName,
-    //            ID=order!.Value.OrderNum,
-    //            Status=order.Value.Status,
-    //            Id = product!.Value.barkode,
-    //            Name = product.Value.productName,
-    //            Price = product.Value.productPrice,
-    //            Category = (BO.Enums.Category)product!.Value.productCategory!
-    //        });
-    //    throw new NotImplementedException();
-    //}
+    public void AddOrder(BO.Order o)
+    {
+
+        CheckCorrectData(o.ID,o!.CostumerName, o.CostumerAddress, o.CostumerEmail);
+        try
+        {
+            Dal!.order.Add(newOrderWithData(o.ID, o!.CostumerName, o.CostumerAddress, o.CostumerEmail));
+        }
+        catch
+        {
+            throw new BO.ProductAlreadyExistsException("product already exists") { ProductAlreadyExists = o.ToString() };
+
+        }
+    }
+    private static DO.Order newOrderWithData(int id, string name, string address, string Email)
+    {
+        DO.Order o = new()
+        {
+            costumerName = name,
+            OrderNum=id,
+            mail=Email,
+            address=address,
+        };
+        return o;
+    }
+    public void CheckCorrectData(int id, string name,string address,string Email)
+    {
+        if (id < 0)
+        {
+            throw new BO.NegativeIdException("negative id") { NegativeId = id.ToString() };
+        }
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new BO.EmptyNameException("empty name") { EmptyName = name!.ToString() };
+        }
+        if (string.IsNullOrEmpty(address))
+        {
+            throw new BO.EmptyAddressException("empty address") { EmptyAddress = name!.ToString() };
+        }
+        if (string.IsNullOrEmpty(Email))
+        {
+            throw new BO.EmptyEmailException("empty Email") { EmptyEmail = name!.ToString() };
+        }
+        return;
+
+    }
     public BO.Order GetOrderDetails(int id)
     {
         if (id <= 0)
@@ -81,8 +107,6 @@ internal class Order : BlApi.IOrder
             return DOorderToBOorder(o);
         }
     }
-
-
     public BO.OrderTracking GetOrderTracking(int orderId)
     {
         DO.Order o = new DO.Order();
@@ -150,8 +174,11 @@ internal class Order : BlApi.IOrder
         return orderTracking;
 
     }
-
-
+    public int GetnextidFromDO()
+    {
+        int id = Dal!.order.GetNextId();
+        return id;
+    }
     public BO.Order UpdateDeliveryDate(int orderId)
     {
         DO.Order o = new DO.Order();
@@ -178,8 +205,6 @@ internal class Order : BlApi.IOrder
 
                     throw new BO.UpdateOrderNotSucceedException("update order not succeed") { UpdateOrderNotSucceed = o.ToString() };
                 }
-
-
             }
 
         }
