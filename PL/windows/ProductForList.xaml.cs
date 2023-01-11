@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,8 +22,9 @@ namespace Pl.windows;
 public partial class ProductForList : Window
 {
     static BlApi.IBl? bl = BlApi.Factory.Get();
-    public ProductForList()
+    public ProductForList(BO.Cart myCart)
     {
+        ThisCart = myCart;
         ProductList = bl!.Product.GetListOfProduct();
         Categorys = Enum.GetValues(typeof(BO.Enums.Category));
         InitializeComponent();
@@ -36,7 +38,13 @@ public partial class ProductForList : Window
     }
     public static readonly DependencyProperty ProductListProperty =
         DependencyProperty.Register("ProductList", typeof(IEnumerable<BO.ProductForList?>), typeof(ProductForList));
-
+    public BO.Cart ThisCart
+    {
+        get { return (BO.Cart)GetValue(ThisCartProperty); }
+        set { SetValue(ThisCartProperty, value); }
+    }
+    public static readonly DependencyProperty ThisCartProperty =
+        DependencyProperty.Register("ThisCart", typeof(BO.Cart), typeof(ProductForList));
     public BO.ProductForList Selected
     {
         get { return (BO.ProductForList)GetValue(SelectedProperty); }
@@ -48,7 +56,7 @@ public partial class ProductForList : Window
     private void ProductListview_MouseDoubleClick(object sender, MouseEventArgs e)
     {
         BO.ProductForList p = Selected;
-        new Order.ProductForCart(p!.Id!).ShowDialog();
+        new Order.ProductForCart(p!.Id!, ThisCart).ShowDialog();
     }
     public BO.Enums.Category Categoryselected { get; set; }
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
