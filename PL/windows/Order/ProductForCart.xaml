@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pl.windows.Order"
         mc:Ignorable="d"
-        Title="ProductForCart" Height="450" Width="800">
+        Title="ProductForCart" Height="450" Width="800"
+         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        
+        <Grid Name="MainGrid">
+            <Label  Content="id"  HorizontalAlignment="Left" Margin="225,91,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="id" IsReadOnly="True"   HorizontalAlignment="Left" Margin="289,91,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"/>
+            <Label   Content="Category" HorizontalAlignment="Left" Margin="186,181,0,0" VerticalAlignment="Top"/>
+            <Label Content="name" HorizontalAlignment="Left" Margin="203,139,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="name" IsEnabled="False" HorizontalAlignment="Left" Margin="289,139,0,0" TextWrapping="Wrap" Text="{Binding PName}" VerticalAlignment="Top" Width="120"/>
+            <Label Content="price" HorizontalAlignment="Left" Margin="202,227,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="price" IsEnabled="False" HorizontalAlignment="Left" Margin="289,231,0,0" TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top" Width="120"/>
+            <Label Content="inStock" HorizontalAlignment="Left" Margin="196,267,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="inStock" IsEnabled="False" HorizontalAlignment="Left" Margin="289,271,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120"/>
+            
+            <Label Content="{Binding PCategory}" HorizontalAlignment="Left" Margin="293,182,0,0" VerticalAlignment="Top"/>
+
+        </Grid>
     </Grid>
 </Window>

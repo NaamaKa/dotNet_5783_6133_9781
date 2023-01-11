@@ -18,8 +18,6 @@ using System.Xml.Linq;
 namespace Pl.windows;
 
 
-
-
 /// <summary>
 /// Interaction logic for ProductMenu.xaml
 /// </summary>

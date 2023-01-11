@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Printing.IndexedProperties;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,9 +20,51 @@ namespace Pl.windows.Order
     /// </summary>
     public partial class ProductForCart : Window
     {
-        public ProductForCart()
+        BlApi.IBl? bl = BlApi.Factory.Get();
+        public ProductForCart(int _id)
         {
+            BO.Product p = bl.Product!.GetProductItem(_id)!;
+            ID= p.ID;
+            PName=p!.Name;
+            PCategory = p.Category;
+            Price = p.Price;
+            InStock = p.InStock;
             InitializeComponent();
         }
+        public string PName
+        {
+            get { return (string)GetValue(PNameProperty); }
+            set { SetValue(PNameProperty, value); }
+        }
+        public static readonly DependencyProperty PNameProperty =
+            DependencyProperty.Register("PName", typeof(string), typeof(ProductForCart));
+        public double Price
+        {
+            get { return (double)GetValue(PriceProperty); }
+            set { SetValue(PriceProperty, value); }
+        }
+        public static readonly DependencyProperty PriceProperty =
+            DependencyProperty.Register("Price", typeof(double), typeof(ProductForCart));
+        public int ID
+        {
+            get { return (int)GetValue(IDProperty); }
+            set { SetValue(IDProperty, value); }
+        }
+        public static readonly DependencyProperty IDProperty =
+            DependencyProperty.Register("ID", typeof(int), typeof(ProductForCart));
+        public int InStock
+        {
+            get { return (int)GetValue(InStockProperty); }
+            set { SetValue(InStockProperty, value); }
+        }
+        public static readonly DependencyProperty InStockProperty =
+            DependencyProperty.Register("Instock", typeof(int), typeof(ProductForCart));
+        public BO.Enums.Category PCategory
+        {
+            get { return (BO.Enums.Category)GetValue(PCategoryProperty); }
+            set { SetValue(PCategoryProperty, value); }
+        }
+        public static readonly DependencyProperty PCategoryProperty =
+            DependencyProperty.Register("PCategory", typeof(BO.Enums.Category), typeof(ProductForCart));
     }
 }

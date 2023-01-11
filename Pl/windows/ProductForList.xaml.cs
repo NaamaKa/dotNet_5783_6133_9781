@@ -23,7 +23,7 @@ public partial class ProductForList : Window
     static BlApi.IBl? bl = BlApi.Factory.Get();
     public ProductForList()
     {
-        ProductList = bl.Product.GetListOfProduct();
+        ProductList = bl!.Product.GetListOfProduct();
         Categorys = Enum.GetValues(typeof(BO.Enums.Category));
         InitializeComponent();
     }
@@ -48,7 +48,7 @@ public partial class ProductForList : Window
     private void ProductListview_MouseDoubleClick(object sender, MouseEventArgs e)
     {
         BO.ProductForList p = Selected;
-        new ProductMenu(p!.Id!, "update").ShowDialog();
+        new Order.ProductForCart(p!.Id!).ShowDialog();
     }
     public BO.Enums.Category Categoryselected { get; set; }
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
