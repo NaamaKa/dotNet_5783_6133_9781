@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Pl.windows;
 using Pl.windows.Manager;
+using Pl.windows.Order;
 
 namespace Pl;
 
@@ -38,7 +39,8 @@ public partial class MainWindow : Window
 
     private void Order_Button_Click(object sender, RoutedEventArgs e)
     {
-
+        new NewOrder().Show();
+        this.Close();
     }
 
     private void Tracking_Button_Click(object sender, RoutedEventArgs e)
