@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Printing.IndexedProperties;
@@ -21,7 +22,7 @@ namespace Pl.windows.Order
     public partial class ProductForCart : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        public ProductForCart(int _id)
+        public ProductForCart(int _id,BO.Cart myCart)
         {
             BO.Product p = bl.Product!.GetProductItem(_id)!;
             ID= p.ID;
@@ -29,6 +30,7 @@ namespace Pl.windows.Order
             PCategory = p.Category;
             Price = p.Price;
             InStock = p.InStock;
+            MyCart=myCart;
             InitializeComponent();
         }
         public string PName
@@ -66,5 +68,25 @@ namespace Pl.windows.Order
         }
         public static readonly DependencyProperty PCategoryProperty =
             DependencyProperty.Register("PCategory", typeof(BO.Enums.Category), typeof(ProductForCart));
+        public int Amount
+        {
+            get { return (int)GetValue(AmountProperty); }
+            set { SetValue(AmountProperty, value); }
+        }
+        public static readonly DependencyProperty AmountProperty =
+            DependencyProperty.Register("Amount", typeof(int), typeof(ProductForCart));
+
+        public BO.Cart MyCart
+        {
+            get { return (BO.Cart)GetValue(MyCartProperty); }
+            set { SetValue(MyCartProperty, value); }
+        }
+        public static readonly DependencyProperty MyCartProperty =
+            DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(ProductForCart));
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            bl!.Cart.AddItemToCart(MyCart, ID);
+        }
     }
+   
 }

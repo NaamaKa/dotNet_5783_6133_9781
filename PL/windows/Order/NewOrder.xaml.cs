@@ -48,7 +48,13 @@ namespace Pl.windows.Order
             try
             {
                 bl!.Cart!.OpenCart(CreateCart());
-                new ProductForList().Show();
+                BO.Cart myCart = new Cart()
+                {
+                    CostumerName = costumerName.Text,
+                    CostumerAddress = costumerAddress.Text,
+                    CostumerEmail = costumerEmail.Text,
+                };
+                new ProductForList(myCart).Show();
                 this.Close();
             }
             catch (EmptyNameException p)
