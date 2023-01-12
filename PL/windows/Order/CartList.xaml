@@ -1,0 +1,25 @@
+﻿<Window x:Class="Pl.windows.Order.CartList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pl.windows.Order"
+        mc:Ignorable="d"
+        Title="CartList" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="117,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="279,9,0,0" VerticalAlignment="Top"/>
+        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,41,0,91" ItemsSource="{Binding MyCartItems, Mode=TwoWay}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="" HorizontalAlignment="Left" Margin="520,387,0,0" VerticalAlignment="Top"/>
+        <Button Content="Submit Order" HorizontalAlignment="Left" Margin="685,390,0,0" VerticalAlignment="Top"/>
+        <Label Content="Total Price" HorizontalAlignment="Left" Margin="440,386,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

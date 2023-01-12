@@ -31,6 +31,7 @@ namespace Pl.windows.Order
             Price = p.Price;
             InStock = p.InStock;
             MyCart=myCart;
+            NumInTheCart = 1;
             InitializeComponent();
         }
         public string PName
@@ -75,7 +76,13 @@ namespace Pl.windows.Order
         }
         public static readonly DependencyProperty AmountProperty =
             DependencyProperty.Register("Amount", typeof(int), typeof(ProductForCart));
-
+        public int NumInTheCart
+        {
+            get { return (int)GetValue(NumInTheCartProperty); }
+            set { SetValue(NumInTheCartProperty, value); }
+        }
+        public static readonly DependencyProperty NumInTheCartProperty =
+            DependencyProperty.Register("NumInTheCart", typeof(int), typeof(ProductForCart));
         public BO.Cart MyCart
         {
             get { return (BO.Cart)GetValue(MyCartProperty); }
@@ -85,7 +92,19 @@ namespace Pl.windows.Order
             DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(ProductForCart));
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            bl!.Cart.AddItemToCart(MyCart, ID);
+            BO.OrderItem item = new BO.OrderItem()
+            {
+                ID = ID,
+                Name = PName,
+                Amount = Amount,
+                Price = Price,
+                TotalPrice = Price * Amount,
+                NumInOrder = NumInTheCart
+            };
+            NumInTheCart++;
+            
+            MyCart.Price += item.TotalPrice;
+            this.Close();
         }
     }
    

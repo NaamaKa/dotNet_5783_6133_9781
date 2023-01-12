@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ProductForList" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
-   
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid/>
-        
+
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
@@ -33,7 +33,7 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
 
-        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="640,0,0,5" Padding="5" Width="155" Height="28" VerticalAlignment="Bottom" Click="Button_Click" />
+        <Button Content="Show My Cart" Grid.Row="1" HorizontalAlignment="Left" Margin="602,0,0,27" Padding="5" Width="155" Height="28" VerticalAlignment="Bottom" Click="Button_Click" />
 
 
 

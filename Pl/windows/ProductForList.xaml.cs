@@ -66,7 +66,6 @@ public partial class ProductForList : Window
     }
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        int nextId = bl!.Product!.GetnextidFromDO();
-        new ProductMenu(nextId, "add").ShowDialog();
+        new Order.CartList(ThisCart).ShowDialog();
     }
 }

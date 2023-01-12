@@ -45,28 +45,28 @@ internal class Cart : ICart
         return;
 
     }
-    public BO.Cart AddItemToCart(BO.Cart _myCart, int _id)
+    public BO.Cart AddItemToCart(BO.Cart _myCart, OrderItem item)
     {
         if (_myCart == null)
         {
-            throw new SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = _id.ToString() };
+            throw new SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = item.ID.ToString() };
         }
-        DO.Product _wantedProduct = Dal!.product.Get(e => e?.barkode == _id);
+        DO.Product _wantedProduct = Dal!.product.Get(e => e?.barkode == item.ID);
         //var wantedItem=from OrderItem item in _myCart!.Items!
         //               where(item != null && item.ID == _id&& _wantedProduct.inStock >= item.Amount + 1)
         //               select();
 
-        foreach (var item in _myCart!.Items!)
+        foreach (var itemInCart in _myCart!.Items!)
         {
-            if (item != null)
+            if (itemInCart != null)
             {
-                if (item.ID == _id)
+                if (itemInCart.ID == item.ID)
                 {
                     if (_wantedProduct.inStock >= item.Amount + 1)
                     {
-                        item.Amount++;
-                        double pricetoAdd = item.Price;
-                        item.TotalPrice += pricetoAdd;
+                        itemInCart.Amount++;
+                        double pricetoAdd = itemInCart.Price;
+                        itemInCart.TotalPrice += pricetoAdd;
                         _myCart.Price += pricetoAdd;
                         return _myCart;
                     }
@@ -76,6 +76,7 @@ internal class Cart : ICart
                     }
                 }
             }
+            
         }
         #region product not in cart
         //check if product aggsists
