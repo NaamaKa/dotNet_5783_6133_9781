@@ -72,7 +72,7 @@ internal class Cart : ICart
                     }
                     else
                     {
-                        throw new NotEnoughInStockException("not enoughf in stock") { NotEnoughInStock = _id.ToString() };
+                        throw new NotEnoughInStockException("not enoughf in stock") { NotEnoughInStock = item.ID.ToString() };
                     }
                 }
             }
@@ -83,19 +83,19 @@ internal class Cart : ICart
         DO.Product _product = new DO.Product();
         try
         {
-            _product = Dal.product.Get(e => e?.barkode == _id);
+            _product = Dal.product.Get(e => e?.barkode == item.ID);
         }
         catch (Exception)
         {
             //product dosnt aggsist
-            throw new FieldToGetProductException("product dosnt axist") { FieldToGetProduct = _id.ToString() };
+            throw new FieldToGetProductException("product dosnt axist") { FieldToGetProduct = item.ID.ToString() };
         }
         //check if product is inStock
         if (_product.inStock >= 1)
         {
             BO.OrderItem _myNeworderItem = new()
             {
-                ID = _id,
+                ID = item.ID,
                 Name = _product.productName,
                 Price = _product.productPrice,
                 Amount = 1,
@@ -106,7 +106,7 @@ internal class Cart : ICart
             return _myCart;
         }
         else
-            throw new ProductNotInStockException("not enough in stock") { ProductNotInStock = _id.ToString() };
+            throw new ProductNotInStockException("not enough in stock") { ProductNotInStock = item.ID.ToString() };
 
         #endregion
     }
@@ -274,6 +274,26 @@ internal class Cart : ICart
                     }
                 }
             }
+        throw new NotImplementedException();
+    }
+
+    void ICart.OpenCart(BO.Cart myCart)
+    {
+        throw new NotImplementedException();
+    }
+
+    BO.Cart? ICart.AddItemToCart(BO.Cart _myCart, int _id)
+    {
+        throw new NotImplementedException();
+    }
+
+    BO.Cart? ICart.UpdateAmountOfItem(BO.Cart _myCart, int _id, int _newAmount)
+    {
+        throw new NotImplementedException();
+    }
+
+    void ICart.SubmitOrder(BO.Cart _myCart, string _cName, string _cEmail, string _Address)
+    {
         throw new NotImplementedException();
     }
 }
