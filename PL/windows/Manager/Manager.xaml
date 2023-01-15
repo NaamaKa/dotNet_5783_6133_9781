@@ -57,7 +57,7 @@
                         <ColumnDefinition Width="45*"/>
                         <ColumnDefinition Width="716*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding O_Selected}" ItemsSource="{Binding OrdersList,Mode=TwoWay}" Grid.ColumnSpan="3">
+                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding O_Selected}" MouseDoubleClick="ListView_MouseDoubleClick" ItemsSource="{Binding OrdersList,Mode=TwoWay}" Grid.ColumnSpan="3">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn/>

@@ -19,7 +19,7 @@ internal class Order : BlApi.IOrder
     /// <returns></returns>
     /// <exception cref="NoOrdersForListExeption">no orders for list found</exception>
     public IEnumerable<OrderForList> GetListOfOrders()
-    { 
+    {
         IEnumerable<DO.Order?> orderList = Dal!.order.GetAll();
         try
         {
@@ -36,14 +36,14 @@ internal class Order : BlApi.IOrder
         }
         catch
         {
-            
+
             throw new NoOrdersForListExeption("no orders for list") { };
         }
     }
     public void AddOrder(BO.Order o)
     {
 
-        CheckCorrectData(o.ID,o!.CostumerName, o.CostumerAddress, o.CostumerEmail);
+        CheckCorrectData(o.ID, o!.CostumerName, o.CostumerAddress, o.CostumerEmail);
         try
         {
             Dal!.order.Add(newOrderWithData(o.ID, o!.CostumerName, o.CostumerAddress, o.CostumerEmail));
@@ -59,13 +59,13 @@ internal class Order : BlApi.IOrder
         DO.Order o = new()
         {
             costumerName = name,
-            OrderNum=id,
-            mail=Email,
-            address=address,
+            OrderNum = id,
+            mail = Email,
+            address = address,
         };
         return o;
     }
-    public void CheckCorrectData(int id, string name,string address,string Email)
+    public void CheckCorrectData(int id, string name, string address, string Email)
     {
         if (id < 0)
         {
@@ -94,7 +94,7 @@ internal class Order : BlApi.IOrder
         }
         else
         {
-            DO.Order o = new DO.Order();
+            DO.Order o = new();
             try
             {
                 o = Dal!.order.Get(e => e?.OrderNum == id);
@@ -203,7 +203,7 @@ internal class Order : BlApi.IOrder
                 catch (DO.RequestedUpdateItemNotFoundException)
                 {
 
-                    throw new BO.UpdateOrderNotSucceedException("update order not succeed") { UpdateOrderNotSucceed = o.ToString() };
+                    throw new UpdateOrderNotSucceedException("update order not succeed") { UpdateOrderNotSucceed = o.ToString() };
                 }
             }
 
@@ -286,37 +286,39 @@ internal class Order : BlApi.IOrder
     }
     public int GetAmountItems(int id)
     {
-        IEnumerable<DO.OrderItem> orderItemList = new List<DO.OrderItem>();
+        IEnumerable<DO.OrderItem?>? orderItemList = new List<DO.OrderItem?>();
         orderItemList = Dal!.orderItem.GetOrderItemsFromOrder(id);
         int sum = 0;
-        var newSum=from OrderItem item in orderItemList
-                   select ( sum += item.Amount).ToString(); 
+        var newSum = from OrderItem item in orderItemList
+                     select (sum += item.Amount).ToString();
         return sum;
 
     }
     public double CheckTotalSum(int id)
     {
-        IEnumerable<DO.OrderItem> orderItemList = new List<DO.OrderItem>();
+        IEnumerable<DO.OrderItem?>? orderItemList = new List<DO.OrderItem?>();
+
         orderItemList = Dal!.orderItem.GetOrderItemsFromOrder(id);
         double sum = 0;
-        var newSum = from OrderItem item in orderItemList
+        var newSum = from OrderItem item in orderItemList!
                      select (sum = sum + item.Price * item.Amount).ToString();
         return sum;
     }
     public List<OrderItem> GetAllItemsToOrder(int id)
     {
-        IEnumerable<DO.OrderItem> orderItemList = new List<DO.OrderItem>();
+        IEnumerable<DO.OrderItem?>? orderItemList = new List<DO.OrderItem?>();
+
         orderItemList = Dal!.orderItem.GetOrderItemsFromOrder(id);
         int count = 0;
-        return orderItemList
+        return orderItemList!
             .Select(item => new OrderItem()
             {
                 NumInOrder = count++,
-                ID = item.id,
-                Name = getOrderItemName(item.itemId),
-                Price = item.price,
-                Amount = item.amount,
-                TotalPrice = item.price * item.amount
+                ID = item!.Value.id,
+                Name = getOrderItemName(item!.Value.itemId),
+                Price = item!.Value.price,
+                Amount = item!.Value.amount,
+                TotalPrice = item!.Value.price * item!.Value.amount
             }).ToList();
     }
     public string getOrderItemName(int productId)

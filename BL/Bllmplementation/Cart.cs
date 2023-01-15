@@ -277,10 +277,6 @@ internal class Cart : ICart
         throw new NotImplementedException();
     }
 
-    void ICart.OpenCart(BO.Cart myCart)
-    {
-        throw new NotImplementedException();
-    }
 
     BO.Cart? ICart.AddItemToCart(BO.Cart _myCart, int _id)
     {

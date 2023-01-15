@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static BO.Enums;
-
+using Pl.windows.Order;
 namespace Pl.windows.Manager
 {
     /// <summary>
@@ -28,7 +28,7 @@ namespace Pl.windows.Manager
             IsReadOnly = isreadonly;
             ProductList = bl.Product.GetListOfProduct();
             Categorys = Enum.GetValues(typeof(BO.Enums.Category));
-           
+
             InitializeComponent();
         }
         public IEnumerable<OrderForList> OrdersList
@@ -61,7 +61,7 @@ namespace Pl.windows.Manager
         {
 
         }
-      
+
 
         public Array Categorys { get; set; }
 
@@ -81,13 +81,13 @@ namespace Pl.windows.Manager
         public static readonly DependencyProperty SelectedProperty =
             DependencyProperty.Register("Selected", typeof(BO.ProductForList), typeof(Manager));
 
-        public BO.ProductForList O_Selected
+        public BO.OrderForList O_Selected
         {
-            get { return (BO.ProductForList)GetValue(O_SelectedProperty); }
+            get { return (OrderForList)GetValue(O_SelectedProperty); }
             set { SetValue(O_SelectedProperty, value); }
         }
         public static readonly DependencyProperty O_SelectedProperty =
-            DependencyProperty.Register("O_Selected", typeof(BO.ProductForList), typeof(Manager));
+            DependencyProperty.Register("O_Selected", typeof(OrderForList), typeof(Manager));
         private void ProductListview_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             BO.ProductForList p = Selected;
@@ -99,7 +99,7 @@ namespace Pl.windows.Manager
             string? cat = Categoryselected.ToString();
             ProductList = bl!.Product!.GetProductForListByCategory(cat);
         }
-      
+
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
             int nextId = bl!.Product!.GetnextidFromDO();
@@ -109,6 +109,17 @@ namespace Pl.windows.Manager
         private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            OrderForList o = O_Selected;
+            new OrderWindow(false, o.ID).ShowDialog();
         }
     }
 }
