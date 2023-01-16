@@ -34,7 +34,7 @@ VerticalAlignment="Stretch" Width="auto">
         </ListView>
 
         <Button Content="Show My Cart" Grid.Row="1" HorizontalAlignment="Left" Margin="602,0,0,27" Padding="5" Width="155" Height="28" VerticalAlignment="Bottom" Click="Button_Click" />
-
+        <Button Content="Back to menu" Click="Back_Button_Click_1" Margin="600,468,30,70" Grid.Row="1"/>
 
 
 

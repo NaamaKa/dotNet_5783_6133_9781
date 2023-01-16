@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static BO.Enums;
 using Pl.windows.Order;
+using System.Collections.ObjectModel;
+
 namespace Pl.windows.Manager
 {
     /// <summary>
@@ -24,22 +26,22 @@ namespace Pl.windows.Manager
         static BlApi.IBl? bl = BlApi.Factory.Get();
         public Manager(bool isreadonly)
         {
-            OrdersList = bl!.Order.GetListOfOrders();
+            OrdersList = new(bl!.Order.GetListOfOrders());
             IsReadOnly = isreadonly;
             ProductList = bl.Product.GetListOfProduct();
             Categorys = Enum.GetValues(typeof(BO.Enums.Category));
 
             InitializeComponent();
         }
-        public IEnumerable<OrderForList> OrdersList
+        public ObservableCollection<OrderForList> OrdersList
         {
-            get { return (IEnumerable<OrderForList>)GetValue(OrdersListProperty); }
+            get { return (ObservableCollection<OrderForList>)GetValue(OrdersListProperty); }
             set { SetValue(OrdersListProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for OrdersList.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OrdersListProperty =
-            DependencyProperty.Register("OrdersList", typeof(IEnumerable<OrderForList>), typeof(Orders));
+            DependencyProperty.Register(nameof(OrdersList), typeof(ObservableCollection<OrderForList>), typeof(Orders));
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -121,5 +123,7 @@ namespace Pl.windows.Manager
             OrderForList o = O_Selected;
             new OrderWindow(false, o.ID).ShowDialog();
         }
+
+
     }
 }

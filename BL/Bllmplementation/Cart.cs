@@ -55,7 +55,7 @@ internal class Cart : ICart
         //var wantedItem=from OrderItem item in _myCart!.Items!
         //               where(item != null && item.ID == _id&& _wantedProduct.inStock >= item.Amount + 1)
         //               select();
-
+        if(_myCart.Items!=null)
         foreach (var itemInCart in _myCart!.Items!)
         {
             if (itemInCart != null)
@@ -64,11 +64,13 @@ internal class Cart : ICart
                 {
                     if (_wantedProduct.inStock >= item.Amount + 1)
                     {
-                        itemInCart.Amount++;
+                        itemInCart.Amount+=item.Amount;
                         double pricetoAdd = itemInCart.Price;
                         itemInCart.TotalPrice += pricetoAdd;
                         _myCart.Price += pricetoAdd;
-                        return _myCart;
+                         _wantedProduct.inStock -= item.Amount;
+                         Dal.product.Update(_wantedProduct);
+                         return _myCart;
                     }
                     else
                     {
@@ -91,18 +93,22 @@ internal class Cart : ICart
             throw new FieldToGetProductException("product dosnt axist") { FieldToGetProduct = item.ID.ToString() };
         }
         //check if product is inStock
-        if (_product.inStock >= 1)
+        if (_product.inStock >= item.Amount)
         {
             BO.OrderItem _myNeworderItem = new()
             {
                 ID = item.ID,
                 Name = _product.productName,
                 Price = _product.productPrice,
-                Amount = 1,
+                Amount = item.Amount,
                 TotalPrice = _product.productPrice
             };
+            if(_myCart!.Items==null) 
+                _myCart.Items=new List<BO.OrderItem>();
             _myCart.Items.Add(_myNeworderItem);
             _myCart.Price += _product.productPrice;
+            _product.inStock -= item.Amount;
+            Dal.product.Update(_product);
             return _myCart;
         }
         else
@@ -111,7 +117,7 @@ internal class Cart : ICart
         #endregion
     }
 
-    public void SubmitOrder(BO.Cart _myCart, string _cName, string _cEmail, string _cAddress)
+    public void SubmitOrder(BO.Cart _myCart)
     {
         #region check all data
         //check cart
@@ -151,16 +157,16 @@ internal class Cart : ICart
         }
         #endregion
         #region check users data
-        if (_cName == null)
+        if (_myCart.CostumerName == null)
         {
             throw new Exception("no name entered");
         }
-        if (_cAddress == null)
+        if (_myCart.CostumerAddress == null)
         {
             throw new Exception("no address entered");
         }
         Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-        Match match = regex.Match(_cEmail);
+        Match match = regex.Match(_myCart.CostumerEmail);
         if (!match.Success)
         {
             throw new Exception("email not good");
@@ -170,12 +176,12 @@ internal class Cart : ICart
         DO.Order _myNewOrder = new DO.Order()
         {
             OrderNum = 0,
-            costumerName = _cName,
-            mail = _cEmail,
-            address = _cAddress,
+            costumerName = _myCart.CostumerName,
+            mail = _myCart.CostumerEmail,
+            address = _myCart.CostumerAddress,
             OrderDate = DateTime.Now,
-            shippingDate = DateTime.MinValue,
-            arrivleDate = DateTime.MinValue
+            shippingDate = null,
+            arrivleDate = null
         };
         #endregion
         int _newOrderID = 0;
@@ -278,18 +284,7 @@ internal class Cart : ICart
     }
 
 
-    BO.Cart? ICart.AddItemToCart(BO.Cart _myCart, int _id)
-    {
-        throw new NotImplementedException();
-    }
+  
 
-    BO.Cart? ICart.UpdateAmountOfItem(BO.Cart _myCart, int _id, int _newAmount)
-    {
-        throw new NotImplementedException();
-    }
 
-    void ICart.SubmitOrder(BO.Cart _myCart, string _cName, string _cEmail, string _Address)
-    {
-        throw new NotImplementedException();
-    }
 }

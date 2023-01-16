@@ -22,11 +22,61 @@ namespace Pl.windows.Order
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
         
-        public NewOrder()
+        public NewOrder(BO.Cart myCart)
         {
+            MyCart=myCart;
+            Address = null;
+            Mail=null;
+            Name= null; 
             Id = bl.Order!.GetnextidFromDO();
             InitializeComponent();
         }
+
+
+
+        public BO.Cart MyCart
+        {
+            get { return (BO.Cart)GetValue(MyCartProperty); }
+            set { SetValue(MyCartProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyCartProperty =
+            DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(NewOrder));
+
+
+        public string? Name
+        {
+            get { return (string?)GetValue(NameProperty); }
+            set { SetValue(NameProperty, value); }
+        }
+
+        public static readonly DependencyProperty NameProperty =
+            DependencyProperty.Register("Name", typeof(string), typeof(NewOrder));
+
+
+        public string? Address
+        {
+            get { return (string?)GetValue(AddressProperty); }
+            set { SetValue(AddressProperty, value); }
+        }
+
+        public static readonly DependencyProperty AddressProperty =
+            DependencyProperty.Register("Address", typeof(string), typeof(NewOrder));
+
+
+
+        public string? Mail
+        {
+            get { return (string?)GetValue(MailProperty); }
+            set { SetValue(MailProperty, value); }
+        }
+
+        public static readonly DependencyProperty MailProperty =
+            DependencyProperty.Register("Mail", typeof(string), typeof(NewOrder));
+
+
+
         public int Id
         {
             get { return (int)GetValue(IdProperty); }
@@ -36,26 +86,17 @@ namespace Pl.windows.Order
         DependencyProperty.Register("Id", typeof(int), typeof(NewOrder));
         private BO.Cart CreateCart()
         {
-            return new BO.Cart()
-            {
-            CostumerName =costumerName.Text,
-            CostumerAddress=costumerAddress.Text,
-            CostumerEmail=costumerEmail.Text,
-            };
+            MyCart.CostumerName = Name;
+            MyCart.CostumerAddress = Address;
+            MyCart.CostumerEmail = Mail; 
+            return MyCart; 
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 bl!.Cart!.OpenCart(CreateCart());
-                BO.Cart myCart = new Cart()
-                {
-                    CostumerName = costumerName.Text,
-                    CostumerAddress = costumerAddress.Text,
-                    CostumerEmail = costumerEmail.Text,
-                };
-                new ProductForList(myCart).Show();
-                this.Close();
+                
             }
             catch (EmptyNameException p)
             {
@@ -98,7 +139,14 @@ namespace Pl.windows.Order
                 };
                 Grid.SetRow(EmptyEmailExceptionLable, 1);
                 MainGrid.Children.Add(EmptyEmailExceptionLable);
-            } 
+            }
+            bl!.Cart!.SubmitOrder(MyCart);
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

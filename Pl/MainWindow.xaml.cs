@@ -39,7 +39,7 @@ public partial class MainWindow : Window
 
     private void Order_Button_Click(object sender, RoutedEventArgs e)
     {
-        new NewOrder().Show();
+        new ProductForList().ShowDialog();
         this.Close();
     }
 

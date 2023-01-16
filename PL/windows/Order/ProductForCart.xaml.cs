@@ -104,6 +104,7 @@ namespace Pl.windows.Order
             NumInTheCart++;
             
             MyCart.Price += item.TotalPrice;
+            bl.Cart.AddItemToCart(MyCart, item);
             this.Close();
         }
     }

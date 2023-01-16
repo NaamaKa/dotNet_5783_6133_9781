@@ -11,12 +11,13 @@
         <Label Content="your name" HorizontalAlignment="Left" Margin="197,86,0,0" VerticalAlignment="Top"/>
         <Label Content="your address" HorizontalAlignment="Left" Margin="196,136,0,0" VerticalAlignment="Top"/>
         <Label Content="your Email" HorizontalAlignment="Left" Margin="199,202,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.278,0.455"/>
-        <TextBox x:Name="costumerName" HorizontalAlignment="Left" Margin="318,93,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="costumerAddress" HorizontalAlignment="Left" Margin="318,141,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="costumerEmail" HorizontalAlignment="Left" Margin="318,206,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="costumerName" HorizontalAlignment="Left" Margin="318,93,0,0" TextWrapping="Wrap" Text="{Binding Name,Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="costumerAddress" HorizontalAlignment="Left" Margin="318,141,0,0" TextWrapping="Wrap" Text="{Binding Address,Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="costumerEmail" HorizontalAlignment="Left" Margin="318,206,0,0" TextWrapping="Wrap" Text="{Binding Mail,Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
         <Label Content="costumer code" HorizontalAlignment="Left" Margin="198,45,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Id}" HorizontalAlignment="Left" Margin="353,45,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="id" Content="start to buy" HorizontalAlignment="Left" Margin="582,346,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name="id" Content="Next" HorizontalAlignment="Left" Margin="582,346,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="Back" HorizontalAlignment="Left" Margin="582,382,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
 
     </Grid>
 </Window>

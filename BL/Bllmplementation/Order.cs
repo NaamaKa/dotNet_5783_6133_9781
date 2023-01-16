@@ -230,7 +230,7 @@ internal class Order : BlApi.IOrder
         }
         try
         {
-            if (CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate) == BO.Enums.OrderStatus.Arrived)
+            if (CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate) == BO.Enums.OrderStatus.Submitted)
             {
                 o.shippingDate = DateTime.Now;
                 try
@@ -277,13 +277,26 @@ internal class Order : BlApi.IOrder
     public OrderStatus CheckStatus(DateTime? OrderDate, DateTime? ShipDate, DateTime? DeliveryDate)
     {
         DateTime today = DateTime.Now;
-        if (today.Equals(OrderDate) && today.Equals(ShipDate) && today.Equals(DeliveryDate))
-            return OrderStatus.Submitted;
-        else if (today.Equals(OrderDate) && today.Equals(ShipDate))
-            return OrderStatus.Sent;
-        else
-            return OrderStatus.Arrived;
-    }
+        if (OrderDate != null)
+        {
+            if (ShipDate == null)
+            {
+                return OrderStatus.Submitted;
+            }
+            else
+            {
+                if (DeliveryDate == null)
+                {
+                    return OrderStatus.Sent;
+                }
+                else
+                {
+                    return OrderStatus.Arrived;
+                }
+            }
+        }
+        throw new NotImplementedException();
+     }
     public int GetAmountItems(int id)
     {
         IEnumerable<DO.OrderItem?>? orderItemList = new List<DO.OrderItem?>();
