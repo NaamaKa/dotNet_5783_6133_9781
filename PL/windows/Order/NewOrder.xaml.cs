@@ -32,8 +32,6 @@ namespace Pl.windows.Order
             InitializeComponent();
         }
 
-
-
         public BO.Cart MyCart
         {
             get { return (BO.Cart)GetValue(MyCartProperty); }

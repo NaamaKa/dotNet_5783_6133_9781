@@ -38,8 +38,6 @@ namespace Pl.windows.Manager
             get { return (ObservableCollection<OrderForList>)GetValue(OrdersListProperty); }
             set { SetValue(OrdersListProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for OrdersList.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OrdersListProperty =
             DependencyProperty.Register(nameof(OrdersList), typeof(ObservableCollection<OrderForList>), typeof(Orders));
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -53,8 +51,6 @@ namespace Pl.windows.Manager
             get { return (bool)GetValue(IsReadOnlyProperty); }
             set { SetValue(IsReadOnlyProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for IsReadOnly.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsReadOnlyProperty =
             DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(Manager));
 

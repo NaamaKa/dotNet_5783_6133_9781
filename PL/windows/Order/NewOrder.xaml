@@ -16,8 +16,8 @@
         <TextBox x:Name="costumerEmail" HorizontalAlignment="Left" Margin="318,206,0,0" TextWrapping="Wrap" Text="{Binding Mail,Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
         <Label Content="costumer code" HorizontalAlignment="Left" Margin="198,45,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Id}" HorizontalAlignment="Left" Margin="353,45,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="id" Content="Next" HorizontalAlignment="Left" Margin="582,346,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="582,382,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button x:Name="id" Content="Next" HorizontalAlignment="Left" Margin="582,348,0,0" VerticalAlignment="Top" Click="Button_Click" Height="48" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1" Width="100"/>
+        <Button Content="Back" HorizontalAlignment="Left" Margin="84,346,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="48" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1" Width="104"/>
 
     </Grid>
 </Window>

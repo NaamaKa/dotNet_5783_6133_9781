@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Printing.IndexedProperties;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,9 +104,17 @@ namespace Pl.windows.Order
             };
             NumInTheCart++;
             
-            MyCart.Price += item.TotalPrice;
-            bl.Cart.AddItemToCart(MyCart, item);
-            this.Close();
+            MyCart!.Price += item.TotalPrice;
+            try 
+            {
+                bl!.Cart!.AddItemToCart(MyCart, item);
+                this.Close();
+            }
+            catch(ProductNotInStockException p) 
+            {
+                MessageBox.Show(p.Message);
+            }
+            
         }
     }
    

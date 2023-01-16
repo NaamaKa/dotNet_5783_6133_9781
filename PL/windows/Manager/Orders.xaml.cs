@@ -24,7 +24,7 @@ public partial class Orders : Window
     
     public Orders()
     {
-        OrdersList = bl!.Order.GetListOfOrders();
+        OrdersList = bl!.Order!.GetListOfOrders();
         InitializeComponent();
        
     }
@@ -35,7 +35,6 @@ public partial class Orders : Window
         set { SetValue(OrdersListProperty, value); }
     } 
 
-    // Using a DependencyProperty as the backing store for OrdersList.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty OrdersListProperty =
         DependencyProperty.Register("OrdersList", typeof(IEnumerable<OrderForList>), typeof(Orders));
 

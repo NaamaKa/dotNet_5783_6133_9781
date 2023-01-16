@@ -30,17 +30,11 @@ namespace Pl.windows.Order
             InitializeComponent();
         }
         
-
-
-
-
         public BO.Cart MyCart
         {
             get { return (BO.Cart)GetValue(MyCartProperty); }
             set { SetValue(MyCartProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MyCartProperty =
             DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(CartList));
 

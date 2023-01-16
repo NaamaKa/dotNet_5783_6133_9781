@@ -30,7 +30,7 @@ public partial class ProductForList : Window
     public ProductForList()
     {
         
-        ProductList = bl!.Product.GetListOfProduct();
+        ProductList = bl!.Product!.GetListOfProduct();
         Categorys = Enum.GetValues(typeof(BO.Enums.Category));
         InitializeComponent();
     }

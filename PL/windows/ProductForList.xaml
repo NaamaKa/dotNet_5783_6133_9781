@@ -33,8 +33,8 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
 
-        <Button Content="Show My Cart" Grid.Row="1" HorizontalAlignment="Left" Margin="602,0,0,27" Padding="5" Width="155" Height="28" VerticalAlignment="Bottom" Click="Button_Click" />
-        <Button Content="Back to menu" Click="Back_Button_Click_1" Margin="600,468,30,70" Grid.Row="1"/>
+        <Button Content="Show My Cart" Grid.Row="1"  HorizontalAlignment="Left" Margin="578,0,0,24" Padding="5" Width="188"  VerticalAlignment="Bottom" Click="Button_Click" Height="54" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1" />
+        <Button Content="Back to menu" Click="Back_Button_Click_1" Margin="30,498,580,21" Grid.Row="1" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1"/>
 
 
 

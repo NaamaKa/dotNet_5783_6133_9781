@@ -26,7 +26,7 @@ internal class Cart : ICart
     public void OpenCart(BO.Cart myCart)
     {
 
-        CheckCorrectData(myCart!.CostumerName, myCart.CostumerAddress, myCart.CostumerEmail);
+        CheckCorrectData(myCart!.CostumerName!, myCart.CostumerAddress!, myCart.CostumerEmail!);
     }
     public void CheckCorrectData( string name, string address, string Email)
     {

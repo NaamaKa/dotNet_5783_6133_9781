@@ -9,7 +9,6 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Label Visibility="{Binding MesaggeToshow}" Content="hy there,you are nuts!!! you didnt buy yet anythung! run buy NOW!!" HorizontalAlignment="Left" Margin="80,9,0,0" VerticalAlignment="Top" Width="560"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="720,8,0,0" VerticalAlignment="Top"/>
         <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,41,0,91" ItemsSource="{Binding MyCart.Items, Mode=TwoWay}">
             <ListView.View>
                 <GridView>
@@ -17,10 +16,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="{Binding MyCart.Price}" HorizontalAlignment="Left" Margin="520,387,0,0" VerticalAlignment="Top"/>
-        <Button Content="Submit Order" HorizontalAlignment="Left" Margin="685,390,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
-        <Label Content="Total Price" HorizontalAlignment="Left" Margin="440,386,0,0" VerticalAlignment="Top"/>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="685,364,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click"/>
+        <Label Content="{Binding MyCart.Price}" HorizontalAlignment="Left" Margin="432,367,0,0" VerticalAlignment="Top" Foreground="#FFFFD100" FontWeight="Bold"/>
+        <Button Content="Submit Order" HorizontalAlignment="Left" Margin="586,354,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="54" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1" Width="200"/>
+        <Label Content="Total Price:" HorizontalAlignment="Left" Margin="332,372,0,0" VerticalAlignment="Top" Foreground="#FFFFD100" FontWeight="Bold" Height="28" Width="74"/>
+        <Button Content="Back" HorizontalAlignment="Left" Margin="38,358,0,0" VerticalAlignment="Top" Width="133" Click="Button_Click" Height="48" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1"/>
 
     </Grid>
 </Window>
