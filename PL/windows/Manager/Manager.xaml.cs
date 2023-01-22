@@ -120,6 +120,12 @@ namespace Pl.windows.Manager
             new OrderWindow(false, o.ID).ShowDialog();
         }
 
+       
 
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
+        }
     }
 }

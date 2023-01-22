@@ -69,8 +69,8 @@
                         </ListView.View>
                     </ListView>
 
-                    <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Content="Add new Product" Grid.Row="1" HorizontalAlignment="Left" Margin="380,0,0,38" Padding="5" Width="157" Height="33" VerticalAlignment="Bottom" Click="Add_Button_Click" Grid.Column="5" />
-
+                    <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Content="Add new Product" Grid.Row="1" HorizontalAlignment="Left" Margin="382,0,0,43" Padding="5" Width="155" Height="28" VerticalAlignment="Bottom" Click="Add_Button_Click" Grid.Column="5" />
+                    <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" Content="Back" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Margin="10,271,43,49" Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="1" Click="Button_Click_2" RenderTransformOrigin="0.263,0.043" />
 
 
 
