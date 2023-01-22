@@ -37,12 +37,39 @@
                     <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList,Mode=TwoWay}" Margin="0,17,0,16" SelectionChanged="ProductListview_SelectionChanged" Grid.ColumnSpan="6">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn/>
+                                <GridViewColumn Width="Auto" Header="ID">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Margin="-5,-1" Text="{Binding Id}" TextAlignment="Center" Padding="3"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="Auto" Header="Name">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Margin="-5,-1" Text="{Binding Name}" TextAlignment="Center" Padding="3"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="Auto" Header="Price">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Margin="-5,-1" Text="{Binding Price}" TextAlignment="Center" Padding="3"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="Auto" Header="Category">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Margin="-5,-1" Text="{Binding Category}" TextAlignment="Center" Padding="3"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
 
-                    <Button Content="Add new Product" Grid.Row="1" HorizontalAlignment="Left" Margin="382,0,0,43" Padding="5" Width="155" Height="28" VerticalAlignment="Bottom" Click="Add_Button_Click" Grid.Column="5" />
+                    <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Content="Add new Product" Grid.Row="1" HorizontalAlignment="Left" Margin="380,0,0,38" Padding="5" Width="157" Height="33" VerticalAlignment="Bottom" Click="Add_Button_Click" Grid.Column="5" />
 
 
 

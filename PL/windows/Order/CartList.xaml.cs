@@ -22,24 +22,41 @@ namespace Pl.windows.Order
 
         public CartList(BO.Cart myCart)
         {
-            MyCart= myCart;
+            MyCart = myCart;
             if (MyCart.Items == null)
                 MesaggeToshow = true;
             else
                 MesaggeToshow = false;
             InitializeComponent();
         }
-        
+
+
+
+
+
+
+        public double SelectedItemAmount
+        {
+            get { return (double)GetValue(SelectedItemAmountProperty); }
+            set { SetValue(SelectedItemAmountProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedItemAmountProperty =
+            DependencyProperty.Register("SelectedItemAmount", typeof(double), typeof(CartList));
+
+
         public BO.Cart MyCart
         {
             get { return (BO.Cart)GetValue(MyCartProperty); }
             set { SetValue(MyCartProperty, value); }
         }
+
+        // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MyCartProperty =
             DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(CartList));
 
 
-        
+
         public static bool MesaggeToshow { get; set; }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -50,6 +67,14 @@ namespace Pl.windows.Order
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             new NewOrder(MyCart).Show();
+        }
+        private void plus_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void minus_Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

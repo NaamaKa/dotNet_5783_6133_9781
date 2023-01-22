@@ -9,17 +9,65 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Label Visibility="{Binding MesaggeToshow}" Content="hy there,you are nuts!!! you didnt buy yet anythung! run buy NOW!!" HorizontalAlignment="Left" Margin="80,9,0,0" VerticalAlignment="Top" Width="560"/>
-        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,41,0,91" ItemsSource="{Binding MyCart.Items, Mode=TwoWay}">
+        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,41,0,91" ItemsSource="{Binding MyCart.Items, Mode=TwoWay}" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Width="Auto" Header="Num In Order">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding NumInOrder}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="ID">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding ID}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Name}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Price}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100" Header="Amount">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid Width="80">
+                                    <Button Content="-" HorizontalAlignment="Left" Width="20" Click="plus_Button_Click"></Button>
+                                    <TextBlock  Margin="-5,-1" HorizontalAlignment="Center" Text="{Binding Amount}" Width="20" TextAlignment="Center" Padding="3"></TextBlock>
+                                    <Button Content="+" HorizontalAlignment="Right" Width="20" Click="minus_Button_Click"></Button>
+
+                                </Grid>
+
+
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Total Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding TotalPrice}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="{Binding MyCart.Price}" HorizontalAlignment="Left" Margin="432,367,0,0" VerticalAlignment="Top" Foreground="#FFFFD100" FontWeight="Bold"/>
-        <Button Content="Submit Order" HorizontalAlignment="Left" Margin="586,354,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="54" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1" Width="200"/>
-        <Label Content="Total Price:" HorizontalAlignment="Left" Margin="332,372,0,0" VerticalAlignment="Top" Foreground="#FFFFD100" FontWeight="Bold" Height="28" Width="74"/>
-        <Button Content="Back" HorizontalAlignment="Left" Margin="38,358,0,0" VerticalAlignment="Top" Width="133" Click="Button_Click" Height="48" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="22" BorderThickness="1,0,1,1"/>
+        <Label Foreground="#FFFFD100" Content="{Binding MyCart.Price}" HorizontalAlignment="Left" Margin="462,395,0,0" VerticalAlignment="Top"/>
+        <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Content="Submit Order" HorizontalAlignment="Left" Margin="662,384,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="23" Width="108"/>
+        <Label Foreground="#FFFFD100" Content="Total Price" HorizontalAlignment="Left" Margin="350,386,0,0" VerticalAlignment="Top"/>
+        <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Content="Back" HorizontalAlignment="Left" Margin="45,384,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click"/>
 
     </Grid>
 </Window>
