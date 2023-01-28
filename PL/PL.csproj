@@ -19,6 +19,7 @@
 	<ItemGroup>
 	  <None Remove="ikeaLogo.png" />
 	  <None Remove="windows\Order\מנהל.PNG" />
+	  <None Remove="windows\מנהל.PNG" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -28,6 +29,7 @@
 	<ItemGroup>
 	  <Resource Include="ikeaLogo.png" />
 	  <Resource Include="windows\Order\מנהל.PNG" />
+	  <Resource Include="windows\מנהל.PNG" />
 	</ItemGroup>
 
 </Project>

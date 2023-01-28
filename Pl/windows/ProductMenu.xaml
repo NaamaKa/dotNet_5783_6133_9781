@@ -9,6 +9,9 @@
         Title="ProductMenu" Height="450" Width="800">
     <Grid>
         <Grid Name="MainGrid">
+            <Grid.Background>
+                <ImageBrush ImageSource="/windows/מנהל.PNG"/>
+            </Grid.Background>
             <Label  Content="id"  HorizontalAlignment="Left" Margin="225,91,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="id" IsReadOnly="True"   HorizontalAlignment="Left" Margin="289,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
             <Label   Content="Category" HorizontalAlignment="Left" Margin="186,181,0,0" VerticalAlignment="Top"/>

@@ -8,6 +8,9 @@
         Title="CartList" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/windows/Order/מנהל.PNG"/>
+        </Grid.Background>
         <Label Visibility="{Binding MesaggeToshow}" Content="hy there,you are nuts!!! you didnt buy yet anythung! run buy NOW!!" HorizontalAlignment="Left" Margin="80,9,0,0" VerticalAlignment="Top" Width="560"/>
         <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,41,0,91" ItemsSource="{Binding MyCart.Items, Mode=TwoWay}" >
             <ListView.View>

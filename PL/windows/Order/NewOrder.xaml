@@ -8,6 +8,9 @@
         Title="NewOrder" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid x:Name="MainGrid">
+        <Grid.Background>
+            <ImageBrush ImageSource="/windows/Order/מנהל.PNG"/>
+        </Grid.Background>
         <Label Content="your name" HorizontalAlignment="Left" Margin="197,86,0,0" VerticalAlignment="Top"/>
         <Label Content="your address" HorizontalAlignment="Left" Margin="196,136,0,0" VerticalAlignment="Top"/>
         <Label Content="your Email" HorizontalAlignment="Left" Margin="199,202,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.278,0.455"/>
