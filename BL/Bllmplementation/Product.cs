@@ -33,7 +33,24 @@ public class Product : BlApi.IProduct
             });
         throw new NotImplementedException();
     }
-    
+    public BO.ProductForList? GetProductForList(int id)
+    {
+        IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
+        if (Dal != null)
+        {
+            productsList = Dal.product.GetAll();
+        }
+        return productsList
+         .Where(item => (item != null) && (item.Value.barkode == id))
+         .Select(item => new BO.ProductForList()
+         {
+             Id = item!.Value.barkode,
+             Name = item.Value.productName,
+             Price = item.Value.productPrice,
+             Category = (BO.Enums.Category)item.Value.productCategory
+         }).FirstOrDefault();
+
+    }
     public IEnumerable<ProductForList> GetListOfProduct()
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();

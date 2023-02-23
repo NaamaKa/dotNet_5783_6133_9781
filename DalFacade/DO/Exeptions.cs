@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace DO;
 
-
 public class GetPredictNullException : Exception
 {
     public string? GetPredictNull { get; set; }

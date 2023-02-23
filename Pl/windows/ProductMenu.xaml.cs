@@ -3,6 +3,7 @@ using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Pl.windows;
 
@@ -24,21 +26,34 @@ namespace Pl.windows;
 public partial class ProductMenu : Window
 {
     BlApi.IBl? bl = BlApi.Factory.Get();
-    public ProductMenu(int _id, string _buttoncategory)
+    public ProductMenu(int _id, string _buttoncategory, Action<BO.ProductForList?> action)
     {
         InitializeComponent();
+        this.Action = action;
+        ID= _id;
         AddOrUpdateButton.Content = _buttoncategory;
         id.Text = _id.ToString();
-        if (_buttoncategory == "update")
-        {
-            BO.Product p = bl.Product!.GetProductItem(_id)!;
-            name.Text = p!.Name!;
-            price.Text = p!.Price!.ToString();
-            inStock.Text = p!.InStock!.ToString();
-            CategoryComboBox.SelectedIndex = (int)p!.Category!;
-        }
+      
+        CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
+      
+    }
+    public ProductMenu(int _id,string _buttoncategory)
+    {
+        InitializeComponent();
+
+        AddOrUpdateButton.Content = _buttoncategory;
+        id.Text = _id.ToString();
+      
+
+        BO.Product p = bl.Product!.GetProductItem(_id)!;
+        name.Text = p!.Name!;
+        price.Text = p!.Price!.ToString();
+        inStock.Text = p!.InStock!.ToString();
+        CategoryComboBox.SelectedIndex = (int)p!.Category!;
         CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
     }
+    public int ID { get; set; }
+    private Action<BO.ProductForList?> Action;
     private void Category_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
 
@@ -54,6 +69,8 @@ public partial class ProductMenu : Window
                 if ((string)AddOrUpdateButton.Content == "add")
                 {
                     bl!.Product!.AddProduct(CreateProduct());
+                    Action(bl.Product.GetProductForList(ID));
+
                     MessageBox.Show("the product " + name.Text + " add");
 
                 }
@@ -64,6 +81,7 @@ public partial class ProductMenu : Window
                     MessageBox.Show("the product " + name.Text + " update");
 
                 }
+
             }
             this.Close();
         }

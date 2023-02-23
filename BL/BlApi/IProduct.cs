@@ -10,7 +10,7 @@ namespace BlApi;
 public interface IProduct
 {
     //  עבור מנהל ועבור קטלוג ראשי
-    public IEnumerable<BO.ProductForList?> GetListOfProduct();
+    public IEnumerable<ProductForList?> GetListOfProduct();
 
     public int GetnextidFromDO();
     //עבור מנהל
@@ -19,6 +19,8 @@ public interface IProduct
     //קטלוג קונה
     public BO.ProductItem? GetProductItemForCatalog(int id, BO.Cart CostumerCart);
     public IEnumerable<BO.ProductForList?> GetProductForListByCategory(string? myCategory);
+    public BO.ProductForList? GetProductForList(int id);
+
 
     //עבור מנהל
     public void AddProduct(BO.Product p);

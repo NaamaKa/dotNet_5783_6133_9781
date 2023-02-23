@@ -21,7 +21,12 @@ namespace BO
 
         public EmptyNameException(string msg) : base(msg) { }
     }
+    public class WrongEmailException : Exception
+    {
+        public string? WrongEmail { get; set; }
 
+        public WrongEmailException(string msg) : base(msg) { }
+    }
 
     public class NegativePriceException : Exception
     {

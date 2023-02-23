@@ -94,7 +94,6 @@ namespace Pl.windows.Order
             try
             {
                 bl!.Cart!.OpenCart(CreateCart());
-                
             }
             catch (EmptyNameException p)
             {
@@ -109,6 +108,7 @@ namespace Pl.windows.Order
                 };
                 Grid.SetRow(EmptyNameExceptionLable, 1);
                 MainGrid.Children.Add(EmptyNameExceptionLable);
+                return;
             }
             catch (EmptyAddressException p)
             {
@@ -123,6 +123,7 @@ namespace Pl.windows.Order
                 };
                 Grid.SetRow(EmptyAddressExceptionLable, 1);
                 MainGrid.Children.Add(EmptyAddressExceptionLable);
+                return;
             }
             catch (EmptyEmailException p)
             {
@@ -137,8 +138,27 @@ namespace Pl.windows.Order
                 };
                 Grid.SetRow(EmptyEmailExceptionLable, 1);
                 MainGrid.Children.Add(EmptyEmailExceptionLable);
+                return;
             }
-            bl!.Cart!.SubmitOrder(MyCart);
+            try
+            {
+                bl!.Cart!.SubmitOrder(MyCart);
+            }
+            catch(WrongEmailException p)
+            {
+                Label WrongEmailExceptionLabel = new Label()
+                {
+                    Name = "WrongEmailExceptionLabel",
+                    Margin = new Thickness(358, 224, 0, 0),
+                    Content = p.Message,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Foreground = new SolidColorBrush(Colors.Red),
+                };
+                Grid.SetRow(WrongEmailExceptionLabel, 1);
+                MainGrid.Children.Add(WrongEmailExceptionLabel);
+                return;
+            }
             this.Close();
         }
 

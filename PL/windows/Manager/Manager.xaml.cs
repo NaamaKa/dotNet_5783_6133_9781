@@ -26,20 +26,28 @@ namespace Pl.windows.Manager
         static BlApi.IBl? bl = BlApi.Factory.Get();
         public Manager(bool isreadonly)
         {
+            try
+            {
+                ProductList = new ObservableCollection<BO.ProductForList?>(bl.Product.GetListOfProduct().Cast<BO.ProductForList?>());
+            }
+            catch (DO.RequestedItemNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
             OrdersList = new(bl!.Order.GetListOfOrders());
             IsReadOnly = isreadonly;
-            ProductList = bl.Product.GetListOfProduct();
+            //ProductList = bl.Product.GetListOfProduct();
             Categorys = Enum.GetValues(typeof(BO.Enums.Category));
 
             InitializeComponent();
         }
-        public ObservableCollection<OrderForList> OrdersList
+        public ObservableCollection<OrderForList?> ?OrdersList
         {
-            get { return (ObservableCollection<OrderForList>)GetValue(OrdersListProperty); }
+            get { return (ObservableCollection<OrderForList?>)GetValue(OrdersListProperty); }
             set { SetValue(OrdersListProperty, value); }
         }
-        public static readonly DependencyProperty OrdersListProperty =
-            DependencyProperty.Register(nameof(OrdersList), typeof(ObservableCollection<OrderForList>), typeof(Orders));
+        public static readonly DependencyProperty? OrdersListProperty =
+            DependencyProperty.Register(nameof(OrdersList), typeof(ObservableCollection<OrderForList?>), typeof(Orders));
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -63,13 +71,13 @@ namespace Pl.windows.Manager
 
         public Array Categorys { get; set; }
 
-        public IEnumerable<BO.ProductForList?> ProductList
+        public ObservableCollection<BO.ProductForList?>? ProductList
         {
-            get { return (IEnumerable<BO.ProductForList?>)GetValue(ProductListProperty); }
+            get { return (ObservableCollection<BO.ProductForList?>)GetValue(ProductListProperty); }
             set { SetValue(ProductListProperty, value); }
         }
-        public static readonly DependencyProperty ProductListProperty =
-            DependencyProperty.Register("ProductList", typeof(IEnumerable<BO.ProductForList?>), typeof(Manager));
+        public static readonly DependencyProperty? ProductListProperty =
+            DependencyProperty.Register("ProductList", typeof(ObservableCollection<BO.ProductForList?>), typeof(Manager));
 
         public BO.ProductForList Selected
         {
@@ -86,6 +94,13 @@ namespace Pl.windows.Manager
         }
         public static readonly DependencyProperty O_SelectedProperty =
             DependencyProperty.Register("O_Selected", typeof(OrderForList), typeof(Manager));
+        public void updateProduct(BO.ProductForList? product)
+        {
+           
+            
+            int index = ProductList.IndexOf(product) + 1;
+            ProductList[index] = product;
+        }
         private void ProductListview_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             BO.ProductForList p = Selected;
@@ -95,13 +110,14 @@ namespace Pl.windows.Manager
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string? cat = Categoryselected.ToString();
-            ProductList = bl!.Product!.GetProductForListByCategory(cat);
+            ProductList = new ObservableCollection<BO.ProductForList?>( bl!.Product!.GetProductForListByCategory(cat).Cast<BO.ProductForList?>());
         }
+        public void addProduct(BO.ProductForList? pro) => ProductList.Insert(ProductList.Count, pro);
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
             int nextId = bl!.Product!.GetnextidFromDO();
-            new ProductMenu(nextId, "add").ShowDialog();
+            new ProductMenu(nextId, "add",addProduct).ShowDialog();
         }
 
         private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)

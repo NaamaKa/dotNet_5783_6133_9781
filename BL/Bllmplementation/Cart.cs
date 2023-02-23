@@ -28,19 +28,19 @@ internal class Cart : ICart
 
         CheckCorrectData(myCart!.CostumerName!, myCart.CostumerAddress!, myCart.CostumerEmail!);
     }
-    public void CheckCorrectData( string name, string address, string Email)
+    public void CheckCorrectData( string? name, string? address, string? Email)
     {
         if (string.IsNullOrEmpty(name))
         {
-            throw new BO.EmptyNameException("empty name") { EmptyName = name!.ToString() };
+            throw new BO.EmptyNameException("empty name") { EmptyName = name };
         }
         if (string.IsNullOrEmpty(address))
         {
-            throw new BO.EmptyAddressException("empty address") { EmptyAddress = name!.ToString() };
+            throw new BO.EmptyAddressException("empty address") { EmptyAddress = address };
         }
         if (string.IsNullOrEmpty(Email))
         {
-            throw new BO.EmptyEmailException("empty Email") { EmptyEmail = name!.ToString() };
+            throw new BO.EmptyEmailException("empty Email") { EmptyEmail = Email };
         }
         return;
 
@@ -157,19 +157,11 @@ internal class Cart : ICart
         }
         #endregion
         #region check users data
-        if (_myCart.CostumerName == null)
-        {
-            throw new Exception("no name entered");
-        }
-        if (_myCart.CostumerAddress == null)
-        {
-            throw new Exception("no address entered");
-        }
         Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         Match match = regex.Match(_myCart.CostumerEmail);
         if (!match.Success)
         {
-            throw new Exception("email not good");
+            throw new WrongEmailException("email not good") { WrongEmail= _myCart.CostumerEmail };
         }
         #endregion
         #region create new order
