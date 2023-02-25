@@ -106,7 +106,7 @@ namespace Pl.windows.Manager
             BO.ProductForList p = Selected;
             new ProductMenu(p!.Id!, "update").ShowDialog();
         }
-        public BO.Enums.Category Categoryselected { get; set; }
+        public BO.Enums.Category? Categoryselected { get; set; } = null;
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string? cat = Categoryselected.ToString();
