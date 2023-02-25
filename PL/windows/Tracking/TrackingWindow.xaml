@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pl.windows.Tracking"
         mc:Ignorable="d"
-        Title="TrackingWindow" Height="450" Width="800">
+        Title="TrackingWindow" Height="450" Width="800"
+    DataContext="{Binding RelativeSource={RelativeSource self}}">
+
     <Grid>
-        
+        <Label Content="id:" HorizontalAlignment="Left" Margin="250,150,0,0" VerticalAlignment="Top"/>
+        <!--TextChanged="IdChange_TextChanged"-->
+        <TextBox Background="LightBlue" HorizontalAlignment="Left" Margin="289,150,0,0" TextWrapping="Wrap" Text="{Binding MyId,Mode=TwoWay}" VerticalAlignment="Top" Width="150" PreviewTextInput="NumberValidationTextBox" IsReadOnly="False"  TextChanged="id_TextChanged" />
+        <Button Background="Yellow" FontWeight="ExtraBlack" Foreground="Blue" x:Name="get" HorizontalAlignment="Left" Content="get" Padding="10" Margin="500,130,0,0" VerticalAlignment="Top" Click="getButton_Click" />
+        <Button  Background="Yellow" FontWeight="ExtraBlack" Foreground="Blue" x:Name="back"  Content="back" HorizontalAlignment="Left" Margin="700,300,0,0" Padding="10" VerticalAlignment="Top" Click="backButton_Click" />
+        <Label Content="{Binding ExceText,Mode=TwoWay}" HorizontalAlignment="Left" Margin="289,180,0,0" VerticalAlignment="Top"/>
+
+
     </Grid>
 </Window>

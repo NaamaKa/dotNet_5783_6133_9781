@@ -122,20 +122,23 @@ internal class Order : BlApi.IOrder
         OrderTracking orderTracking = new OrderTracking();
         orderTracking.ID = orderId;
         orderTracking.Status = CheckStatus(o.OrderDate, o.shippingDate, o.arrivleDate);
-        if (orderTracking.listOfStatus != null)
-        {
+   
             switch (orderTracking.Status)
             {
 
                 case OrderStatus.Arrived:
-                    orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
+                if (orderTracking.listOfStatus == null) orderTracking.listOfStatus = new List<OrderTracking.StatusAndDate?>();
+
+                orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
                     {
                         Date = o.OrderDate,
                         Status = BO.Enums.OrderStatus.Arrived
                     });
                     break;
                 case OrderStatus.Sent:
-                    orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
+                if (orderTracking.listOfStatus == null) orderTracking.listOfStatus = new List<OrderTracking.StatusAndDate?>();
+
+                orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
                     {
                         Date = o.OrderDate,
                         Status = BO.Enums.OrderStatus.Arrived
@@ -148,6 +151,7 @@ internal class Order : BlApi.IOrder
                     });
                     break;
                 case OrderStatus.Submitted:
+                if (orderTracking.listOfStatus == null) orderTracking.listOfStatus = new List<OrderTracking.StatusAndDate?>();
                     orderTracking.listOfStatus.Add(new OrderTracking.StatusAndDate()
                     {
                         Date = o.OrderDate,
@@ -166,11 +170,8 @@ internal class Order : BlApi.IOrder
                     });
                     break;
             }
-        }
-        else
-        {
-            throw new Exception("no status");
-        }
+      
+ 
         return orderTracking;
 
     }

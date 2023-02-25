@@ -23,7 +23,7 @@ namespace Pl.windows.Order
 
         public OrderWindow(bool isreadonly, int id)
         {
-
+            
             ID = id;
             IsReadOnly = isreadonly;
             MyOrderForList = bl!.Order!.GetOrderDetails(id);
@@ -32,26 +32,63 @@ namespace Pl.windows.Order
             {
                 VisibilityShip = true;
                 VisibiltyArrieved = false;
+                LabelShip=false;
+                LabelArrivle=false;
             }
             else
             {
                 VisibilityShip = false;
                 if (MyOrderForList.DeliveryDate == null)
                 {
+                    LabelShip=true;
                     VisibilityShip = false;
                     VisibiltyArrieved = true;
+                    LabelArrivle = false;
                 }
                 else
                 {
                     VisibilityShip = false;
                     VisibiltyArrieved = false;
+                    LabelShip = true;
+                    LabelArrivle=true;
                 }
             }
-        
+            if (isreadonly == true)
+            {
+                VisibilityShip = false;
+                VisibiltyArrieved = false;
+            }
 
             InitializeComponent();
         }
         #region Dependency propoties
+
+
+
+
+        public bool LabelShip
+        {
+            get { return (bool)GetValue(LabelShipProperty); }
+            set { SetValue(LabelShipProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for LabelShip.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LabelShipProperty =
+            DependencyProperty.Register("LabelShip", typeof(bool), typeof(OrderWindow));
+
+
+
+        public bool LabelArrivle
+        {
+            get { return (bool)GetValue(LabelArrivleProperty); }
+            set { SetValue(LabelArrivleProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for LabelArrivle.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LabelArrivleProperty =
+            DependencyProperty.Register("LabelArrivle", typeof(bool), typeof(OrderWindow));
+
+
 
 
         public bool VisibilityShip

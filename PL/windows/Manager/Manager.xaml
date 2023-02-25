@@ -85,9 +85,10 @@
                         <ColumnDefinition Width="9*"/>
                         <ColumnDefinition Width="0*"/>
                         <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width="697*"/>
+                        <ColumnDefinition Width="206*"/>
+                        <ColumnDefinition Width="491*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding O_Selected}" MouseDoubleClick="ListView_MouseDoubleClick" ItemsSource="{Binding OrdersList,Mode=TwoWay}" Grid.ColumnSpan="6" >
+                    <ListView d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding O_Selected}" MouseDoubleClick="ListView_MouseDoubleClick" ItemsSource="{Binding OrdersList,Mode=TwoWay}" Grid.ColumnSpan="7" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn/>
