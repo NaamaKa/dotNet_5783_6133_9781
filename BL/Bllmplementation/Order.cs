@@ -300,12 +300,25 @@ internal class Order : BlApi.IOrder
      }
     public int GetAmountItems(int id)
     {
-        IEnumerable<DO.OrderItem?>? orderItemList = new List<DO.OrderItem?>();
-        orderItemList = Dal!.orderItem.GetOrderItemsFromOrder(id);
-        int sum = 0;
-        var newSum = from OrderItem item in orderItemList
-                     select (sum += item.Amount).ToString();
-        return sum;
+        IEnumerable<DO.OrderItem?> orderItemList = new List<DO.OrderItem?>();
+        try
+        {
+            if (Dal != null)
+            {
+                orderItemList = Dal.orderItem.GetAll(e => e?.orderId == id);
+            }
+        }
+        catch
+        {
+            throw new BO.OrderNotExistsException("order not exists,can not get all orderItems") { OrderNotExists = id.ToString() };
+
+        }
+     
+        return orderItemList
+                       .Where(item => item != null)
+                       .Sum(item => item!.Value.amount);
+
+
 
     }
     public double CheckTotalSum(int id)
@@ -314,9 +327,9 @@ internal class Order : BlApi.IOrder
 
         orderItemList = Dal!.orderItem.GetOrderItemsFromOrder(id);
         double sum = 0;
-        var newSum = from OrderItem item in orderItemList!
-                     select (sum = sum + item.Price * item.Amount).ToString();
-        return sum;
+        return orderItemList
+                    .Where(item => item != null)
+                    .Sum(item => item!.Value.price * item.Value.amount);
     }
     public List<OrderItem> GetAllItemsToOrder(int id)
     {
