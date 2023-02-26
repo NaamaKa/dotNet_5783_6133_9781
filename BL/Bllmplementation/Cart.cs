@@ -22,12 +22,20 @@ internal class Cart : ICart
     /// <exception cref="NotEnoughInStockException">not enough of product in stock</exception>
     /// <exception cref="FieldToGetProductException">product does not exsist</exception>
     /// <exception cref="ProductNotInStockException"></exception>
-
     public void OpenCart(BO.Cart myCart)
     {
 
         CheckCorrectData(myCart!.CostumerName!, myCart.CostumerAddress!, myCart.CostumerEmail!);
     }
+    /// <summary>
+    /// checks if all data from user is ok and sends mtching exeptions
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="address"></param>
+    /// <param name="Email"></param>
+    /// <exception cref="BO.EmptyNameException"></exception>
+    /// <exception cref="BO.EmptyAddressException"></exception>
+    /// <exception cref="BO.EmptyEmailException"></exception>
     public void CheckCorrectData( string? name, string? address, string? Email)
     {
         if (string.IsNullOrEmpty(name))
@@ -45,6 +53,16 @@ internal class Cart : ICart
         return;
 
     }
+    /// <summary>
+    /// gets a cart and wanted item and adds it  to cart
+    /// </summary>
+    /// <param name="_myCart"></param>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    /// <exception cref="SendEmptyCartException"></exception>
+    /// <exception cref="NotEnoughInStockException"></exception>
+    /// <exception cref="FieldToGetProductException"></exception>
+    /// <exception cref="ProductNotInStockException"></exception>
     public BO.Cart AddItemToCart(BO.Cart _myCart, OrderItem item)
     {
         if (_myCart == null)
@@ -52,9 +70,7 @@ internal class Cart : ICart
             throw new SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = item.ID.ToString() };
         }
         DO.Product _wantedProduct = Dal!.product.Get(e => e?.barkode == item.ID);
-        //var wantedItem=from OrderItem item in _myCart!.Items!
-        //               where(item != null && item.ID == _id&& _wantedProduct.inStock >= item.Amount + 1)
-        //               select();
+       
         if(_myCart.Items!=null)
         foreach (var itemInCart in _myCart!.Items!)
         {
@@ -116,7 +132,12 @@ internal class Cart : ICart
 
         #endregion
     }
-
+    /// <summary>
+    /// gets all order and deels with the submitting process
+    /// </summary>
+    /// <param name="_myCart"></param>
+    /// <exception cref="Exception"></exception>
+    /// <exception cref="WrongEmailException"></exception>
     public void SubmitOrder(BO.Cart _myCart)
     {
         #region check all data
@@ -222,9 +243,16 @@ internal class Cart : ICart
             }
         }
 
-        //throw new NotImplementedException();
     }
-
+    /// <summary>
+    /// updates amount of wanted item in cart that user updated from his cart
+    /// </summary>
+    /// <param name="_myCart"></param>
+    /// <param name="_id"></param>
+    /// <param name="_newAmount"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    /// <exception cref="NotImplementedException"></exception>
     public BO.Cart UpdateAmountOfItem(BO.Cart _myCart, int _id, int _newAmount)
     {
         if (_myCart.Items != null)
@@ -274,9 +302,4 @@ internal class Cart : ICart
             }
         throw new NotImplementedException();
     }
-
-
-  
-
-
 }

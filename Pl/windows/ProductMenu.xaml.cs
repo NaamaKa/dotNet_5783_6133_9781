@@ -28,6 +28,7 @@ public partial class ProductMenu : Window
     BlApi.IBl? bl = BlApi.Factory.Get();
     public ProductMenu(int _id, string _buttoncategory, Action<BO.ProductForList?> action)
     {
+        MyProduct = new();
         InitializeComponent();
         this.Action = action;
         ID= _id;
@@ -37,28 +38,40 @@ public partial class ProductMenu : Window
         CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
       
     }
-    public ProductMenu(int _id,string _buttoncategory)
+    public ProductMenu(int idToUpdate)
     {
+
+        try
+        {
+            MyProduct = bl.Product.GetProductItem(idToUpdate);
+            Index4ComboBox = (int)MyProduct.Category;
+        }
+        catch (ProductNotExistsException ex)
+        {
+            MessageBox.Show(ex.Message.ToString());
+        }
         InitializeComponent();
-
-        AddOrUpdateButton.Content = _buttoncategory;
-        id.Text = _id.ToString();
-      
-
-        BO.Product p = bl.Product!.GetProductItem(_id)!;
-        name.Text = p!.Name!;
-        price.Text = p!.Price!.ToString();
-        inStock.Text = p!.InStock!.ToString();
-        CategoryComboBox.SelectedIndex = (int)p!.Category!;
+        AddOrUpdateButton.Content = "update";
         CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
+
+
     }
+
     public int ID { get; set; }
     private Action<BO.ProductForList?> Action;
-    private void Category_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
 
+    public Product MyProduct
+    {
+        get { return (Product)GetValue(MyProductProperty); }
+        set { SetValue(MyProductProperty, value); }
     }
-    
+
+    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty MyProductProperty =
+        DependencyProperty.Register("MyProduct", typeof(Product), typeof(ProductMenu));
+
+    public int Index4ComboBox { get; set; }
+
     private void AddOrUpdateButton_Click(object sender, RoutedEventArgs e)
     {
         try

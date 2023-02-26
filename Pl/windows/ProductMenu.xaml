@@ -6,22 +6,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pl.windows"
         mc:Ignorable="d"
-        Title="ProductMenu" Height="450" Width="800">
+        Title="ProductMenu" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    
     <Grid>
         <Grid Name="MainGrid">
             <Grid.Background>
                 <ImageBrush ImageSource="/windows/מנהל.PNG"/>
             </Grid.Background>
             <Label  Content="id"  HorizontalAlignment="Left" Margin="225,91,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="id" IsReadOnly="True"   HorizontalAlignment="Left" Margin="289,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="id" Text="{Binding MyProduct.ID}" IsReadOnly="True"   HorizontalAlignment="Left" Margin="289,91,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
             <Label   Content="Category" HorizontalAlignment="Left" Margin="186,181,0,0" VerticalAlignment="Top"/>
-            <ComboBox x:Name="CategoryComboBox" Text="" HorizontalAlignment="Left" Margin="289,184,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Category_SelectionChanged"/>
+            <ComboBox x:Name="CategoryComboBox" SelectedIndex="{Binding Index4ComboBox}" HorizontalAlignment="Left" Margin="289,184,0,0" VerticalAlignment="Top" Width="120" />
             <Label Content="name" HorizontalAlignment="Left" Margin="203,139,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="name" HorizontalAlignment="Left" Margin="289,139,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="name" HorizontalAlignment="Left" Margin="289,139,0,0" TextWrapping="Wrap" Text="{Binding MyProduct.Name}" VerticalAlignment="Top" Width="120"/>
             <Label Content="price" HorizontalAlignment="Left" Margin="202,227,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="price" HorizontalAlignment="Left" Margin="289,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="price" HorizontalAlignment="Left" Margin="289,231,0,0" TextWrapping="Wrap" Text="{Binding MyProduct.Price}" VerticalAlignment="Top" Width="120"/>
             <Label Content="inStock" HorizontalAlignment="Left" Margin="196,267,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="inStock" HorizontalAlignment="Left" Margin="289,271,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="inStock" HorizontalAlignment="Left" Margin="289,271,0,0" TextWrapping="Wrap" Text="{Binding MyProduct.InStock}" VerticalAlignment="Top" Width="120"/>
             <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" x:Name="AddOrUpdateButton"  Content="" HorizontalAlignment="Left" Margin="479,349,0,0" VerticalAlignment="Top" Click="AddOrUpdateButton_Click"  />
            
 
