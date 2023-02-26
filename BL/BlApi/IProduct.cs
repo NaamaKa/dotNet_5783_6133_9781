@@ -20,8 +20,9 @@ public interface IProduct
     public BO.ProductItem? GetProductItemForCatalog(int id, BO.Cart CostumerCart);
     public IEnumerable<BO.ProductForList?> GetProductForListByCategory(string? myCategory);
     public BO.ProductForList? GetProductForList(int id);
+    public IEnumerable<BO.ProductItem?> GetProductItemList(Func<DO.Product?, bool>? predict = null);
 
-
+    
     //עבור מנהל
     public void AddProduct(BO.Product p);
     public void UpdateProduct(BO.Product item);

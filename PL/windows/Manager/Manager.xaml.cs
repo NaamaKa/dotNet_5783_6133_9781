@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using static BO.Enums;
 using Pl.windows.Order;
 using System.Collections.ObjectModel;
+using DO;
 
 namespace Pl.windows.Manager
 {
@@ -141,6 +142,14 @@ namespace Pl.windows.Manager
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
+            try
+            {
+                OrdersList = new(bl.Order.GetListOfOrders());
+            }
+            catch (RequestedItemNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
             this.Close();
         }
     }

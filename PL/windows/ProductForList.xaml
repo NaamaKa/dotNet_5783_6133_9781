@@ -23,12 +23,54 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <ComboBox  Name="CategorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged"  ItemsSource="{Binding Categorys}" SelectedItem="{Binding Categoryselected}"/>
-            <Label Content="Category" HorizontalAlignment="Left" Margin="177,9,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+            <CheckBox Name="chkEnable" Checked="chkEnable_Click" Margin="95,8,0,0" Content="מיון לפי קטגוריות"/>
         </Grid>
-        <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList,Mode=TwoWay}">
+        <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList,Mode=TwoWay}" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Width="Auto" Header="ID">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Id}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Name}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Price}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Category">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Category}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Amount">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Amount}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="InStock">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding InStock}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                   
                 </GridView>
             </ListView.View>
         </ListView>

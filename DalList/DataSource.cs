@@ -33,17 +33,7 @@ public static class DataSource
         Order o = new Order() { OrderNum = Config.OrderID, OrderDate = DateTime.Now, costumerName = Oname, mail = Omail, address = Oaddress };
         orders.Add(o);
     }
-    //static private void addNewOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress)
-    //{
-    //    DateTime _today = DateTime.Now;
-    //    int daysAgo = new Random().Next(600);
-    //    DateTime NewOrderDate = _today.AddDays(-daysAgo);
-    //    int daysbetweenOrderToShip = new Random().Next(10);
-    //    DateTime newShipDate = NewOrderDate.AddDays(daysbetweenOrderToShip);
-    //    int daysbetweenDeliveryToShip = new Random().Next(7);
-    //    DateTime newDeliveryDate = newShipDate.AddDays(daysbetweenDeliveryToShip);
-    //    addNewOrder(newCustomerName, newCustomerEmail, newCustomerAdress, NewOrderDate, newShipDate, newDeliveryDate);
-    //}
+   
     static private void addNewOrderItem(int _id, int OrderId, int OrderItemId, double Oprice, int Oamount)
     {
         OrderItem oi = new OrderItem() { id = _id, itemId = OrderItemId, orderId = OrderId, price = Oprice, amount = Oamount };

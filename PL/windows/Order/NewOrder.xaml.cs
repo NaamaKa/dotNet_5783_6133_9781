@@ -159,6 +159,7 @@ namespace Pl.windows.Order
                 MainGrid.Children.Add(WrongEmailExceptionLabel);
                 return;
             }
+            new ThankYou(Name).Show();
             this.Close();
         }
 

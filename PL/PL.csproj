@@ -18,7 +18,10 @@
 
 	<ItemGroup>
 	  <None Remove="ikeaLogo.png" />
+	  <None Remove="windows\Order\3.png" />
 	  <None Remove="windows\Order\מנהל.PNG" />
+	  <None Remove="windows\Tracking\5.png" />
+	  <None Remove="windows\Tracking\6.png" />
 	  <None Remove="windows\מנהל.PNG" />
 	</ItemGroup>
 
@@ -28,7 +31,10 @@
 
 	<ItemGroup>
 	  <Resource Include="ikeaLogo.png" />
+	  <Resource Include="windows\Order\3.png" />
 	  <Resource Include="windows\Order\מנהל.PNG" />
+	  <Resource Include="windows\Tracking\5.png" />
+	  <Resource Include="windows\Tracking\6.png" />
 	  <Resource Include="windows\מנהל.PNG" />
 	</ItemGroup>
 

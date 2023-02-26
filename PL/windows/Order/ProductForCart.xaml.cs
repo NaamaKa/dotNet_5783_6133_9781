@@ -30,8 +30,11 @@ namespace Pl.windows.Order
             PName=p!.Name;
             PCategory = p.Category;
             Price = p.Price;
-            InStock = p.InStock;
-            MyCart=myCart;
+            if (p!.InStock! > 0)
+                InStock = "true";
+            else
+                InStock = "false";
+            MyCart =myCart;
             NumInTheCart = 1;
             InitializeComponent();
         }
@@ -56,13 +59,13 @@ namespace Pl.windows.Order
         }
         public static readonly DependencyProperty IDProperty =
             DependencyProperty.Register("ID", typeof(int), typeof(ProductForCart));
-        public int InStock
+        public string InStock
         {
-            get { return (int)GetValue(InStockProperty); }
+            get { return (string)GetValue(InStockProperty); }
             set { SetValue(InStockProperty, value); }
         }
         public static readonly DependencyProperty InStockProperty =
-            DependencyProperty.Register("Instock", typeof(int), typeof(ProductForCart));
+            DependencyProperty.Register("Instock", typeof(string), typeof(ProductForCart));
         public BO.Enums.Category PCategory
         {
             get { return (BO.Enums.Category)GetValue(PCategoryProperty); }

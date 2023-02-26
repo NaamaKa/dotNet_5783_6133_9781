@@ -51,6 +51,49 @@ public class Product : BlApi.IProduct
          }).FirstOrDefault();
 
     }
+    public IEnumerable<BO.ProductItem?> GetProductItemList(Func<DO.Product?, bool>? predict = null)
+    {
+        IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
+        IEnumerable<DO.OrderItem?> orderItemList = new List<DO.OrderItem?>();
+        if (Dal != null)
+        {
+            productsList = Dal.product.GetAll();
+            orderItemList = Dal.orderItem.GetAll();
+        }
+        if (predict == null)
+            return productsList
+                .Where(product => product is not null && product.Value.productCategory is not null)
+                .Select(p => new BO.ProductItem()
+                {
+                    Id = p.Value.barkode,
+                    Name = p.Value.productName,
+                    Category = (BO.Enums.Category)p.Value.productCategory,
+                    Price = p.Value.productPrice,
+                    InStock = p.Value.inStock > 0 ? true : false,
+                    //AmoutInYourCart = CostumerCart.ItemList.FindAll(e => e?.ID == id).Count()
+                    Amount = ((from item in orderItemList
+                                        group item by item?.id into mygroup
+                                        where mygroup.Key == p.Value.barkode
+                                        select (mygroup.Count())).FirstOrDefault())
+                }).ToList();
+        else
+            return productsList
+           .Where(product => product is not null && product.Value.productCategory is not null && (predict(product)))
+           .Select(p => new BO.ProductItem()
+           {
+               Id = p!.Value.barkode,
+               Name = p.Value.productName,
+               Category = (BO.Enums.Category)p.Value.barkode,
+               Price = p.Value.productPrice,
+               InStock = p.Value.inStock > 0 ? true : false,
+               Amount = (from item in orderItemList
+                                  group item by item?.id into mygroup
+                                  where mygroup.Key == p.Value.barkode
+                                  select (mygroup.Count())).FirstOrDefault()
+
+
+           }).ToList();
+    }
     public IEnumerable<ProductForList> GetListOfProduct()
     {
         IEnumerable<DO.Product?> productsList = new List<DO.Product?>();
