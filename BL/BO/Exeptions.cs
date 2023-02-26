@@ -67,6 +67,13 @@ namespace BO
 
         public ProductNotExistsException(string msg) : base(msg) { }
     }
+    public class GetEmptyCateporyException : Exception
+    {
+        public string? GetEmptyCatepory { get; set; }
+
+        public GetEmptyCateporyException(string msg) : base(msg) { }
+    }
+
 
     #endregion
 

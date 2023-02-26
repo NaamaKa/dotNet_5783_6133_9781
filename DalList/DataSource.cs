@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 using System;
 using System.Diagnostics;
 using System.Net;
@@ -28,12 +29,32 @@ public static class DataSource
         Product p = new Product() { barkode = Config.ProductID, productName = PName, productCategory = PCategory, productPrice = PPrice, inStock = PInStock };
         products.Add(p);
     }
-    static private void addNewOrder(string Oname, string Omail, string Oaddress)
+
+    static private void addNewOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress, DateTime NewOrderDate, DateTime? newShipDate, DateTime? newDeliveryDate)
     {
-        Order o = new Order() { OrderNum = Config.OrderID, OrderDate = DateTime.Now, costumerName = Oname, mail = Omail, address = Oaddress };
-        orders.Add(o);
+        Order newOrder = new()
+        {
+            OrderNum = Config.OrderID,
+            costumerName = newCustomerName,
+            mail = newCustomerEmail,
+            address = newCustomerAdress,
+            OrderDate = NewOrderDate,
+            shippingDate = newShipDate,
+            arrivleDate = newDeliveryDate
+        };
+        orders.Add(newOrder);
     }
-   
+    //static private void addNewOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress)
+    //{
+    //    DateTime _today = DateTime.Now;
+    //    int daysAgo = new Random().Next(600);
+    //    DateTime NewOrderDate = _today.AddDays(-daysAgo);
+    //    int daysbetweenOrderToShip = new Random().Next(10);
+    //    DateTime newShipDate = NewOrderDate.AddDays(daysbetweenOrderToShip);
+    //    int daysbetweenDeliveryToShip = new Random().Next(7);
+    //    DateTime newDeliveryDate = newShipDate.AddDays(daysbetweenDeliveryToShip);
+    //    addNewOrder(newCustomerName, newCustomerEmail, newCustomerAdress, NewOrderDate, newShipDate, newDeliveryDate);
+    //}
     static private void addNewOrderItem(int _id, int OrderId, int OrderItemId, double Oprice, int Oamount)
     {
         OrderItem oi = new OrderItem() { id = _id, itemId = OrderItemId, orderId = OrderId, price = Oprice, amount = Oamount };
@@ -133,26 +154,26 @@ public static class DataSource
         #region new order
 
         Random rnd = new Random();
-        addNewOrder("David Levi", "david@gmail.com", "buksboim 12");
-        addNewOrder("Shimon Cohen", "Shimon@gmail.com", "shaulzon 9");
-        addNewOrder("Chaim Uzan", "Chaim@gmail.com", "Ruzin 10");
-        addNewOrder("Menachem Safra", "Menachem@gmail.com", "Parnas 8");
-        addNewOrder("Mati Pollack", "Mati@gmail.com", "Zerach 9");
-        addNewOrder("Reuven Blau", "Reuven@gmail.com", "Bar Ilan 56");
-        addNewOrder("Levi Nachmon", "Levi@gmail.com", "yerushalaim 23");
-        addNewOrder("Yehuda Eliovich", "Yehuda@gmail.com", "rabi Akiva 12");
-        addNewOrder("Zvulun Chason", "Zvulun@gmail.com", "agasi 17");
-        addNewOrder("Dan Sason", "Dan@gmail.com", "vital 6");
-        addNewOrder("Naftali Hersh", "Naftali@gmail.com", "Ptachia 9");
-        addNewOrder("Gadi Cohen", "Gadi@gmail.com", "yarden 54");
-        addNewOrder("Asher Fredz", "Asher@gmail.com", "Menashe 56");
-        addNewOrder("Yossi Naiov", "Yossi@gmail.com", "Goldknopf 70");
-        addNewOrder("Benny Fried", "Benny@gmail.com", "buksboim 19");
-        addNewOrder("Avi Merry", "Avi@gmail.com", "Tarmish 87");
-        addNewOrder("Itzik Zer", "Itzik@gmail.com", "vital 14");
-        addNewOrder("Kobi Green", "Kobi@gmail.com", "Pisga 12");
-        addNewOrder("Moshe Chaim", "Moshe@gmail.com", "Torah 67");
-        addNewOrder("Aharon Rabi", "Aharon@gmail.com", "Baal Hatania 24");
+        addNewOrder("David Levi", "david@gmail.com", "buksboim 12", DateTime.Now.AddDays(-(rnd.Next(10))), DateTime.Now.AddDays(-(rnd.Next(5))), DateTime.Now.AddDays(-(rnd.Next(3))));
+        addNewOrder("Shimon Cohen", "Shimon@gmail.com", "shaulzon 9", DateTime.Now.AddDays(-(rnd.Next(20))), DateTime.Now.AddDays(-(rnd.Next(15))), null);
+        addNewOrder("Chaim Uzan", "Chaim@gmail.com", "Ruzin 10", DateTime.Now.AddDays(-(rnd.Next(8))), null,null);
+        addNewOrder("Menachem Safra", "Menachem@gmail.com", "Parnas 8", DateTime.Now.AddDays(-(rnd.Next(5))), DateTime.Now.AddDays(-(rnd.Next(3))),null);
+        addNewOrder("Mati Pollack", "Mati@gmail.com", "Zerach 9", DateTime.Now.AddDays(-(rnd.Next(13))), null,null);
+        addNewOrder("Reuven Blau", "Reuven@gmail.com", "Bar Ilan 56", DateTime.Now.AddDays(-(rnd.Next(14))), DateTime.Now.AddDays(-(rnd.Next(10))), DateTime.Now.AddDays(-(rnd.Next(5))));
+        addNewOrder("Levi Nachmon", "Levi@gmail.com", "yerushalaim 23", DateTime.Now.AddDays(-(rnd.Next(9))), DateTime.Now.AddDays(-(rnd.Next(5))), null);
+        addNewOrder("Yehuda Eliovich", "Yehuda@gmail.com", "rabi Akiva 12", DateTime.Now.AddDays(-(rnd.Next(13))), DateTime.Now.AddDays(-(rnd.Next(11))), DateTime.Now.AddDays(-(rnd.Next(5))));
+        addNewOrder("Zvulun Chason", "Zvulun@gmail.com", "agasi 17", DateTime.Now.AddDays(-(rnd.Next(10))),null,null);
+        addNewOrder("Dan Sason", "Dan@gmail.com", "vital 6", DateTime.Now.AddDays(-(rnd.Next(9))), DateTime.Now.AddDays(-(rnd.Next(7))), null);
+        addNewOrder("Naftali Hersh", "Naftali@gmail.com", "Ptachia 9", DateTime.Now.AddDays(-(rnd.Next(8))), DateTime.Now.AddDays(-(rnd.Next(7))), DateTime.Now.AddDays(-(rnd.Next(3))));
+        addNewOrder("Gadi Cohen", "Gadi@gmail.com", "yarden 54",DateTime.Now.AddDays(-(rnd.Next(10))), null,null);
+        addNewOrder("Asher Fredz", "Asher@gmail.com", "Menashe 56", DateTime.Now.AddDays(-(rnd.Next(18))), DateTime.Now.AddDays(-(rnd.Next(13))), null);
+        addNewOrder("Yossi Naiov", "Yossi@gmail.com", "Goldknopf 70", DateTime.Now.AddDays(-(rnd.Next(14))), DateTime.Now.AddDays(-(rnd.Next(9))), DateTime.Now.AddDays(-(rnd.Next(3))));
+        addNewOrder("Benny Fried", "Benny@gmail.com", "buksboim 19",DateTime.Now.AddDays(-(rnd.Next(2))),null,null);
+        addNewOrder("Avi Merry", "Avi@gmail.com", "Tarmish 87", DateTime.Now.AddDays(-(rnd.Next(3))), null,null);
+        addNewOrder("Itzik Zer", "Itzik@gmail.com", "vital 14", DateTime.Now.AddDays(-(rnd.Next(6))), DateTime.Now.AddDays(-(rnd.Next(2))), null);
+        addNewOrder("Kobi Green", "Kobi@gmail.com", "Pisga 12", DateTime.Now.AddDays(-(rnd.Next(17))), DateTime.Now.AddDays(-(rnd.Next(10))), DateTime.Now.AddDays(-(rnd.Next(3))));
+        addNewOrder("Moshe Chaim", "Moshe@gmail.com", "Torah 67",DateTime.Now.AddDays(-(rnd.Next(21))), DateTime.Now.AddDays(-(rnd.Next(12))),null);
+        addNewOrder("Aharon Rabi", "Aharon@gmail.com", "Baal Hatania 24", DateTime.Now.AddDays(-(rnd.Next(16))), DateTime.Now.AddDays(-(rnd.Next(5))), null);
 
         #endregion
     }

@@ -187,17 +187,34 @@ public class Product : BlApi.IProduct
     public void UpdateProduct(BO.Product item)
     {
 
+        //CheckCorrectData(item.ID, item.Name!, item.Category, item.Price, item.InStock);
+        //try
+        //{
+        //    Dal!.product.Update(newProductWithData(item.ID, item!.Name!, item.Category, item.Price, item.InStock));
+        //}
+        //catch (DO.RequestedItemNotFoundException)
+        //{
+        //    throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = item.ToString() };
+
+        //}
         CheckCorrectData(item.ID, item.Name!, item.Category, item.Price, item.InStock);
         try
         {
-            Dal!.product.Update(newProductWithData(item.ID, item!.Name!, item.Category, item.Price, item.InStock));
+            if ( item.Name is null)
+                throw new BO.GetEmptyCateporyException("the product category is empty")
+                {
+                    GetEmptyCatepory = null
+                };
+            if (Dal != null)
+            {
+                Dal.product.Update(newProductWithData(item.ID, item.Name, (BO.Enums.Category)item.Category, item.Price, item.InStock));
+            }
         }
         catch (DO.RequestedItemNotFoundException)
         {
             throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = item.ToString() };
 
         }
-
     }
 
     public void DeleteProduct(int id)

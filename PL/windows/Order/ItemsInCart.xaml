@@ -9,10 +9,51 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid>
-        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding ListOfItemsINCart,Mode=TwoWay}">
+        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding ListOfItemsINCart}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Width="Auto" Header="ID">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding ID}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Name}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="num in order">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding NumInOrder}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Price}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Amount">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding Amount}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="TotalPrice">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="-5,-1" Text="{Binding TotalPrice}" TextAlignment="Center" Padding="3"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

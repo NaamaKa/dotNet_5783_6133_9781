@@ -16,7 +16,7 @@ using static BO.Enums;
 using Pl.windows.Order;
 using System.Collections.ObjectModel;
 using DO;
-
+using Pl.windows;
 namespace Pl.windows.Manager
 {
     /// <summary>
@@ -95,17 +95,21 @@ namespace Pl.windows.Manager
         }
         public static readonly DependencyProperty O_SelectedProperty =
             DependencyProperty.Register("O_Selected", typeof(OrderForList), typeof(Manager));
-        public void updateProduct(BO.ProductForList? product)
-        {
-           
-            
-            int index = ProductList.IndexOf(product) + 1;
-            ProductList[index] = product;
-        }
+   
+        public BO.ProductForList? productToUp { get; set; } = new();
+       
         private void ProductListview_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             BO.ProductForList p = Selected;
-            new ProductMenu(p!.Id!, "update").ShowDialog();
+            new ProductMenu(p!.Id!).ShowDialog();
+            try
+            {
+                ProductList = new(bl.Product.GetListOfProduct());
+            }
+            catch (RequestedItemNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
         }
         public BO.Enums.Category? Categoryselected { get; set; } = null;
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -121,14 +125,17 @@ namespace Pl.windows.Manager
             new ProductMenu(nextId, "add",addProduct).ShowDialog();
         }
 
-        private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ProductListview_MouseDoubleClick(object sender, SelectionChangedEventArgs e)
         {
-
-        }
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            new ProductMenu(productToUp.Id).ShowDialog();
+            try
+            {
+                ProductList = new(bl.Product.GetListOfProduct());
+            }
+            catch (RequestedItemNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
         }
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -152,5 +159,7 @@ namespace Pl.windows.Manager
             }
             this.Close();
         }
+
+       
     }
 }
