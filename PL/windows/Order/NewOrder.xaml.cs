@@ -104,7 +104,7 @@ namespace Pl.windows.Order
                     Content = p.Message,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Foreground = new SolidColorBrush(Colors.Red),
+                    Foreground = new SolidColorBrush(Colors.White),
                 };
                 Grid.SetRow(EmptyNameExceptionLable, 1);
                 MainGrid.Children.Add(EmptyNameExceptionLable);
@@ -119,7 +119,7 @@ namespace Pl.windows.Order
                     Content = p.Message,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Foreground = new SolidColorBrush(Colors.Red),
+                    Foreground = new SolidColorBrush(Colors.White),
                 };
                 Grid.SetRow(EmptyAddressExceptionLable, 1);
                 MainGrid.Children.Add(EmptyAddressExceptionLable);
@@ -134,7 +134,7 @@ namespace Pl.windows.Order
                     Content = p.Message,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Foreground = new SolidColorBrush(Colors.Red),
+                    Foreground = new SolidColorBrush(Colors.White),
                 };
                 Grid.SetRow(EmptyEmailExceptionLable, 1);
                 MainGrid.Children.Add(EmptyEmailExceptionLable);
@@ -153,7 +153,7 @@ namespace Pl.windows.Order
                     Content = p.Message,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Foreground = new SolidColorBrush(Colors.Red),
+                    Foreground = new SolidColorBrush(Colors.White),
                 };
                 Grid.SetRow(WrongEmailExceptionLabel, 1);
                 MainGrid.Children.Add(WrongEmailExceptionLabel);
