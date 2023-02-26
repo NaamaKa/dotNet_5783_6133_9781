@@ -36,11 +36,10 @@
                         <ComboBox  Name="CategorySelector" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" ItemsSource="{Binding Categorys}" SelectedItem="{Binding Categoryselected}" Margin="0,3,0,0"/>
                         <Label Content="Category" HorizontalAlignment="Left" Margin="177,9,0,0" VerticalAlignment="Top" Grid.Column="0"/>
                     </Grid>
-<<<<<<<<< Temporary merge branch 1
-                    <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList}" Margin="0,17,0,16" Grid.ColumnSpan="6">
-=========
-                    <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList}" Margin="0,17,0,16" SelectionChanged="ProductListview_SelectionChanged" Grid.ColumnSpan="7">
->>>>>>>>> Temporary merge branch 2
+
+
+                    <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList}" Margin="0,17,0,16"  Grid.ColumnSpan="7">
+
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="Auto" Header="ID">

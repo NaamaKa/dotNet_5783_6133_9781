@@ -32,7 +32,7 @@ public static class DataSource
 
     static private void addNewOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress, DateTime NewOrderDate, DateTime? newShipDate, DateTime? newDeliveryDate)
     {
-        Order o = new Order() { OrderNum = Config.OrderID, OrderDate = DateTime.Now, costumerName = Oname, mail = Omail, address = Oaddress };
+        Order o = new Order() { OrderNum = Config.OrderID, OrderDate = NewOrderDate, costumerName = newCustomerName, mail = newCustomerEmail, address = newCustomerAdress ,shippingDate=newShipDate,arrivleDate=newDeliveryDate};
         orders.Add(o);
     }
     //static private void addNewOrder(string newCustomerName, string newCustomerEmail, string newCustomerAdress)
