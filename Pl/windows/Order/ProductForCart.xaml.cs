@@ -139,7 +139,6 @@ namespace Pl.windows.Order
 
                         MyCart!.Price += item.TotalPrice;
                         MyCart = bl.Cart.AddItemToCart(MyCart, MyProduct.Id,item);
-
                     }
                     catch (ProductNotExistsException ex)
                     {
@@ -154,10 +153,7 @@ namespace Pl.windows.Order
                 MessageBox.Show(ex.Message.ToString());
                 Close();
             }
-      
             MyAction(MyProduct);
-
-
         }
     }
    

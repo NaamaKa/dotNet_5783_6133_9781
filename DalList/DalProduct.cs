@@ -97,7 +97,7 @@ internal class DalProduct : IProduct
             throw new RequestedProductNotFoundException("product not exist") { RequestedProductNotFound = _myBarcode.ToString() };
 
         }
-     
+
     }
     /// <summary>
     /// gets all products and puts them in array
@@ -135,7 +135,7 @@ internal class DalProduct : IProduct
             throw new RequestedProductNotFoundException("product not exist") { RequestedProductNotFound = _myBarcode.ToString() };
 
         }
-   
+
     }
     /// <summary>
     /// updates a spesific product
@@ -143,19 +143,41 @@ internal class DalProduct : IProduct
     /// <param name="_newProduct">product to be replaced insead</param>
     public void Update(Product _newProduct)
     {
+        //    try
+        //    {
+        //        products.Remove(products
+        //            .Where(p => p is not null && p.Value.barkode == _newProduct.barkode)
+        //            .Select(p => p).FirstOrDefault());
+        //        products.Add(_newProduct);
+        //    }
+        //    catch
+        //    {
+        //        throw new RequestedProductNotFoundException("product not exist") { RequestedProductNotFound = _newProduct.barkode.ToString() };
+
+        //    }
+
+        //}
+        if (_newProduct.productName == null || _newProduct.productCategory == null)
+        {
+            return;
+
+        }
+
+        //if (DataSource._Products == null) throw new RequestedItemNotFoundException("order not exists,can not get") { RequestedItemNotFound = _p.ToString() };
+        ////Product? _productToUpdate = new Product();
+        ////_productToUpdate = DataSource._Products.Find(e => e.HasValue && e!.Value.ID == _p.ID);
         try
         {
-            products.Remove(products
-                .Where(p => p is not null && p.Value.barkode == _newProduct.barkode)
-                .Select(p => p).FirstOrDefault());
-            products.Add(_newProduct);
+            DataSource.products.Remove(DataSource.products
+               .Where(e => e is not null && e.Value.barkode == _newProduct.barkode)
+               .Select(e => (Product?)e!).First());
+            DataSource.products.Add(_newProduct);
         }
+
         catch
         {
-            throw new RequestedProductNotFoundException("product not exist") { RequestedProductNotFound = _newProduct.barkode.ToString() };
-
+            throw new RequestedItemNotFoundException("product not exists,can not do update") { RequestedItemNotFound = _newProduct.ToString() };
         }
 
     }
-
 }

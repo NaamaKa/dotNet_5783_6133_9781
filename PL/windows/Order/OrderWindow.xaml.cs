@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,11 +53,31 @@ namespace Pl.windows.Order
                     LabelShip = true;
                     LabelArrivle=true;
                 }
+                ShipDate = MyOrderForList.ShippingDate;
+                ArriveDate = MyOrderForList.DeliveryDate;
+
             }
             if (isreadonly == true)
             {
                 VisibilityShip = false;
                 VisibiltyArrieved = false;
+                if(MyOrderForList?.ShippingDate == null)
+                {
+                    LabelShip = false;
+                    LabelArrivle = false;
+                }
+                else if(MyOrderForList?.DeliveryDate == null)
+                {
+                    LabelShip = true;
+                    LabelArrivle = false;
+                }
+                else
+                {
+                    LabelShip = true;
+                    LabelArrivle = true;
+                }
+                ArriveDate = MyOrderForList.DeliveryDate;
+                ShipDate = MyOrderForList.ShippingDate;
             }
 
             InitializeComponent();
@@ -175,7 +196,7 @@ namespace Pl.windows.Order
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             ShipDate = DateTime.Now;
-            bl!.Order!.UpdateShipDate(ID);
+            MyOrderForList= bl!.Order!.UpdateShipDate(ID);
             VisibilityShip = false;
             VisibiltyArrieved = true;
         }
@@ -185,9 +206,11 @@ namespace Pl.windows.Order
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            bl!.Order!.UpdateDeliveryDate(ID);
+            MyOrderForList= bl!.Order!.UpdateDeliveryDate(ID);
             VisibiltyArrieved = false;
             ArriveDate = DateTime.Now;
         }
+
+      
     }
 }

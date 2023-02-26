@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
@@ -426,5 +427,29 @@ internal class Order : BlApi.IOrder
             throw new BO.ProductAlreadyExistsException("product already exists") { ProductAlreadyExists = o.ToString() };
 
         }
+    }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public int? getOrderToPromote()
+    {
+        IEnumerable<DO.Order?> orderList = new List<DO.Order?>();
+        if (Dal != null)
+        {
+            orderList = Dal.order.GetAll();
+        }
+        var minShipDate = (from o in orderList
+                           where o.Value.shippingDate is not null && o.Value.arrivleDate is null
+                           orderby o.Value.shippingDate
+                           select o.Value.OrderNum).FirstOrDefault();
+        var minOrderDate = (from o in orderList
+                            where o.Value.shippingDate is null && o.Value.arrivleDate is null
+                            orderby o.Value.OrderDate
+                            select o.Value.OrderNum).FirstOrDefault();
+        if (minShipDate > 0 && minOrderDate > 0)
+            return (minShipDate > minOrderDate) ? minOrderDate : minShipDate;
+        else if (minShipDate > 0)
+            return minShipDate;
+        else if (minOrderDate > 0)
+            return minOrderDate;
+        return null;
     }
 }

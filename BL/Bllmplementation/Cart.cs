@@ -63,74 +63,170 @@ internal class Cart : ICart
     /// <exception cref="NotEnoughInStockException"></exception>
     /// <exception cref="FieldToGetProductException"></exception>
     /// <exception cref="ProductNotInStockException"></exception>
-    public BO.Cart AddItemToCart(BO.Cart _myCart, OrderItem item)
+    public BO.Cart AddItemToCart(BO.Cart _myCart, int itemId,OrderItem item)
     {
         if (_myCart == null)
         {
-            throw new SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = item.ID.ToString() };
+            throw new BO.SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = itemId.ToString() };
         }
-        DO.Product _wantedProduct = Dal!.product.Get(e => e?.barkode == item.ID);
-       
-        if(_myCart.Items!=null)
-        foreach (var itemInCart in _myCart!.Items!)
+        else
         {
-            if (itemInCart != null)
+            if (_myCart.Items == null)
+                _myCart.Items = new List<OrderItem?>();
+                /*throw new ItemNotInCartException("item list not exsist") { ItemNotInCart = _myCart.ToString() };*/
+            var exist = _myCart.Items
+                .Where(e => e?.ID == itemId)
+                .Select(e => (BO.OrderItem?)e).FirstOrDefault();
+            if (exist is not null)
             {
-                if (itemInCart.ID == item.ID)
+                //BO.OrderItem BOI = cart.ItemList.Find(e => e?.ID == itemId) ?? new BO.OrderItem();
+                var BOI = _myCart.Items
+                    .Where(e => e?.ID == itemId)
+                    .Select(e => (BO.OrderItem?)e!).FirstOrDefault();
+                if (BOI != null)
                 {
-                    if (_wantedProduct.inStock >= item.Amount + 1)
+                    DO.Product DP;
+                    if (Dal != null)
                     {
-                        itemInCart.Amount+=item.Amount;
-                        double pricetoAdd = itemInCart.Price;
-                        itemInCart.TotalPrice += pricetoAdd;
-                        _myCart.Price += pricetoAdd;
-                         _wantedProduct.inStock -= item.Amount;
-                         Dal.product.Update(_wantedProduct);
-                         return _myCart;
+                        DP = Dal.product.Get(e => e.Value.barkode == itemId);
                     }
                     else
                     {
-                        throw new NotEnoughInStockException("not enoughf in stock") { NotEnoughInStock = item.ID.ToString() };
+                        throw new BO.GetDulNullException("product not exists") { GetDulNull = itemId.ToString() };
+                    }
+
+                    if (BOI.Amount < DP.inStock)
+                    {
+                        BOI.Amount++;
+                        BOI.TotalPrice += BOI.Price;
+                        _myCart.Price += BOI.Price;
+                        return _myCart;
+                    }
+                    else
+                    {
+                        throw new BO.NotEnoughInStockException("Not enough in stock") { NotEnoughInStock = itemId.ToString() };
                     }
                 }
+                else
+                {
+                    return _myCart;
+                }
             }
-            
-        }
-        #region product not in cart
-        //check if product aggsists
-        DO.Product _product = new DO.Product();
-        try
-        {
-            _product = Dal.product.Get(e => e?.barkode == item.ID);
-        }
-        catch (Exception)
-        {
-            //product dosnt aggsist
-            throw new FieldToGetProductException("product dosnt axist") { FieldToGetProduct = item.ID.ToString() };
-        }
-        //check if product is inStock
-        if (_product.inStock >= item.Amount)
-        {
-            BO.OrderItem _myNeworderItem = new()
+            else
             {
-                ID = item.ID,
-                Name = _product.productName,
-                Price = _product.productPrice,
-                Amount = item.Amount,
-                TotalPrice = _product.productPrice
-            };
-            if(_myCart!.Items==null) 
-                _myCart.Items=new List<BO.OrderItem>();
-            _myCart.Items.Add(_myNeworderItem);
-            _myCart.Price += _product.productPrice;
-            _product.inStock -= item.Amount;
-            Dal.product.Update(_product);
-            return _myCart;
-        }
-        else
-            throw new ProductNotInStockException("not enough in stock") { ProductNotInStock = item.ID.ToString() };
+                try
+                {
+                    DO.Product DP;
+                    try
+                    {
+                        DP = Dal.product.Get(e => e.Value.barkode == itemId);
+                    }
+                    catch
+                    {
+                        throw new BO.GetDulNullException("product not exists") { GetDulNull = itemId.ToString() };
+                    }
+                    if (DP.inStock > 0)
+                    {
+                        _myCart.Items.Add(new BO.OrderItem()
+                        {
+                            NumInOrder = _myCart.Items.Count + 1,
+                            ID = DP.barkode,
+                            Name = DP.productName,
+                            Price = DP.productPrice,
+                            Amount = item.Amount,
+                            TotalPrice = DP.productPrice*item.Amount
 
-        #endregion
+                        });
+                        _myCart.Price += DP.productPrice;
+                        return _myCart;
+                    }
+                    else
+                    {
+                        throw new BO.ProductNotInStockException("product not in stock") { ProductNotInStock = itemId.ToString() };
+                    }
+
+                }
+                catch (DO.RequestedItemNotFoundException)
+                {
+                    throw new BO.ProductNotExistsException("product not exists") { ProductNotExists = itemId.ToString() };
+                }
+            }
+
+        }
+        //if (_myCart == null)
+        //{
+        //    throw new SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = itemId.ToString() };
+        //}
+        //DO.Product _wantedProduct = Dal!.product.Get(e => e?.barkode == itemId);
+
+        //if (_myCart.Items != null)
+        //{
+        //    var item1 = _myCart.Items
+        //                .Where(e => e?.ID == itemId)
+        //                .Select(e => (BO.OrderItem?)e!).FirstOrDefault();
+        //    foreach (var itemInCart in _myCart!.Items!)
+        //    {
+        //        if (itemInCart != null)
+        //        {
+        //            if (itemInCart.ID == itemId)
+        //            {
+        //                if (_wantedProduct.inStock >= item1.Amount + 1)
+        //                {
+        //                    itemInCart.Amount += item1.Amount;
+        //                    double pricetoAdd = itemInCart.Price;
+        //                    itemInCart.TotalPrice += pricetoAdd;
+        //                    _myCart.Price += pricetoAdd;
+        //                    _wantedProduct.inStock -= item1.Amount;
+        //                    Dal.product.Update(_wantedProduct);
+        //                    return _myCart;
+        //                }
+        //                else
+        //                {
+        //                    throw new NotEnoughInStockException("not enoughf in stock") { NotEnoughInStock = itemId.ToString() };
+        //                }
+        //            }
+        //        }
+
+        //    }
+        //}
+        //#region product not in cart
+        ////check if product aggsists
+        //DO.Product _product = new DO.Product();
+        //try
+        //{
+        //    _product = Dal.product.Get(e => e?.barkode == itemId);
+        //}
+        //catch (Exception)
+        //{
+        //    //product dosnt aggsist
+        //    throw new FieldToGetProductException("product dosnt axist") { FieldToGetProduct = itemId.ToString() };
+        //}
+        ////check if product is inStock
+
+
+        //if (_product.inStock >= item.Amount)
+        //{
+        //    BO.OrderItem _myNeworderItem = new()
+        //    {
+        //        ID = item.ID,
+        //        Name = _product.productName,
+        //        Price = _product.productPrice,
+        //        Amount = item.Amount,
+        //        TotalPrice = _product.productPrice,
+        //        NumInOrder = item.NumInOrder
+        //    };
+        //    if (_myCart!.Items == null)
+        //        _myCart.Items = new List<BO.OrderItem>();
+        //    _myCart.Items.Add(_myNeworderItem);
+        //    _myCart.Price += _product.productPrice;
+        //    _product.inStock -= item.Amount;
+        //    Dal.product.Update(_product);
+        //    return _myCart;
+        //}
+        //else
+        //    throw new ProductNotInStockException("not enough in stock") { ProductNotInStock = item.ID.ToString() };
+
+        //#endregion
     }
     /// <summary>
     /// gets all order and deels with the submitting process

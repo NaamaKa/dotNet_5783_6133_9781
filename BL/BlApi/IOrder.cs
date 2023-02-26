@@ -19,5 +19,5 @@ public interface IOrder
     public void AddOrder(BO.Order o);
     public BO.OrderTracking? GetOrderTracking(int orderId);
     List<OrderItem> GetAllItemsToOrder(int id);
-
+    public int? getOrderToPromote();
 }

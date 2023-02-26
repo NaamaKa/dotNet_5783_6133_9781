@@ -79,6 +79,14 @@ namespace BO
 
 
     #region cart exceptions
+    public class GetDulNullException : Exception
+    {
+        public string? GetDulNull { get; set; }
+
+        public GetDulNullException(string msg) : base(msg)
+        {
+        }
+    }
     public class ItemAlreadyExistsException : Exception
     {
         public string? ItemAlreadyExists { get; set; }

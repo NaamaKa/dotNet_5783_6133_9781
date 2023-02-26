@@ -62,7 +62,7 @@ public partial class ProductForList : Window
     private void ProductListview_MouseDoubleClick(object sender, MouseEventArgs e)
     {
         BO.ProductItem p = Selected;
-        new Order.ProductForCart(p!.Id!, ThisCart).ShowDialog();
+        new Order.ProductForCart(p!.Id!, ThisCart,updateList).ShowDialog();
     }
     public BO.Enums.Category? Categoryselected { get; set; }
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -111,6 +111,12 @@ public partial class ProductForList : Window
     private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         BO.ProductItem p = Selected;
-        new Order.ProductForCart(p!.Id!, ThisCart).ShowDialog();
+        new Order.ProductForCart(p!.Id!, ThisCart, updateList).ShowDialog();
+    }
+    private void updateList(BO.ProductItem p)
+    {
+        var item = ProductList.FirstOrDefault(item => item.Id== p.Id);
+        //item.AmoutInYourCart = p.AmoutInYourCart;
+        ProductList[ProductList.IndexOf(item)] = p;
     }
 }
