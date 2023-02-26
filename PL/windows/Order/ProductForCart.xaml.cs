@@ -43,14 +43,21 @@ namespace Pl.windows.Order
             MyProduct.Name=p.Name;
             MyProduct.Category=p.Category;
             MyProduct.Price=p.Price;
+           
             ID = p.ID;
             PName = p!.Name;
             PCategory = p.Category;
             Price = p.Price;
             if (p!.InStock! > 0)
+            {
                 InStock = "true";
+                MyProduct.InStock = true;
+            }
             else
+            {
                 InStock = "false";
+                MyProduct.InStock = false;
+            }
             MyCart = myCart;
             NumInTheCart = 1;
             InitializeComponent();
@@ -121,38 +128,26 @@ namespace Pl.windows.Order
         {
             try
             {
-                for (int i = 0; i < Amount - MyProduct.Amount; i++)
+                BO.OrderItem item = new BO.OrderItem()
                 {
-                    try
-                    {
-                   
-                        BO.OrderItem item = new BO.OrderItem()
-                        {
-                            ID = ID,
-                            Name = PName,
-                            Amount = Amount,
-                            Price = Price,
-                            TotalPrice = Price * Amount,
-                            NumInOrder = NumInTheCart
-                        };
-                        NumInTheCart++;
-
-                        MyCart!.Price += item.TotalPrice;
-                        MyCart = bl.Cart.AddItemToCart(MyCart, MyProduct.Id,item);
-                    }
-                    catch (ProductNotExistsException ex)
-                    {
-                        MessageBox.Show(ex.Message.ToString());
-                    }
-                }
-                MyProduct.Amount = Amount;
-                Close();
+                    ID = ID,
+                    Name = PName,
+                    Amount = Amount,
+                    Price = Price,
+                    TotalPrice = Price * Amount,
+                    NumInOrder = NumInTheCart
+                };
+                NumInTheCart++;
+                MyProduct.Amount=Amount;
+                MyCart = bl.Cart.AddItemToCart(MyCart, MyProduct.Id, item);
             }
-            catch (ProductNotInStockException ex)
+            catch
             {
-                MessageBox.Show(ex.Message.ToString());
-                Close();
+
             }
+  
+            MyProduct.Amount= bl.Cart.ReturnAmountOfItemInCart(MyCart,MyProduct.Id);
+            Close();
             MyAction(MyProduct);
         }
     }
