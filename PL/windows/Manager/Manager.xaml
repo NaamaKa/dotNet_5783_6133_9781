@@ -38,7 +38,10 @@
                     </Grid>
 
 
-                    <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList}" Margin="0,17,0,16"  Grid.ColumnSpan="7">
+                    <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList}" Margin="0,17,0,10"  Grid.ColumnSpan="8">
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/windows/Manager/איקאה לוגוים.PNG"/>
+                        </ListView.Background>
 
                         <ListView.View>
                             <GridView>
@@ -75,7 +78,7 @@
                     </ListView>
 
                     <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Content="Add new Product" Grid.Row="1" HorizontalAlignment="Left" Margin="300,0,0,43" Padding="5" Width="155" Height="28" VerticalAlignment="Bottom" Click="Add_Button_Click" Grid.Column="5" />
-                    <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" Content="Back" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Margin="419,-26,60,35" Grid.Column="5" Click="Button_Click_2" RenderTransformOrigin="0.263,0.043" Grid.ColumnSpan="2" />
+                    <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" Content="Back" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Margin="301,289,31,85" Grid.Column="5" Click="Button_Click_2" RenderTransformOrigin="0.263,0.043" Grid.Row="1" />
 
 
 
@@ -84,6 +87,8 @@
             </TabItem>
             <TabItem Header="orders" Margin="-2,-2,-2,2">
                 <Grid>
+
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="33*"/>
                         <ColumnDefinition Width="45*"/>
@@ -94,6 +99,9 @@
                         <ColumnDefinition Width="491*"/>
                     </Grid.ColumnDefinitions>
                     <ListView d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding O_Selected}" MouseDoubleClick="ListView_MouseDoubleClick" ItemsSource="{Binding OrdersList,Mode=TwoWay}" Grid.ColumnSpan="7" >
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/windows/Manager/ארגזים.PNG"/>
+                        </ListView.Background>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="Auto" Header="ID">
@@ -134,7 +142,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-
+                    <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" Content="Back" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Margin="169,323,71,51" Grid.Column="6" Click="Button_Click_2" RenderTransformOrigin="0.263,0.043" />
                 </Grid>
             </TabItem>
 

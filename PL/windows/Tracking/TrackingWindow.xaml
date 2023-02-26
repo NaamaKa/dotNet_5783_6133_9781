@@ -9,13 +9,13 @@
     DataContext="{Binding RelativeSource={RelativeSource self}}">
 
     <Grid>
-        <Label Content="id:" HorizontalAlignment="Left" Margin="250,150,0,0" VerticalAlignment="Top"/>
+        <Label Content="Enter the order number to aee the details:" FontSize="17" FontWeight="Bold" HorizontalAlignment="Left" Margin="421,86,0,0" VerticalAlignment="Top"/>
         <!--TextChanged="IdChange_TextChanged"-->
-        <TextBox Background="LightBlue" HorizontalAlignment="Left" Margin="553,117,0,0" TextWrapping="Wrap" Text="{Binding MyId,Mode=TwoWay}" VerticalAlignment="Top" Width="150" PreviewTextInput="NumberValidationTextBox" IsReadOnly="False"  TextChanged="id_TextChanged" />
-        <Button Margin="500,0,0,155" Padding="5" Width="106"  VerticalAlignment="Bottom"  Height="35" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" x:Name="get" HorizontalAlignment="Left" Content="get"  Click="getButton_Click" />
-        <Button  Margin="635,0,0,31" Padding="5" Width="106"  VerticalAlignment="Bottom"  Height="35" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" x:Name="back"  Content="back" HorizontalAlignment="Left"  Click="backButton_Click" />
+        <TextBox Background="LightBlue" HorizontalAlignment="Left" Margin="515,127,0,0" TextWrapping="Wrap" Text="{Binding MyId,Mode=TwoWay}" VerticalAlignment="Top" Width="188" PreviewTextInput="NumberValidationTextBox" IsReadOnly="False"  TextChanged="id_TextChanged" Height="29" />
+        <Button Margin="597,0,0,54" Padding="5" Width="160"  VerticalAlignment="Bottom"  Height="40" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" x:Name="get" HorizontalAlignment="Left" Content="get"  Click="getButton_Click" />
+        <Button  Margin="63,0,0,54" Padding="5" Width="194"  VerticalAlignment="Bottom"  Height="45" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" x:Name="back"  Content="back" HorizontalAlignment="Left"  Click="backButton_Click" />
         <Label Content="{Binding ExceText,Mode=TwoWay}" HorizontalAlignment="Left" Margin="289,180,0,0" VerticalAlignment="Top"/>
-        <Image HorizontalAlignment="Left" Height="258" Margin="-25,221,0,0" VerticalAlignment="Top" Width="395" Source="/windows/Tracking/6.png">
+        <Image HorizontalAlignment="Left" Height="285" Margin="-40,12,0,0" VerticalAlignment="Top" Width="456" Source="/windows/Tracking/6.png">
             <Image.OpacityMask>
                 <ImageBrush ImageSource="/windows/Tracking/6.png"/>
             </Image.OpacityMask>

@@ -8,14 +8,17 @@
         Title="OrderTracking" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource self}}">
     <Grid DataContext="{Binding orderTrackingToUp}">
-        <Label Content="Id"   HorizontalAlignment="Left" Margin="250,91,0,0" VerticalAlignment="Top"/>
-        <TextBox Background="LightBlue"  x:Name="id" HorizontalAlignment="Left" Margin="289,91,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
-        <Label  Content="Status"   HorizontalAlignment="Left" Margin="225,120,0,0" VerticalAlignment="Top"/>
-        <Button Background="Yellow" FontWeight="ExtraBlack" Foreground="Blue" x:Name="back"  Content="back" HorizontalAlignment="Left" Margin="670,300,0,0" Padding="10" VerticalAlignment="Top" Click="backButton_Click" />
+        <Grid.Background>
+            <ImageBrush ImageSource="/windows/Tracking/מכונית איקאה.PNG"/>
+        </Grid.Background>
+        <Label Content="Id" FontSize="17" FontWeight="Bold"   HorizontalAlignment="Left" Margin="40,51,0,0" VerticalAlignment="Top"/>
+        <TextBox Background="LightBlue"  x:Name="id" HorizontalAlignment="Left" Margin="113,59,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
+        <Label  Content="Status" FontSize="17" FontWeight="Bold"   HorizontalAlignment="Left" Margin="27,98,0,0" VerticalAlignment="Top"/>
+        <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1"  x:Name="back"  Content="back" HorizontalAlignment="Left" Margin="53,361,0,0" Padding="10" VerticalAlignment="Top" Click="backButton_Click" Height="37" Width="158" />
 
-        <Button Background="Yellow" FontWeight="ExtraBlack" Foreground="Blue" Content="go to order" HorizontalAlignment="Left" Margin="650,150,0,0" Padding="10" VerticalAlignment="Top" Click="orderButton_Click" />
-        <TextBox Background="LightBlue" x:Name="status" HorizontalAlignment="Left" Margin="289,120,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
-        <ListView x:Name="OrderTrackingListView" Margin="289,150,250,100"  ItemsSource="{Binding listOfStatus}" >
+        <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1"  Content="go to order" HorizontalAlignment="Left" Margin="594,359,0,0" Padding="10" VerticalAlignment="Top" Click="orderButton_Click" Height="39" Width="168" />
+        <TextBox Background="LightBlue" x:Name="status" HorizontalAlignment="Left" Margin="111,106,0,0" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
+        <ListView x:Name="OrderTrackingListView" Margin="19,148,520,102"  ItemsSource="{Binding listOfStatus}" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

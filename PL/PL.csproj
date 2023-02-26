@@ -19,10 +19,18 @@
 	<ItemGroup>
 	  <None Remove="ikeaLogo.png" />
 	  <None Remove="windows\Manager\6.png" />
+	  <None Remove="windows\Manager\איקאה לוגוים.PNG" />
+	  <None Remove="windows\Manager\ארגזים.PNG" />
 	  <None Remove="windows\Order\3.png" />
+	  <None Remove="windows\Order\image %2821%29.png" />
+	  <None Remove="windows\Order\image %2827%29.png" />
 	  <None Remove="windows\Order\מנהל.PNG" />
+	  <None Remove="windows\Order\קטלוגים איקאה.PNG" />
+	  <None Remove="windows\Order\שקיות.PNG" />
+	  <None Remove="windows\SimulatorFolder\שעון.PNG" />
 	  <None Remove="windows\Tracking\5.png" />
 	  <None Remove="windows\Tracking\6.png" />
+	  <None Remove="windows\Tracking\מכונית איקאה.PNG" />
 	  <None Remove="windows\מנהל.PNG" />
 	</ItemGroup>
 
@@ -34,10 +42,18 @@
 	<ItemGroup>
 	  <Resource Include="ikeaLogo.png" />
 	  <Resource Include="windows\Manager\6.png" />
+	  <Resource Include="windows\Manager\איקאה לוגוים.PNG" />
+	  <Resource Include="windows\Manager\ארגזים.PNG" />
 	  <Resource Include="windows\Order\3.png" />
+	  <Resource Include="windows\Order\image (21).png" />
+	  <Resource Include="windows\Order\image (27).png" />
 	  <Resource Include="windows\Order\מנהל.PNG" />
+	  <Resource Include="windows\Order\קטלוגים איקאה.PNG" />
+	  <Resource Include="windows\Order\שקיות.PNG" />
+	  <Resource Include="windows\SimulatorFolder\שעון.PNG" />
 	  <Resource Include="windows\Tracking\5.png" />
 	  <Resource Include="windows\Tracking\6.png" />
+	  <Resource Include="windows\Tracking\מכונית איקאה.PNG" />
 	  <Resource Include="windows\מנהל.PNG" />
 	</ItemGroup>
 
