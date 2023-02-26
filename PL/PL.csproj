@@ -31,6 +31,7 @@
 	  <None Remove="windows\Tracking\5.png" />
 	  <None Remove="windows\Tracking\6.png" />
 	  <None Remove="windows\Tracking\מכונית איקאה.PNG" />
+	  <None Remove="windows\איקאה לוגוים.PNG" />
 	  <None Remove="windows\מנהל.PNG" />
 	</ItemGroup>
 
@@ -54,6 +55,7 @@
 	  <Resource Include="windows\Tracking\5.png" />
 	  <Resource Include="windows\Tracking\6.png" />
 	  <Resource Include="windows\Tracking\מכונית איקאה.PNG" />
+	  <Resource Include="windows\איקאה לוגוים.PNG" />
 	  <Resource Include="windows\מנהל.PNG" />
 	</ItemGroup>
 

@@ -107,7 +107,7 @@ public partial class ProductMenu : Window
                 Content = p.Message,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
-                Foreground = new SolidColorBrush(Colors.Red),
+                Foreground = new SolidColorBrush(Colors.White),
             };
             Grid.SetRow(NegativeIdExceptionLable, 1);
             MainGrid.Children.Add(NegativeIdExceptionLable);
@@ -121,7 +121,7 @@ public partial class ProductMenu : Window
                 Content = p.Message,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
-                Foreground = new SolidColorBrush(Colors.Red),
+                Foreground = new SolidColorBrush(Colors.White),
             };
             Grid.SetRow(ProductAlreadyExistsLable, 1);
             MainGrid.Children.Add(ProductAlreadyExistsLable);
@@ -135,7 +135,7 @@ public partial class ProductMenu : Window
                 Content = p.Message,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
-                Foreground = new SolidColorBrush(Colors.Red),
+                Foreground = new SolidColorBrush(Colors.White),
             };
             Grid.SetRow(EmptyNameExceptionLable, 1);
             MainGrid.Children.Add(EmptyNameExceptionLable);
@@ -150,7 +150,7 @@ public partial class ProductMenu : Window
                 Content = p.Message,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
-                Foreground = new SolidColorBrush(Colors.Red),
+                Foreground = new SolidColorBrush(Colors.White),
             };
             Grid.SetRow(NegativePriceExceptionLable, 1);
             MainGrid.Children.Add(NegativePriceExceptionLable);
@@ -164,7 +164,7 @@ public partial class ProductMenu : Window
                 Content = p.Message,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
-                Foreground = new SolidColorBrush(Colors.Red),
+                Foreground = new SolidColorBrush(Colors.White),
             };
             Grid.SetRow(NegativeStockExceptionLable, 1);
             MainGrid.Children.Add(NegativeStockExceptionLable);
