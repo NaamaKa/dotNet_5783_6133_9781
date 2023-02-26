@@ -16,7 +16,7 @@
             <ImageBrush ImageSource="/windows/Order/מנהל.PNG"/>
         </Grid.Background>
         <Label Visibility="{Binding MesaggeToshow}" Content="hy there,you are nuts!!! you didnt buy yet anythung! run buy NOW!!" HorizontalAlignment="Left" Margin="80,9,0,0" VerticalAlignment="Top" Width="560"/>
-        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,41,0,91" ItemsSource="{Binding MyCart.Items, Mode=TwoWay}" Grid.ColumnSpan="2" Background="White" >
+        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,41,0,91" ItemsSource="{Binding MyItemList, Mode=TwoWay}" Grid.ColumnSpan="2" Background="White" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto" Header="Num In Order">
@@ -51,9 +51,9 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Width="80">
-                                    <Button Content="-" HorizontalAlignment="Left" Width="20" Click="plus_Button_Click"></Button>
+                                    <Button Content="-" HorizontalAlignment="Left" Width="20" Click="minus_Button_Click"></Button>
                                     <TextBlock  Margin="-5,-1" HorizontalAlignment="Center" Text="{Binding Amount}" Width="20" TextAlignment="Center" Padding="3"></TextBlock>
-                                    <Button Content="+" HorizontalAlignment="Right" Width="20" Click="minus_Button_Click"></Button>
+                                    <Button Content="+" HorizontalAlignment="Right" Width="20" Click="plus_Button_Click"></Button>
 
                                 </Grid>
 
