@@ -97,9 +97,9 @@ internal class Cart : ICart
 
                     if (BOI.Amount < DP.inStock)
                     {
-                        BOI.Amount++;
-                        BOI.TotalPrice += BOI.Price;
-                        _myCart.Price += BOI.Price;
+                        BOI.Amount= BOI.Amount+item.Amount;
+                        BOI.TotalPrice= BOI.TotalPrice +BOI.Price* item.Amount;
+                        _myCart.Price= _myCart.Price + BOI.Price * item.Amount;
                         return _myCart;
                     }
                     else
@@ -137,7 +137,7 @@ internal class Cart : ICart
                             TotalPrice = DP.productPrice*item.Amount
 
                         });
-                        _myCart.Price += DP.productPrice;
+                        _myCart.Price += DP.productPrice * item.Amount;
                         return _myCart;
                     }
                     else
@@ -153,80 +153,6 @@ internal class Cart : ICart
             }
 
         }
-        //if (_myCart == null)
-        //{
-        //    throw new SendEmptyCartException("try to add to an empty cart") { SendEmptyCart = itemId.ToString() };
-        //}
-        //DO.Product _wantedProduct = Dal!.product.Get(e => e?.barkode == itemId);
-
-        //if (_myCart.Items != null)
-        //{
-        //    var item1 = _myCart.Items
-        //                .Where(e => e?.ID == itemId)
-        //                .Select(e => (BO.OrderItem?)e!).FirstOrDefault();
-        //    foreach (var itemInCart in _myCart!.Items!)
-        //    {
-        //        if (itemInCart != null)
-        //        {
-        //            if (itemInCart.ID == itemId)
-        //            {
-        //                if (_wantedProduct.inStock >= item1.Amount + 1)
-        //                {
-        //                    itemInCart.Amount += item1.Amount;
-        //                    double pricetoAdd = itemInCart.Price;
-        //                    itemInCart.TotalPrice += pricetoAdd;
-        //                    _myCart.Price += pricetoAdd;
-        //                    _wantedProduct.inStock -= item1.Amount;
-        //                    Dal.product.Update(_wantedProduct);
-        //                    return _myCart;
-        //                }
-        //                else
-        //                {
-        //                    throw new NotEnoughInStockException("not enoughf in stock") { NotEnoughInStock = itemId.ToString() };
-        //                }
-        //            }
-        //        }
-
-        //    }
-        //}
-        //#region product not in cart
-        ////check if product aggsists
-        //DO.Product _product = new DO.Product();
-        //try
-        //{
-        //    _product = Dal.product.Get(e => e?.barkode == itemId);
-        //}
-        //catch (Exception)
-        //{
-        //    //product dosnt aggsist
-        //    throw new FieldToGetProductException("product dosnt axist") { FieldToGetProduct = itemId.ToString() };
-        //}
-        ////check if product is inStock
-
-
-        //if (_product.inStock >= item.Amount)
-        //{
-        //    BO.OrderItem _myNeworderItem = new()
-        //    {
-        //        ID = item.ID,
-        //        Name = _product.productName,
-        //        Price = _product.productPrice,
-        //        Amount = item.Amount,
-        //        TotalPrice = _product.productPrice,
-        //        NumInOrder = item.NumInOrder
-        //    };
-        //    if (_myCart!.Items == null)
-        //        _myCart.Items = new List<BO.OrderItem>();
-        //    _myCart.Items.Add(_myNeworderItem);
-        //    _myCart.Price += _product.productPrice;
-        //    _product.inStock -= item.Amount;
-        //    Dal.product.Update(_product);
-        //    return _myCart;
-        //}
-        //else
-        //    throw new ProductNotInStockException("not enough in stock") { ProductNotInStock = item.ID.ToString() };
-
-        //#endregion
     }
     /// <summary>
     /// gets all order and deels with the submitting process
@@ -397,5 +323,16 @@ internal class Cart : ICart
                 }
             }
         throw new NotImplementedException();
+    }
+    public int ReturnAmountOfItemInCart(BO.Cart _myCart, int _id)
+    {
+        var exist = _myCart.Items
+                .Where(e => e?.ID == _id)
+                .Select(e => (BO.OrderItem?)e).FirstOrDefault();
+        if (exist != null)
+            if(exist.Amount>=0)
+                return exist.Amount;
+        return 0;
+        
     }
 }
