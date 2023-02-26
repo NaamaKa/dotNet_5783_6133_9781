@@ -142,6 +142,15 @@ namespace Pl.windows.Manager
         {
             OrderForList o = O_Selected;
             new OrderWindow(false, o.ID).ShowDialog();
+            try
+            {
+                OrdersList = new(bl.Order.GetListOfOrders());
+            }
+            catch (RequestedItemNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+           
         }
 
        

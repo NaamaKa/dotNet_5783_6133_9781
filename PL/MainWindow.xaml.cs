@@ -13,10 +13,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Bllmplementation;
 using Pl.windows;
 using Pl.windows.Manager;
 using Pl.windows.Order;
+using Pl.windows.SimulatorFolder;
 using Pl.windows.Tracking;
+using Simulator;
 
 namespace Pl;
 
@@ -25,6 +28,7 @@ namespace Pl;
 /// </summary>
 public partial class MainWindow : Window
 {
+    BlApi.IBl bl = BlApi.Factory.Get();
     public MainWindow()
     {
         InitializeComponent();
@@ -48,6 +52,11 @@ public partial class MainWindow : Window
     {
         new TrackingWindow().Show();
         this.Close();
+    }
+
+    private void Simulator_Button_Click(object sender, RoutedEventArgs e)
+    {
+        new SimulatorW(bl).Show();
     }
 }
 
