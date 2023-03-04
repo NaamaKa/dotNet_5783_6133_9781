@@ -20,6 +20,10 @@ public class OrderTracking
     {
         public DateTime? Date { get; set; }
         public OrderStatus? Status { get; set; }
+        public override string ToString()=>
+        
+            $@"{Status}:{Date}";
+        
     }
 
     #endregion

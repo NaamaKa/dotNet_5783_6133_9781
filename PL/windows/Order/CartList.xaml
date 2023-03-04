@@ -51,7 +51,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid Width="80">
-                                    <Button Content="-" HorizontalAlignment="Left" Width="20" Click="minus_Button_Click"></Button>
+                                    <Button  Content="-" HorizontalAlignment="Left" Width="20" Click="minus_Button_Click"></Button>
                                     <TextBlock  Margin="-5,-1" HorizontalAlignment="Center" Text="{Binding Amount}" Width="20" TextAlignment="Center" Padding="3"></TextBlock>
                                     <Button Content="+" HorizontalAlignment="Right" Width="20" Click="plus_Button_Click"></Button>
 
@@ -71,7 +71,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Foreground="#FFFFD100" Content="{Binding MyCart.Price}" HorizontalAlignment="Left" Margin="462,383,0,0" VerticalAlignment="Top"/>
+        <Label Foreground="#FFFFD100" Content="{Binding MYToTalSum}" HorizontalAlignment="Left" Margin="462,383,0,0" VerticalAlignment="Top"/>
         <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Content="Submit Order" HorizontalAlignment="Left" Margin="662,384,0,0" VerticalAlignment="Top" Click="Button_Click_1" Height="23" Width="108" Grid.ColumnSpan="2"/>
         <Label Foreground="#FFFFD100" Content="Total Price" HorizontalAlignment="Left" Margin="350,380,0,0" VerticalAlignment="Top"/>
         <Button Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" Content="Back" HorizontalAlignment="Left" Margin="45,384,0,0" VerticalAlignment="Top" Width="85" Click="Button_Click"/>

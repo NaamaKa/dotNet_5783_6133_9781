@@ -45,18 +45,18 @@
 	  <Resource Include="windows\Manager\6.png" />
 	  <Resource Include="windows\Manager\איקאה לוגוים.PNG" />
 	  <Resource Include="windows\Manager\ארגזים.PNG" />
-	  <Resource Include="windows\Order\3.png" />
-	  <Resource Include="windows\Order\image (21).png" />
-	  <Resource Include="windows\Order\image (27).png" />
-	  <Resource Include="windows\Order\מנהל.PNG" />
-	  <Resource Include="windows\Order\קטלוגים איקאה.PNG" />
-	  <Resource Include="windows\Order\שקיות.PNG" />
+	  <Resource Include="windows\Order\pictures\3.png" />
+	  <Resource Include="windows\Order\pictures\image %2821%29.png" />
+	  <Resource Include="windows\Order\pictures\image %2827%29.png" />
+	  <Resource Include="windows\Order\pictures\מנהל.PNG" />
+	  <Resource Include="windows\Order\pictures\קטלוגים איקאה.PNG" />
+	  <Resource Include="windows\Order\pictures\שקיות.PNG" />
 	  <Resource Include="windows\SimulatorFolder\שעון.PNG" />
-	  <Resource Include="windows\Tracking\5.png" />
-	  <Resource Include="windows\Tracking\6.png" />
-	  <Resource Include="windows\Tracking\מכונית איקאה.PNG" />
-	  <Resource Include="windows\איקאה לוגוים.PNG" />
-	  <Resource Include="windows\מנהל.PNG" />
+	  <Resource Include="windows\Tracking\pictures\5.png" />
+	  <Resource Include="windows\Tracking\pictures\6.png" />
+	  <Resource Include="windows\Tracking\pictures\מכונית איקאה.PNG" />
+	  <Resource Include="windows\Tracking\pictures\איקאה לוגוים.PNG" />
+	  <Resource Include="windows\Tracking\pictures\מנהל.PNG" />
 	</ItemGroup>
 
 </Project>

@@ -25,15 +25,15 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Current Order:" Grid.Row="1" Grid.Column="0" Margin="136,40,142,28" FontSize="16" FontWeight="Bold" />
-            <TextBlock x:Name="currentOrder" Grid.Row="1" Margin="297,40,341,39" Text="{Binding Item1.ID}" Grid.ColumnSpan="2"  FontSize="16"/>
-            <TextBlock Text="begin Time:" Grid.Row="1" Grid.Column="0" Margin="136,80,146,67" FontWeight="Bold" FontSize="16"  Grid.RowSpan="2"/>
-            <TextBlock x:Name="beginTime" Grid.Row="1" Margin="297,80,341,67" Text="{Binding Item5}" Grid.ColumnSpan="2"  FontSize="16" Grid.RowSpan="2"/>
-            <TextBlock Text="Previous Status:" Grid.Row="2" Grid.Column="0" Margin="136,15,114,25" FontSize="16" FontWeight="Bold" />
-            <TextBlock  Text="{Binding Item3}" Grid.Row="2" Margin="297,15,341,28" Grid.ColumnSpan="2" FontSize="16" />
-            <TextBlock Text="Next Status:" Grid.Row="2" Grid.Column="0" Margin="136,55,114,0" Height="29" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Grid.RowSpan="2"></TextBlock>
-            <TextBlock  Text="{Binding Item4}" Grid.Row="2" Margin="297,55,103,90" Grid.ColumnSpan="2" Grid.RowSpan="2"  FontSize="16"/>
-            <TextBlock Text="Estimated time to complete:" Grid.Row="3" Grid.Column="0" Margin="136,20,0,48" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Width="235"/>
-            <TextBlock x:Name="EstimatedTime" Text="{Binding Item2}" Grid.Row="3" Margin="390,10,222,52" FontSize="16" Grid.ColumnSpan="2"/>
+            <TextBlock x:Name="currentOrder" Grid.Row="1" Margin="297,40,325,28" Text="{Binding Item1.ID}" Grid.ColumnSpan="2"  FontSize="16"/>
+            <TextBlock Text="begin Time:" Grid.Row="1" Grid.Column="0" Margin="136,83,120,55" FontWeight="Bold" FontSize="16"  Grid.RowSpan="2"/>
+            <TextBlock x:Name="beginTime" Grid.Row="1" Margin="297,77,315,65" Text="{Binding Item5}" Grid.ColumnSpan="2"  FontSize="16" Grid.RowSpan="2"/>
+            <TextBlock Text="Previous Status:" Grid.Row="2" Grid.Column="0" Margin="136,24,95,6" FontSize="16" FontWeight="Bold" />
+            <TextBlock  Text="{Binding Item3}" Grid.Row="2" Margin="297,15,310,20" Grid.ColumnSpan="2" FontSize="16" />
+            <TextBlock Text="Next Status:" Grid.Row="2" Grid.Column="0" Margin="136,64,114,0" Height="29" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Grid.RowSpan="2"></TextBlock>
+            <TextBlock  Text="{Binding Item4}" Grid.Row="2" Margin="297,64,75,72" Grid.ColumnSpan="2" Grid.RowSpan="2"  FontSize="16"/>
+            <TextBlock Text="Estimated time to complete:" Grid.Row="3" Grid.Column="0" Margin="136,41,0,27" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Width="235"/>
+            <TextBlock x:Name="EstimatedTime" Text="{Binding Item2}" Grid.Row="3" Margin="390,34,222,28" FontSize="16" Grid.ColumnSpan="2"/>
             <TextBlock Name="tbTime" Margin="95,48,117,14" Grid.Row="3" Grid.Column="1" FontSize="16"/>
             <Image Grid.Column="1" HorizontalAlignment="Left" Height="133" Margin="492,10,0,0" Grid.RowSpan="2" Grid.Row="1" VerticalAlignment="Top" Width="150">
                 <Image.OpacityMask>

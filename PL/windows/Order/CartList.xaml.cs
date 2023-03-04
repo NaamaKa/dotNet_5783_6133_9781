@@ -22,19 +22,15 @@ namespace Pl.windows.Order
     /// </summary>
     public partial class CartList : Window
     {
-        public Action<BO.OrderItem?> Action;
-        public CartList(BO.Cart myCart/*Action<BO.OrderItem?> MyAction*/)
+        public CartList(BO.Cart myCart)
         {
             MyItemList =new( myCart.Items);
             MyCart = myCart;
             InitializeComponent();
-            //Action= MyAction;
+            MYToTalSum = myCart.Price;
         }
-
-
-
-
-
+        #region dependency proporties
+        public static bool MesaggeToshow { get; set; }
 
         public double SelectedItemAmount
         {
@@ -68,24 +64,22 @@ namespace Pl.windows.Order
         public static readonly DependencyProperty MyCartProperty =
             DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(CartList));
 
-
-
-        public static bool MesaggeToshow { get; set; }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public double MYToTalSum
         {
-            this.Close();
+            get { return (double)GetValue(MYToTalSumProperty); }
+            set { SetValue(MYToTalSumProperty, value); }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            new NewOrder(MyCart).Show();
-        }
+        // Using a DependencyProperty as the backing store for MYToTalSum.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MYToTalSumProperty =
+            DependencyProperty.Register("MYToTalSum", typeof(double), typeof(CartList));
+        #endregion
+        #region methods
         private void plus_Button_Click(object sender, RoutedEventArgs e)
         {
             BO.OrderItem obj = ((FrameworkElement)sender).DataContext as BO.OrderItem;
             int num = obj.NumInOrder;
-            UpdatePlus(num-1);
+            UpdatePlus(num - 1);
         }
         private void minus_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -96,15 +90,35 @@ namespace Pl.windows.Order
 
         public void UpdatePlus(int index)
         {
-            MyItemList[index].Amount +=1;
-            MyItemList.Insert(index, MyItemList[index]);
-            MyItemList.RemoveAt(index+1);
-        }
-        public void UpdateMinus(int index)
-        {
-            MyItemList[index].Amount -= 1;
+            MyItemList[index].Amount += 1;
+            MyItemList[index].TotalPrice += MyItemList[index].Price;
+            MyCart.Price += MyItemList[index].Price;
+            MYToTalSum += MyItemList[index].Price;
             MyItemList.Insert(index, MyItemList[index]);
             MyItemList.RemoveAt(index + 1);
         }
+        public void UpdateMinus(int index)
+        {
+            if (MyItemList[index].Amount >= 1)
+            {
+                MyItemList[index].Amount -= 1;
+                MyItemList[index].TotalPrice -= MyItemList[index].Price;
+                MyCart.Price -= MyItemList[index].Price;
+                MYToTalSum -= MyItemList[index].Price;
+                MyItemList.Insert(index, MyItemList[index]);
+                MyItemList.RemoveAt(index + 1);
+            }
+
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            new NewOrder(MyCart).Show();
+        }
+        #endregion
     }
 }
