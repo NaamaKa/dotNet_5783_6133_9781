@@ -15,9 +15,9 @@
         <Button Margin="597,0,0,54" Padding="5" Width="160"  VerticalAlignment="Bottom"  Height="40" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" x:Name="get" HorizontalAlignment="Left" Content="get"  Click="getButton_Click" />
         <Button  Margin="63,0,0,54" Padding="5" Width="194"  VerticalAlignment="Bottom"  Height="45" Foreground="#FFFFD100" BorderBrush="#FFFFD100" Background="#FF0084C8" FontWeight="Bold" FontSize="15" BorderThickness="1,0,1,1" x:Name="back"  Content="back" HorizontalAlignment="Left"  Click="backButton_Click" />
         <Label Content="{Binding ExceText,Mode=TwoWay}" HorizontalAlignment="Left" Margin="289,180,0,0" VerticalAlignment="Top"/>
-        <Image HorizontalAlignment="Left" Height="285" Margin="-40,12,0,0" VerticalAlignment="Top" Width="456" Source="/windows/Tracking/6.png">
+        <Image HorizontalAlignment="Left" Height="285" Margin="-40,12,0,0" VerticalAlignment="Top" Width="456" Source="/windows/Tracking/pictures/6.png">
             <Image.OpacityMask>
-                <ImageBrush ImageSource="/windows/Tracking/6.png"/>
+                <ImageBrush ImageSource="/windows/Tracking/pictures/6.png"/>
             </Image.OpacityMask>
         </Image>
 

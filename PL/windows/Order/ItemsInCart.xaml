@@ -11,7 +11,7 @@
     <Grid>
         <ListView d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding ListOfItemsINCart}">
             <ListView.Background>
-                <ImageBrush ImageSource="/windows/Order/מנהל.PNG"/>
+                <ImageBrush ImageSource="/windows/Order/pictures/מנהל.PNG"/>
             </ListView.Background>
             <ListView.View>
                 <GridView>

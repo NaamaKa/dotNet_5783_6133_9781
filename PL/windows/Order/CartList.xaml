@@ -13,7 +13,7 @@
             <ColumnDefinition Width="23*"/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="/windows/Order/מנהל.PNG"/>
+            <ImageBrush ImageSource="/windows/Order/pictures/מנהל.PNG"/>
         </Grid.Background>
         <Label Visibility="{Binding MesaggeToshow}" Content="hy there,you are nuts!!! you didnt buy yet anythung! run buy NOW!!" HorizontalAlignment="Left" Margin="80,9,0,0" VerticalAlignment="Top" Width="560"/>
         <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,41,0,91" ItemsSource="{Binding MyItemList, Mode=TwoWay}" Grid.ColumnSpan="2" Background="White" >
