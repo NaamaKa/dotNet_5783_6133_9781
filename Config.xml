@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config>
+	<idOrder>200039</idOrder>
+	<idProduct>100012</idProduct>
+	<idOrderItem>300041</idOrderItem>
+	<idOrderOfIdOrderItem>1</idOrderOfIdOrderItem>
+	<idProductOfIdOrderItem>1</idProductOfIdOrderItem>
+</Config>

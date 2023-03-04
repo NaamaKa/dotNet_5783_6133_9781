@@ -245,7 +245,7 @@ internal class Order : BlApi.IOrder
 
         orderItemList = Dal!.orderItem.GetOrderItemsFromOrder(id);
         double sum = 0;
-        return orderItemList
+        return orderItemList!
                     .Where(item => item != null)
                     .Sum(item => item!.Value.price * item.Value.amount);
     }
@@ -310,7 +310,6 @@ internal class Order : BlApi.IOrder
             throw new BO.EmptyEmailException("empty Email") { EmptyEmail = name!.ToString() };
         }
         return;
-
     }
     public int GetnextidFromDO()
     {
@@ -416,10 +415,10 @@ internal class Order : BlApi.IOrder
     public void AddOrder(BO.Order o)
     {
 
-        CheckCorrectData(o.ID, o!.CostumerName, o.CostumerAddress, o.CostumerEmail);
+        CheckCorrectData(o.ID, o!.CostumerName!, o.CostumerAddress!, o.CostumerEmail!);
         try
         {
-            Dal!.order.Add(newOrderWithData(o.ID, o!.CostumerName, o.CostumerAddress, o.CostumerEmail));
+            Dal!.order.Add(newOrderWithData(o.ID, o!.CostumerName!, o.CostumerAddress!, o.CostumerEmail!));
         }
         catch
         {

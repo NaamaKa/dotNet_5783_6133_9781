@@ -5,7 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DO;
+public class ItemAlreadyExistsException : Exception
+{
+    public string? ItemAlreadyExists { get; set; }
 
+    public ItemAlreadyExistsException(string msg) : base(msg)
+    {
+    }
+}
 public class GetPredictNullException : Exception
 {
     public string? GetPredictNull { get; set; }

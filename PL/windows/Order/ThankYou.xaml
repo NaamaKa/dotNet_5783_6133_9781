@@ -8,8 +8,10 @@
         Title="ThankYou" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        <Image HorizontalAlignment="Left" Height="374" Margin="323,33,0,0" VerticalAlignment="Top" Width="422" Source="/windows/Order/3.png"/>
-        <Label Content="{Binding CotumerName}" HorizontalAlignment="Left" FontSize="15" Margin="31,116,0,0" VerticalAlignment="Top" Height="128" Width="328"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/windows/Order/image (27).png"/>
+        </Grid.Background>
+        <Label Content="{Binding CotumerName}" HorizontalAlignment="Left" FontSize="15" FontWeight="bold" Margin="41,16,0,0" Foreground="white" VerticalAlignment="Top" Height="128" Width="710"/>
 
     </Grid>
 </Window>
