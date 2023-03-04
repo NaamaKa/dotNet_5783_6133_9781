@@ -9,7 +9,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid x:Name="MainGrid">
         <Grid.Background>
-            <ImageBrush ImageSource="/windows/Order/pictures/image (21).png"/>
+            <ImageBrush ImageSource="/windows/Order/image (21).png"/>
         </Grid.Background>
         <Label Content="your name" HorizontalAlignment="Left" Margin="197,86,0,0" VerticalAlignment="Top"/>
         <Label Content="your address" HorizontalAlignment="Left" Margin="196,136,0,0" VerticalAlignment="Top"/>

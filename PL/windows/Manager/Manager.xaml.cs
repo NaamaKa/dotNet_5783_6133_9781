@@ -37,7 +37,6 @@ namespace Pl.windows.Manager
             }
             OrdersList = new(bl!.Order.GetListOfOrders());
             IsReadOnly = isreadonly;
-            //ProductList = bl.Product.GetListOfProduct();
             Categorys = Enum.GetValues(typeof(BO.Enums.Category));
 
             InitializeComponent();

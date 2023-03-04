@@ -27,7 +27,7 @@ VerticalAlignment="Stretch" Width="auto">
         </Grid>
         <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList,Mode=TwoWay}" >
             <ListView.Background>
-                <ImageBrush ImageSource="/windows/Manager/איקאה לוגוים.PNG"/>
+                <ImageBrush ImageSource="/windows/איקאה לוגוים.PNG"/>
             </ListView.Background>
             <ListView.View>
                 <GridView>
