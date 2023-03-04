@@ -84,14 +84,16 @@ public partial class ProductForList : Window
 
     private void Back_Button_Click_1(object sender, RoutedEventArgs e)
     {
-          new MainWindow().Show();
+
+        new MainWindow().Show();
+        Close();
     }
 
     private void chkEnable_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            ProductList = new(bl!.Product.GetProductItemList());
+            ProductList = new(bl!.Product!.GetProductItemList());
         }
         catch (RequestedItemNotFoundException ex)
         {
