@@ -9,9 +9,9 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/windows/Order/image (27).png"/>
+            <ImageBrush ImageSource="/windows/Order/pictures/image (27).png"/>
         </Grid.Background>
-        <Label Content="{Binding CotumerName}" HorizontalAlignment="Left" FontSize="15" FontWeight="bold" Margin="41,16,0,0" Foreground="white" VerticalAlignment="Top" Height="128" Width="710"/>
+        <Label Content="{Binding CotumerName}" HorizontalAlignment="Center" FontWeight="Bold" Foreground="White" FontSize="17" Margin="0,18,0,0" VerticalAlignment="Top" Height="139" Width="780"/>
 
     </Grid>
 </Window>

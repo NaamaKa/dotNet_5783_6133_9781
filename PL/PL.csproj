@@ -19,6 +19,8 @@
 	<ItemGroup>
 	  <None Remove="ikeaLogo.png" />
 	  <None Remove="windows\Manager\6.png" />
+	  <None Remove="windows\Manager\איקאה לוגוים.PNG" />
+	  <None Remove="windows\Manager\ארגזים.PNG" />
 	  <None Remove="windows\Order\3.png" />
 	  <None Remove="windows\Order\image %2821%29.png" />
 	  <None Remove="windows\Order\image %2825%29.png" />
@@ -36,6 +38,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\BL\BL.csproj" />
+		<ProjectReference Include="..\Simulator\Simulator.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

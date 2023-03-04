@@ -12,7 +12,7 @@
     <Grid>
         <Grid Name="MainGrid">
             <Grid.Background>
-                <ImageBrush ImageSource="/windows/מנהל.PNG"/>
+                <ImageBrush ImageSource="/windows/Order/pictures/מנהל.PNG"/>
             </Grid.Background>
             <Label  Content="id"  HorizontalAlignment="Left" Margin="225,91,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="id" Text="{Binding MyProduct.ID}" IsReadOnly="True"   HorizontalAlignment="Left" Margin="289,91,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>

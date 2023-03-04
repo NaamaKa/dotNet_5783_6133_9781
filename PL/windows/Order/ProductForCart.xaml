@@ -10,7 +10,7 @@
     <Grid>
         <Grid Name="MainGrid">
             <Grid.Background>
-                <ImageBrush ImageSource="/windows/Order/קטלוגים איקאה.PNG"/>
+                <ImageBrush ImageSource="/windows/Order/מנהל.PNG"/>
             </Grid.Background>
             <Label  Content="id" FontWeight="Bold" FontSize="15"  HorizontalAlignment="Left" Margin="225,91,0,0" VerticalAlignment="Top"/>
             <Label FontWeight="Bold" FontSize="15"  HorizontalAlignment="Left" Margin="289,91,0,0" Content="{Binding ID}" VerticalAlignment="Top"/>

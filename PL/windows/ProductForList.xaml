@@ -26,6 +26,9 @@ VerticalAlignment="Stretch" Width="auto">
             <CheckBox Name="chkEnable" Checked="chkEnable_Click" Margin="95,8,0,0" Content="מיון לפי קטגוריות"/>
         </Grid>
         <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectedValue="{Binding Selected}" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding ProductList,Mode=TwoWay}" >
+            <ListView.Background>
+                <ImageBrush ImageSource="/windows/Manager/איקאה לוגוים.PNG"/>
+            </ListView.Background>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto" Header="ID">
